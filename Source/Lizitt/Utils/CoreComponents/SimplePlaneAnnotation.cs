@@ -28,7 +28,7 @@ namespace com.lizitt.u3d
     /// </summary>
     /// <remarks>
     /// <para>
-    /// The annotations game object should usually be marked as EditorOnly since the plane
+    /// The annotation's GameObject should usually be marked as EditorOnly since the plane
     /// is a gizmo.
     /// </para>
     /// </remarks>

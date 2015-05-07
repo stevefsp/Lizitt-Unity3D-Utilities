@@ -41,8 +41,8 @@ namespace com.lizitt.u3d
         /// </summary>
         /// <param name="action">The action to run after the specified delay. (May be null.)</param>
         /// <param name="delay">
-        /// The number of seconds to wait before calling the action. [Limit: >=0]<
-        /// /param>
+        /// The number of seconds to wait before calling the action. [Limit: >=0]
+        /// </param>
         public DelayedActionRunner(System.Action action = null, float delay = 1)
         {
             Action = action;
@@ -77,7 +77,7 @@ namespace com.lizitt.u3d
         /// <remarks>
         /// <para>
         /// The runner will trigger the action when it reaches the <see cref="Delay"/>.  The value
-        /// will continue increasing with each update call, so the it can be greater than
+        /// will continue increasing with each update call, so it can be greater than
         /// <see cref="Delay"/>.
         /// </para>
         /// </remarks>
@@ -165,7 +165,7 @@ namespace com.lizitt.u3d
         /// </para>
         /// <para>
         /// It is safe to continue calling this method after the action has been executed. 
-        /// It will only execute the action once per reset.  (Event if the the time has been
+        /// It will only execute the action once per reset.  (Even if the the time has been
         /// decremented using a negative <paramref name="deltaTime"/> value.
         /// </para>
         /// </remarks>

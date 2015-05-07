@@ -71,7 +71,7 @@ namespace com.lizitt.u3d
         }
 
         /// <summary>
-        /// Draws a circle gizmo aligned with the xz-plane.
+        /// Draws a circle gizmo at the specified transform.
         /// </summary>
         /// <param name="transform">The transform to use for center, rotation, and scale.</param>
         /// <param name="localOffset">The local offset of the center of the circle.</param>

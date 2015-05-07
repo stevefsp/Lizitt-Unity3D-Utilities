@@ -38,7 +38,7 @@ namespace com.lizitt.u3d
 
         [SerializeField]
         [Tooltip("If true, the collider should be added to a new transform."
-            + " Otherwise it should be added directly to its parent object.")]
+            + " Otherwise it should be added directly to its target object.")]
         private bool m_NewTransform = false;
         
         [SerializeField]
@@ -111,14 +111,19 @@ namespace com.lizitt.u3d
         /// </summary>
         /// <remarks>
         /// <para>
-        /// The new collider will be be added directory to the target if not configured for a
-        /// new transform.  Other it will be added to a new transform that is a child of the parent.
+        /// The new collider will be be added directly to the target if not configured for a
+        /// new transform.  Otherwise it will be added to a new transform that is a child of the 
+        /// target.
         /// </para>
         /// </remarks>
         /// <param name="target">The collider target.</param>
         /// <returns>The new collider.</returns>
         public abstract Collider Create(Transform target);
 
+        /// <summary>
+        /// The name that will be used when creating a new transform for the collider.  
+        /// (If applicable.)
+        /// </summary>
         public virtual string NewName
         {
             get { return "Collider"; }
@@ -161,7 +166,7 @@ namespace com.lizitt.u3d
         }
 
         /// <summary>
-        /// Applies the settings to an existing collider.  (New collider settings do not apply.)
+        /// Applies the settings to an existing collider.  (New collider settings are ignored.)
         /// </summary>
         /// <remarks>
         /// <para>
@@ -169,7 +174,7 @@ namespace com.lizitt.u3d
         /// this method.  Only collider component settings such as trigger and material are applied.
         /// </para>
         /// </remarks>
-        /// <param name="collider"></param>
+        /// <param name="collider">The collider to apply the settings to.</param>
         public virtual void ApplyTo(Collider collider)
         {
             collider.isTrigger = m_IsTrigger;
@@ -261,11 +266,27 @@ namespace com.lizitt.u3d
             set { m_Direction = value; }
         }
 
+        /// <summary>
+        /// The name that will be used when creating a new transform for the collider.  
+        /// (If applicable.)
+        /// </summary>
         public override string NewName
         {
             get { return "CapsuleCollider"; }
         }
 
+        /// <summary>
+        /// Creates a new collider based on the settings.  
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// The new collider will be be added directly to the target if not configured for a
+        /// new transform.  Otherwise it will be added to a new transform that is a child of the 
+        /// target.
+        /// </para>
+        /// </remarks>
+        /// <param name="target">The collider target.</param>
+        /// <returns>The new collider.</returns>
         public override Collider Create(Transform target)
         {
             var result = GetAttachTarget(target).AddComponent<CapsuleCollider>();
@@ -275,6 +296,16 @@ namespace com.lizitt.u3d
             return result;
         }
 
+        /// <summary>
+        /// Applies the settings to an existing collider.  (New collider settings are ignored.)
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// The new collider settings, such as position and rotation offsets, do not apply to
+        /// this method.  Only collider component settings such as trigger and material are applied.
+        /// </para>
+        /// </remarks>
+        /// <param name="collider">The collider to apply the settings to.</param>
         public override void ApplyTo(Collider collider)
         {
             var col = collider as CapsuleCollider;
@@ -331,11 +362,27 @@ namespace com.lizitt.u3d
             }
         }
 
+        /// <summary>
+        /// The name that will be used when creating a new transform for the collider.  
+        /// (If applicable.)
+        /// </summary>
         public override string NewName
         {
             get { return "BoxCollider"; }
         }
 
+        /// <summary>
+        /// Creates a new collider based on the settings.  
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// The new collider will be be added directly to the target if not configured for a
+        /// new transform.  Otherwise it will be added to a new transform that is a child of the 
+        /// target.
+        /// </para>
+        /// </remarks>
+        /// <param name="target">The collider target.</param>
+        /// <returns>The new collider.</returns>
         public override Collider Create(Transform target)
         {
             var result = GetAttachTarget(target).AddComponent<BoxCollider>();
@@ -345,6 +392,16 @@ namespace com.lizitt.u3d
             return result;
         }
 
+        /// <summary>
+        /// Applies the settings to an existing collider.  (New collider settings are ignored.)
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// The new collider settings, such as position and rotation offsets, do not apply to
+        /// this method.  Only collider component settings such as trigger and material are applied.
+        /// </para>
+        /// </remarks>
+        /// <param name="collider">The collider to apply the settings to.</param>
         public override void ApplyTo(Collider collider)
         {
             var col = collider as BoxCollider;
@@ -393,11 +450,27 @@ namespace com.lizitt.u3d
             set { m_Radius = Mathf.Max(0, value); }
         }
 
+        /// <summary>
+        /// The name that will be used when creating a new transform for the collider.  
+        /// (If applicable.)
+        /// </summary>
         public override string NewName
         {
             get { return "SphereCollider"; }
         }
 
+        /// <summary>
+        /// Creates a new collider based on the settings.  
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// The new collider will be be added directly to the target if not configured for a
+        /// new transform.  Otherwise it will be added to a new transform that is a child of the 
+        /// target.
+        /// </para>
+        /// </remarks>
+        /// <param name="target">The collider target.</param>
+        /// <returns>The new collider.</returns>
         public override Collider Create(Transform target)
         {
             var result = GetAttachTarget(target).AddComponent<SphereCollider>();
@@ -407,6 +480,16 @@ namespace com.lizitt.u3d
             return result;
         }
 
+        /// <summary>
+        /// Applies the settings to an existing collider.  (New collider settings are ignored.)
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// The new collider settings, such as position and rotation offsets, do not apply to
+        /// this method.  Only collider component settings such as trigger and material are applied.
+        /// </para>
+        /// </remarks>
+        /// <param name="collider">The collider to apply the settings to.</param>
         public override void ApplyTo(Collider collider)
         {
             var col = collider as SphereCollider;

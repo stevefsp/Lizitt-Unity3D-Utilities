@@ -54,7 +54,7 @@ namespace com.lizitt.u3d
         public delegate bool Sync(Animator target, Animator source);
 
         /// <summary>
-        /// Synchronzie layer weight, layer state, and parameter values from the source animator
+        /// Synchronize layer weight, layer state, and parameter values from the source animator
         /// to the target. (Does not sync IK.)
         /// </summary>
         /// <remarks>

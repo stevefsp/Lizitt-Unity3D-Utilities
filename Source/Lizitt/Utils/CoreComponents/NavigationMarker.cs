@@ -27,7 +27,7 @@ namespace com.lizitt.u3d
     /// Represents a marker with an option to include a rotation directive.
     /// </summary>
     /// <remarks>
-    /// <para>This is similar to a traditional actor marker representing a position anc
+    /// <para>This is similar to a traditional actor marker representing a position and
     /// face direction. The range is generally used to communicate how close to the mark
     /// the actor must get.</para>
     /// </remarks>
