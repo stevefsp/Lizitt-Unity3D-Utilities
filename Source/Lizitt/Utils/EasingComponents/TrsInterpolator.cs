@@ -71,6 +71,11 @@ namespace com.lizitt.u3d
         /// <summary>
         /// Called whenever the interpolator's status changes.
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This callback allows concrete classes to respond to changes in the status.
+        /// </para>
+        /// </remarks>
         protected virtual void LocalOnStatusChange()
         {
         }

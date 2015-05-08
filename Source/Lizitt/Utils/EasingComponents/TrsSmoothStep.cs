@@ -24,43 +24,28 @@ using UnityEngine;
 namespace com.lizitt.u3d
 {
     /// <summary>
-    /// A Monobehaviour that implements <see cref="ITrsInterpolator"/> features that use the 
-    /// standard easing functions.
+    /// A Monobehaviour that implements <see cref="ITrsInterpolator"/> features that use 
+    /// Mathf.SmoothStep for interpolation.
     /// </summary>
-    public abstract class TrsEase
+    public abstract class TrsSmoothStep
         : TrsInterpolator
     {
         [Space(5)]
 
         [SerializeField]
-        private TrsEaseParams m_MainSettings = new TrsEaseParams();
+        private TrsInterpolationParams m_MainSettings = new TrsInterpolationParams();
 
         [Space(5)]
 
         [SerializeField]
-        [Tooltip("The action to take when the ease operation is complete.")]
+        [Tooltip("The action to take when the interpolation operation is complete.")]
         private EaseCompletionType m_CompletionAction = EaseCompletionType.StopUpdating;
 
-        private TrsEaseHelper m_Helper;
-        private bool m_IsBehaviorComplete;
+        private TrsSmoothStepHelper m_Helper;
+        private bool m_IsBehaviourComplete = false;
 
         /// <summary>
-        /// The ease type to use.
-        /// </summary>
-        public EaseType Mode
-        {
-            get { return m_MainSettings.EaseMode; }
-            set
-            {
-                if (m_Helper == null)
-                    m_MainSettings.EaseMode = value;
-                else
-                    m_Helper.EaseMode = value;
-            }
-        }
-
-        /// <summary>
-        /// The length of the ease in seconds. [Limit: >= 0]
+        /// The length of the interpolation in seconds. [Limit: >= 0]
         /// </summary>
         public float Duration
         {
@@ -83,63 +68,9 @@ namespace com.lizitt.u3d
             set { m_CompletionAction = value; }
         }
 
-        /// <summary>
-        /// True if the match item should be treated as dynamic rather than static.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// A dynamic match target is a target that may change after interpolation
-        /// begins.  Dynamic  match targets are generally more expensive to deal with and
-        /// may result in less accurate interpolation.
-        /// </para>
-        /// </remarks>
-        public bool MatchIsDynamic
-        {
-            get { return m_MainSettings.MatchIsDynamic; }
-            set { m_MainSettings.MatchIsDynamic = value; }
-        }
-
-        /// <summary>
-        /// Creates the interpolation helper.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// This method is called to initialize <see cref="Helper"/>.
-        /// </para>
-        /// </remarks>
-        /// <param name="settings">The settings to use.</param>
-        /// <returns>An interpolation helper.</returns>
-        protected abstract TrsEaseHelper LocalCreateHelper(TrsEaseParams settings);
-
-        protected override bool IsBehaviourComplete
-        {
-            get { return m_IsBehaviorComplete; }
-        }
-
         protected override bool ContinueOnComplete
         {
             get { return m_CompletionAction == EaseCompletionType.ContinueUpdating; }
-        }
-
-        protected override void LocalOnStatusChange()
-        {
-            if (Status == InterpolationStatus.Inactive)
-            {
-                m_IsBehaviorComplete = false;
-                return;
-            }
-
-            if (Status != InterpolationStatus.Complete)
-                return;
-
-            switch (m_CompletionAction)
-            {
-                case EaseCompletionType.DestroyScript:
-
-                    m_IsBehaviorComplete = true;
-                    Destroy(this);
-                    break;
-            }
         }
 
         protected override BaseTrsInterpolationParams BaseSettings
@@ -152,9 +83,37 @@ namespace com.lizitt.u3d
             get { return m_Helper; }
         }
 
+        protected override bool IsBehaviourComplete
+        {
+            get { return m_IsBehaviourComplete; }
+        }
+
         protected override void CreateHelper()
         {
-            m_Helper = LocalCreateHelper(m_MainSettings);
+            m_Helper = CreateHelper(m_MainSettings);
+        }
+
+        protected abstract TrsSmoothStepHelper CreateHelper(TrsInterpolationParams settings);
+
+        protected override void LocalOnStatusChange()
+        {
+            if (Status == InterpolationStatus.Inactive)
+            {
+                m_IsBehaviourComplete = false;
+                return;
+            }
+
+            if (Status != InterpolationStatus.Complete)
+                return;
+
+            switch (m_CompletionAction)
+            {
+                case EaseCompletionType.DestroyScript:
+
+                    Destroy(this);
+                    m_IsBehaviourComplete = true;
+                    break;
+            }
         }
     }
 }
