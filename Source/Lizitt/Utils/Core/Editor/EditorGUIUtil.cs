@@ -29,8 +29,6 @@ namespace com.lizitt.u3d.editor
     /// </summary>
     public static class EditorGUIUtil
     {
-
-        private static GUIStyle m_RedLabel;
         private static int IndentAmount = 2;
 
         public static void BeginSection(string headingLabel)
@@ -181,6 +179,14 @@ namespace com.lizitt.u3d.editor
             property.arraySize--;
         }
 
+
+        #region Colored Labels
+
+        private static GUIStyle m_RedLabel;
+
+        /// <summary>
+        /// A bold red label style.
+        /// </summary>
         public static GUIStyle RedLabel
         {
             get
@@ -195,6 +201,28 @@ namespace com.lizitt.u3d.editor
                 return m_RedLabel;
             }
         }
+
+        private static GUIStyle m_YellowLabel;
+
+        /// <summary>
+        /// A yellow label style.
+        /// </summary>
+        public static GUIStyle YellowLabel
+        {
+            get
+            {
+                if (m_YellowLabel == null)
+                {
+                    m_YellowLabel = new GUIStyle(GUI.skin.label);
+                    m_YellowLabel.fontStyle = FontStyle.Bold;
+                    m_YellowLabel.normal.textColor = Color.yellow;
+                }
+
+                return m_YellowLabel;
+            }
+        }
+
+        #endregion
 
         public static int DrawEnumFlagsField(
             Rect position, int value, System.Type enumTyp, GUIContent label, bool sort)
