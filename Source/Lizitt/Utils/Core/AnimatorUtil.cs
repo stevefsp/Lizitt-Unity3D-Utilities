@@ -119,15 +119,13 @@ namespace com.lizitt.u3d
             if (!(force || target.CanSafelySyncFrom(source, true)))
                 return false;
 
-            for (int i = 1; i < source.layerCount; i++)
+            for (int i = 0; i < source.layerCount; i++)
             {
-                target.SetLayerWeight(i, source.GetLayerWeight(i));
-                var sstate = source.GetCurrentAnimatorStateInfo(i);
+                if (i != 0)
+                    target.SetLayerWeight(i, source.GetLayerWeight(i));
 
-                Debug.LogWarning(target.GetCurrentAnimatorStateInfo(i).normalizedTime + ", " + sstate.normalizedTime);
+                var sstate = source.GetCurrentAnimatorStateInfo(i);
                 target.Play(sstate.fullPathHash, i, sstate.normalizedTime);
-                //target.Play(sstate.fullPathHash, i, 0.5f);
-                Debug.LogWarning(target.GetCurrentAnimatorStateInfo(i).normalizedTime + ", " + sstate.normalizedTime);
             }
 
             foreach (var svar in source.parameters)
