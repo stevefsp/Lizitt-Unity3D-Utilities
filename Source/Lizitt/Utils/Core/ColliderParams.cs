@@ -185,7 +185,7 @@ namespace com.lizitt.u3d
     }
 
     /// <summary>
-    /// Represents capsule collider settings.
+    /// Capsule collider settings.
     /// </summary>
     [System.Serializable]
     public class CapsuleColliderParams
@@ -323,7 +323,7 @@ namespace com.lizitt.u3d
     }
 
     /// <summary>
-    /// Represents box collider settings.
+    /// Box collider settings.
     /// </summary>
     [System.Serializable]
     public class BoxColliderParams
@@ -417,7 +417,7 @@ namespace com.lizitt.u3d
     }
 
     /// <summary>
-    /// Represents sphere collider settings.
+    /// Sphere collider settings.
     /// </summary>
     [System.Serializable]
     public class SphereColliderParams
