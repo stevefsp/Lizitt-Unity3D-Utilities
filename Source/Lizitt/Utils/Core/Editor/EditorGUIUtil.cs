@@ -180,7 +180,7 @@ namespace com.lizitt.u3d.editor
         }
 
 
-        #region Colored Labels
+        #region Label Styles
 
         private static GUIStyle m_RedLabel;
 
@@ -219,6 +219,22 @@ namespace com.lizitt.u3d.editor
                 }
 
                 return m_YellowLabel;
+            }
+        }
+
+        private static GUIStyle m_BoldLabel;
+
+        public static GUIStyle BoldLabel
+        {
+            get
+            {
+                if (m_BoldLabel == null)
+                {
+                    m_BoldLabel = new GUIStyle(GUI.skin.label);
+                    m_BoldLabel.fontStyle = FontStyle.Bold;
+                }
+
+                return m_BoldLabel;
             }
         }
 
