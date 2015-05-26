@@ -1,7 +1,5 @@
 # Lizitt Unity3D Utilities
 
-**2015-05-04:**  Roll-out is in progress.  It will be several weeks before all current code is posted.
-
 ## Overview
 
 This project implements various useful utilities for [Unity3D](http://unity3d.com/unity) projects.
