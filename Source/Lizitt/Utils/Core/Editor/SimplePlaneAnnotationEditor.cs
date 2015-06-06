@@ -36,7 +36,7 @@ namespace com.lizitt.u3d.editor
         static void DrawGizmo(SimplePlaneAnnotation item, GizmoType type)
         {
 #if UNITY_5_0_0 || UNITY_5_0_1
-            if (AnnotationUtil.drawAlways || (type & GizmoType.SelectedOrChild) != 0)
+            if (!(AnnotationUtil.drawAlways || (type & GizmoType.SelectedOrChild) != 0))
 #else
             if (!(AnnotationUtil.drawAlways || (type & GizmoType.InSelectionHierarchy) != 0))
 #endif
