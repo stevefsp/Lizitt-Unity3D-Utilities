@@ -62,11 +62,6 @@ namespace com.lizitt.u3d
         /// Performs a 'safe' synchronization.  I.e. Performs the 
         /// <see cref="CanSafelySyncFrom(Animator, Animator, bool)"/> checks.
         /// </para>
-        /// <para>
-        /// WARNING: BUG: If the target is already in the same state as the
-        /// source, the normalized time synchronization will fail.  The target will continue
-        /// from its current play time.  This appears to be a problem with Unity as of v5.0.0.
-        /// </para>
         /// </remarks>
         /// <param name="target">
         /// The Animator whose state will be synchronized with the <paramref name="source"/>.
@@ -87,13 +82,6 @@ namespace com.lizitt.u3d
         /// Synchronzie layer weight, layer state, and parameter values from the source animator
         /// to the target. (Does not sync IK.)
         /// </summary>
-        /// <remarks>
-        /// <para>
-        /// WARNING: BUG: If the target is already in the same state as the
-        /// source, the normalized time synchronization will fail.  The target will continue
-        /// from its current play time.  This appears to be a problem with Unity as of v5.0.0.
-        /// </para>
-        /// </remarks>
         /// <param name="target">
         /// The Animator whose state will be synchronized with the <paramref name="source"/>.
         /// </param>

@@ -25,7 +25,11 @@ namespace com.lizitt.u3d.editor
 {
     public class MarkerEditor
     {
+#if UNITY_5_0_0 || UNITY_5_0_1
         [DrawGizmo(GizmoType.NotSelected | GizmoType.SelectedOrChild | GizmoType.Pickable)]
+#else
+        [DrawGizmo(GizmoType.NotInSelectionHierarchy | GizmoType.InSelectionHierarchy | GizmoType.Pickable)]        
+#endif
         private static void DrawGizmo(Marker marker, GizmoType type)
         {
             /*
@@ -37,13 +41,16 @@ namespace com.lizitt.u3d.editor
              * call to this method.  That is why the drawing code is located in the marker classes
              * rather than an editor class.
              * 
-             * Unity Bug: The content of 'type' is broken in Unity 5.0+ (bug submitted and 
-             * accepted). So the 'type' test below isn't currently functional.  Until the bug
-             * is fixed, the gizmo will only display when the marker is drectly selelected or 
-             * drawAlways is true.
+             * Unity Bug (Pre-5.0.2): The content of 'type' is broken.  The 'type' test below 
+             * isn't currently functional.  Until the bug is fixed, the gizmo will only display 
+             * when the marker is drectly selelected or drawAlways is true.
              */
 
+#if UNITY_5_0_0 || UNITY_5_0_1
             if (AnnotationUtil.drawAlways || (type & GizmoType.SelectedOrChild) != 0)
+#else
+            if (AnnotationUtil.drawAlways || (type & GizmoType.InSelectionHierarchy) != 0)
+#endif
                 marker.DrawGizmo();
         }
     }
