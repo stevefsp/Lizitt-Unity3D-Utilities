@@ -4,11 +4,10 @@
 
 This project implements various useful utilities for [Unity3D](http://unity3d.com/unity) projects.
 
-Status: Alpha  
+API Status: Alpha  
+Test Status: Beta  
 Language: C#  
 Target: Unity3D 5.0+ (Personal & Professional)
-
-Unit test coverage not yet complete.
 
 ## Installation
 
