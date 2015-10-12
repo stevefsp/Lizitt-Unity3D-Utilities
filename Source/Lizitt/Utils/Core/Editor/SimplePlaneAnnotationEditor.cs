@@ -31,7 +31,8 @@ namespace com.lizitt.u3d.editor
 #if UNITY_5_0_0 || UNITY_5_0_1
         [DrawGizmo(GizmoType.NotSelected | GizmoType.SelectedOrChild)]
 #else
-        [DrawGizmo(GizmoType.NotInSelectionHierarchy | GizmoType.InSelectionHierarchy)]
+        [DrawGizmo(GizmoType.NotInSelectionHierarchy | GizmoType.InSelectionHierarchy 
+            | GizmoType.Pickable)]
 #endif
         static void DrawGizmo(SimplePlaneAnnotation item, GizmoType type)
         {
