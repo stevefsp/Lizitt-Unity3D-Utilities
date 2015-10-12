@@ -34,26 +34,33 @@ namespace com.lizitt.u3d
     /// </para>
     /// </remarks>
     public class NavigationNode
-        : NavigationMarker, IEnumerable<NavigationNode>
+        : NavigationMarker
     {
         [SerializeField]
         [Tooltip("The exit nodes for the node.")]
-        private NavigationNode[] m_Links = new NavigationNode[0];
+        private BaseNavigationMarker[] m_Links = new BaseNavigationMarker[0];
+
+        #region Iteration Members
 
         /// <summary>
-        /// Gets the specified exit node. [Limits: 0 &lt;= value &lt; index]
+        /// Gets the specified link's node.
         /// </summary>
-        /// <param name="index">The index of the link to retrieve.</param>
-        /// <returns></returns>
-        public NavigationNode this[int index]
+        /// <param name="index">
+        /// The index of the link to retrieve.  
+        /// [Limits: 0 &lt;= value &lt; <see cref="LinkCount"/>]
+        /// </param>
+        /// <returns>The specified link's node.</returns>
+        public BaseNavigationMarker this[int index]
         {
             get { return m_Links[index]; }
         }
 
-        /// <summary>
-        /// The number of exit links for the node.
-        /// </summary>
-        public int LinkCount
+        public override BaseNavigationMarker GetLink(int index)
+        {
+            return m_Links[index];
+        }
+
+        public override int LinkCount
         {
             get {return m_Links.Length; }
         }
@@ -61,8 +68,8 @@ namespace com.lizitt.u3d
         /// <summary>
         /// An enumerator of the exit links for the node.
         /// </summary>
-        /// <returns>An enumerator of the exit links for the node.</returns>
-        public IEnumerator<NavigationNode> GetEnumerator()
+        /// <returns>An enumerator of the links for the node.</returns>
+        public override IEnumerator<BaseNavigationMarker> GetEnumerator()
         {
             foreach (var item in m_Links)
             {
@@ -71,14 +78,9 @@ namespace com.lizitt.u3d
             }
         }
 
-        /// <summary>
-        /// An enumerator of the exit links for the node.
-        /// </summary>
-        /// <returns>An enumerator of the exit links for the node.</returns>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        #endregion
+
+        #region Gizmo Members
 
         /// <summary>
         /// The color to use for Gizmos.
@@ -104,5 +106,7 @@ namespace com.lizitt.u3d
 
             base.DrawGizmo();
         }
+
+        #endregion
     }
 }

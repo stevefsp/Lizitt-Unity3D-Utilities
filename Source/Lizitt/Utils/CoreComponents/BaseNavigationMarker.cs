@@ -19,35 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace com.lizitt.u3d
 {
     /// <summary>
-    /// Represents a marker with an option to include a rotation directive.
+    /// The base class for marker's that include rotation information.
     /// </summary>
-    /// <remarks>
-    /// <para>This is similar to a traditional actor marker representing a position and
-    /// face direction. The range is generally used to communicate how close to the mark
-    /// the actor must get.</para>
-    /// </remarks>
-    public class NavigationMarker
-        : BaseNavigationMarker
+    public abstract class BaseNavigationMarker
+        : Marker, IEnumerable<BaseNavigationMarker>
     {
-        #region Marker Members
+        /// <summary>
+        /// The standard tolerance to use when matching rotation.
+        /// </summary>
+        public const float DirectionTolerance = 5.0f;
 
-        [SerializeField]
-        [Tooltip("If true, the rotation of the marker is significant.")]
-        private bool m_UseRotation = false;
+        #region Marker members
 
         /// <summary>
         /// If true, the rotation of the marker is significant.
         /// </summary>
-        public override bool UseRotation
-        {
-            get { return m_UseRotation; }
-            set { m_UseRotation = true; }
-        }
+        public abstract bool UseRotation { get; set; }
 
         /// <summary>
         /// Determines if a direction vector matches the rotation required by the marker within
@@ -62,15 +55,20 @@ namespace com.lizitt.u3d
         /// <param name="tolerance">The angle tolerance in degrees.</param>
         /// <returns>True if the direction vector matches the rotation required by the marker 
         /// within the specified tolerance.</returns>
-        public override bool IsAtRotation(Vector3 direction, float tolerance = DirectionTolerance)
-        {
-            // WARNING: See note in base class if you are getting a mono error for this method.
+        public abstract bool IsAtRotation(Vector3 direction, float tolerance = DirectionTolerance);
 
-            if (!m_UseRotation)
-                return true;
-
-            return Mathf.Abs(Vector3.Angle(transform.forward, direction)) < tolerance;
-        }
+        /*
+         * Warning for IsAtRotation: 
+         * 
+         * As of Unity 5.0.2 a 'Key duplication' Mono compile error may occur when 
+         * a script uses the default tolerance.  E.g. myMarker.IsAtRotation(myDirection)
+         * 
+         * The workaround is to explicitly provide the tolerance.
+         * E.g. myMarker.IsAtRotation(myDirection, 5)
+         * 
+         * This Mono-only bug began to exhibit when this abstract class was inserted between
+         * Marker and NavigationMarker.  Up until that point there were no problems.
+         */
 
         /// <summary>
         /// Determines whether the specified position and direction is considered on mark.
@@ -80,64 +78,33 @@ namespace com.lizitt.u3d
         /// <param name="direction">The direction to test.</param>
         /// <param name="directionTolerance">The angle tolerance in degrees.</param>
         /// <returns>True if the values meet the range and rotation checks.</returns>
-        public override bool IsOnMark(
-            Vector3 position, Vector3 direction, float directionTolerance = DirectionTolerance)
-        {
-            if (!IsInRange(position))
-                return false;
-
-            return IsAtRotation(direction, directionTolerance);
-        }
-
-        /// <summary>
-        /// Mutates the transform's position and rotation to meet the markers requirements.
-        /// </summary>
-        /// <param name="trans">The transform to operate on.</param>
-        public override void ApplyTo(Transform trans)
-        {
-            base.ApplyTo(trans);
-
-            if (!IsAtRotation(trans.forward, DirectionTolerance))
-                trans.forward = transform.forward;
-        }
+        public abstract bool IsOnMark(
+            Vector3 position, Vector3 direction, float directionTolerance = DirectionTolerance);
 
         #endregion
 
         #region Iteration Members
 
-        public override BaseNavigationMarker GetLink(int index)
-        {
-            throw new System.IndexOutOfRangeException();
-        }
-
-        public override int LinkCount
-        {
-            get { return 0; }
-        }
-
-        public override System.Collections.Generic.IEnumerator<BaseNavigationMarker> GetEnumerator()
-        {
-            return null;
-        }
-
-        #endregion
-
-        #region Gizmo Members
+        public abstract BaseNavigationMarker GetLink(int index);
 
         /// <summary>
-        /// The color to use for gizmos.
+        /// The number of exit node links.
         /// </summary>
-        public override Color GizmoColor
-        {
-            get { return ColorUtil.Magenta; }
-        }
+        public abstract int LinkCount { get; }
 
         /// <summary>
-        /// Draw the gizmo.  (Only call reference Gizmo-legal methods.)
+        /// An enumerator of the exit links for the node.
         /// </summary>
-        public override void DrawGizmo()
+        /// <returns>An enumerator of the exit links for the node.</returns>
+        public abstract IEnumerator<BaseNavigationMarker> GetEnumerator();
+
+        /// <summary>
+        /// An enumerator of the exit links for the node.
+        /// </summary>
+        /// <returns>An enumerator of the exit links for the node.</returns>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            DrawStandardGizmo(transform, Range, GizmoColor, m_UseRotation);
+            return GetEnumerator();
         }
 
         #endregion

@@ -24,7 +24,7 @@ using UnityEngine;
 namespace com.lizitt.u3d
 {
     /// <summary>
-    /// An annotation representing a transform with a radius.
+    /// An marker representing a position with a radius.
     /// </summary>
     public class Marker
         : MonoBehaviour

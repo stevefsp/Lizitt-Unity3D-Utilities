@@ -23,6 +23,9 @@ using UnityEditor;
 
 namespace com.lizitt.u3d.editor
 {
+    /// <summary>
+    /// Providers marker features for the editor.
+    /// </summary>
     public class MarkerEditor
     {
 #if UNITY_5_0_0 || UNITY_5_0_1
@@ -35,15 +38,15 @@ namespace com.lizitt.u3d.editor
             /*
              * Design note:
              * 
-             * It is unusally preferred to place all gizmo code in an editor class.  But the current
-             * Unity behavior is that this method is called on all classes that have
-             * Marker as their base.  So both Marker and NavigationMarker result in a
-             * call to this method.  That is why the drawing code is located in the marker classes
-             * rather than an editor class.
+             * It is unusally preferred to place all gizmo code in an editor class.  
+             * But Unity behavior is to call the gizmo method for all classes in 
+             * an objects heirarchy.  E.g.  NavigationMarker is a sub-class of Marker.  If
+             * both have DrawGizmo methods, then both methods will be called.  So each concrete 
+             * class needs to know how to draw itself with only this one draw gizmo method
+             * defined.
              * 
              * Unity Bug (Pre-5.0.2): The content of 'type' is broken.  The 'type' test below 
-             * isn't currently functional.  Until the bug is fixed, the gizmo will only display 
-             * when the marker is drectly selelected or drawAlways is true.
+             * isn't currently functional. 
              */
 
 #if UNITY_5_0_0 || UNITY_5_0_1

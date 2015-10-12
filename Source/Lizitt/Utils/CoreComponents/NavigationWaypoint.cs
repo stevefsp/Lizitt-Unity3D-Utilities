@@ -31,16 +31,41 @@ namespace com.lizitt.u3d
     {
         [SerializeField]
         [Tooltip("The next waypoint. (If any.)")]
-        private NavigationWaypoint m_Next = null;
+        private BaseNavigationMarker m_Next = null;
+
+        #region Iteration Members
 
         /// <summary>
         /// The next waypoint, or null if the waypoint is a terminus.
         /// </summary>
-        public NavigationWaypoint Next
+        public BaseNavigationMarker Next
         {
             get { return m_Next; }
             set { m_Next = value; }
         }
+
+        public override int LinkCount
+        {
+            get { return m_Next ? 1 : 0; }
+        }
+
+        public override BaseNavigationMarker GetLink(int index)
+        {
+            if (index == 0 && m_Next)
+                return m_Next;
+            else
+                throw new System.IndexOutOfRangeException();
+        }
+
+        public override System.Collections.Generic.IEnumerator<BaseNavigationMarker> GetEnumerator()
+        {
+            if (m_Next)
+                yield return m_Next;
+        }
+
+        #endregion
+
+        #region Gizmo Members
 
         /// <summary>
         /// The color to use for Gizmos.
@@ -51,7 +76,7 @@ namespace com.lizitt.u3d
         }
 
         /// <summary>
-        /// Draw the gizmo.  (Only call from Gizmo-legal methods.)
+        /// Draw the gizmo.  (Only call reference Gizmo-legal methods.)
         /// </summary>
         public override void DrawGizmo()
         {
@@ -63,5 +88,7 @@ namespace com.lizitt.u3d
 
             base.DrawGizmo();
         }
+
+        #endregion
     }
 }
