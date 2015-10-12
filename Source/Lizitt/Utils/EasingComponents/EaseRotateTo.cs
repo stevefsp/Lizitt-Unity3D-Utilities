@@ -29,21 +29,24 @@ namespace com.lizitt.u3d
     /// All rotation axes are interpolated using the same ease mode.
     /// </para>
     /// <para>
-    /// The <see cref="InterpolatedValue"/> is guarenteed to match the <see cref="To"/> value 
-    /// at completion.  After completion, if the match item is dynamic, the 
-    /// <see cref="InterpolatedValue"/> will stay locked to the <see cref="To"/> value. 
-    /// (No further interpolation, lock step behavior.)
+    /// The <see cref="TrsInterpolator.InterpolatedValue"/> is guarenteed to match the
+    /// final value at completion.  After completion, if the match item
+    /// is dynamic, the <see cref="TrsInterpolator.InterpolatedValue"/> will stay 
+    /// locked to the final value. (No further interpolation, lock step behavior.)
     /// </para>
     /// <para>
     /// Because of the guarentee that the interpolation will complete within the specified
     /// duration, this class is generally designed for static use.  It works best when the 
-    /// settings and the <see cref="MatchItem"/> remain static for during of the interpolation.  
+    /// settings and the <see cref="TrsInterpolator.MatchItem"/> remain static for during of the interpolation.  
     /// Any changes during the the interpolation will warp the easing behavior.
     /// </para>
     /// </remarks>
     public class EaseRotateTo
         : TrsEase
     {
+        /// <summary>
+        /// <see cref="TrsEase.LocalCreateHelper"/>
+        /// </summary>
         protected override TrsEaseHelper LocalCreateHelper(TrsEaseParams settings)
         {
             return new EaseRotateToHelper(settings);

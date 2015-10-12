@@ -135,7 +135,7 @@ namespace com.lizitt.u3d
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Setting this property to a new value will reset <see cref="RigidBody"/> to null.
+        /// Setting this property to a new value will reset RigidBody to null.
         /// </para>
         /// </remarks>
         public Transform ItemToTransform

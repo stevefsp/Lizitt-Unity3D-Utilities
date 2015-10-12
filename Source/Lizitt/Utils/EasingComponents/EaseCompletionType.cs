@@ -21,6 +21,9 @@
  */
 namespace com.lizitt.u3d
 {
+    /// <summary>
+    /// The type of action to take when easing is complete.
+    /// </summary>
     public enum EaseCompletionType
     {
         /// <summary>

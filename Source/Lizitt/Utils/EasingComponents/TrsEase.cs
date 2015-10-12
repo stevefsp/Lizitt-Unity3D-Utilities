@@ -24,7 +24,7 @@ using UnityEngine;
 namespace com.lizitt.u3d
 {
     /// <summary>
-    /// A Monobehaviour that implements <see cref="ITrsInterpolator"/> features that use the 
+    /// A Monobehaviour that implements <see cref="ITrsInterpolationHelper"/> features that use the 
     /// standard easing functions.
     /// </summary>
     public abstract class TrsEase
