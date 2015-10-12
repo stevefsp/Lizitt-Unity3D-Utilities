@@ -43,6 +43,85 @@ namespace com.lizitt.u3d
     [System.Serializable]
     public class SimpleRangeTimer
     {
+        #region Pooling
+
+        private static SimpleInfinitePool<SimpleRangeTimer> m_Pool;
+
+        private static void CheckForPool(
+            int maxPoolSize = 50, int preloadCount = 0, int initCapacity = 10)
+        {
+            if (m_Pool == null)
+            {
+                m_Pool = new SimpleInfinitePool<SimpleRangeTimer>(maxPoolSize,
+                    delegate() { return new SimpleRangeTimer(); },
+                    delegate(SimpleRangeTimer item) { item.Reset(0, 0); },   // Force to zero duration.
+                    preloadCount, initCapacity);
+            }
+        }
+
+        /// <summary>
+        /// Resets the pool with the specified configuration.
+        /// </summary>
+        /// <param name="maxPoolSize">
+        /// The maximum number of objects that can be stored in the pool. [Limit: >= 1]
+        /// </param>
+        /// <param name="preloadCount">
+        /// The number of objects that will be immediately instantiated and stored in the pool.
+        /// [Limit: 0 &lt;= value &lt= <paramref name="maxPoolSize"/>]
+        /// </param>
+        /// <param name="initPoolCapacity">
+        /// The initial capacity of the pool. 
+        /// [Limit: 0 &lt;= value &lt= <paramref name="maxPoolSize"/>]
+        public static void ResetPool(
+            int maxPoolSize = 50, int preloadCount = 0, int initCapacity = 10)
+        {
+            m_Pool = null;
+            CheckForPool(maxPoolSize, preloadCount, initCapacity);
+        }
+
+        /// <summary>
+        /// Gets a timer form the pool with the specified duration.
+        /// </summary>
+        /// <param name="minimum">
+        /// The minimum number of seconds to run. 
+        /// [Limits: 0 &lt;= value &lt;= <paramref name="maximum"/>.]
+        /// </param>
+        /// <param name="maximum">The maximum number of seconds to run. [Limit: >= 0]</param>
+        /// <returns>
+        /// A timer reference the pool that is ready to use, or a new timer if the pool is empty.
+        /// </returns>
+        public static SimpleRangeTimer GetFromPool(float minimum, float maximum)
+        {
+            CheckForPool();
+
+            var result = m_Pool.GetPooledObject();
+            // Don't wan't accidental -1 in parameters.
+            result.Reset(Mathf.Max(0, minimum), Mathf.Max(0, maximum));
+
+            return result;
+        }
+
+        /// <summary>
+        /// Return a timer to the pool if there is room.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Important: All external references to the timer should be nulled.
+        /// </para>
+        /// </remarks>
+        /// <param name="item">The timer to return.</param>
+        /// <returns>
+        /// True if the pool had room for the timer.  
+        /// False if the timer was reset and released for garbage collection.
+        /// </returns>
+        public static bool ReturnToPool(SimpleRangeTimer item)
+        {
+            CheckForPool();
+            return m_Pool.PoolObject(item);
+        }
+
+        #endregion
+
         [SerializeField]
         [Tooltip("The minimum number of seconds the timer will run before completing.")]
         [ClampMinimum(0)]
