@@ -74,8 +74,8 @@ namespace com.lizitt.u3d
         }
 
         /// <summary>
-        /// Instantiates a new version of the component's GameObject and returns its new
-        /// component.
+        /// Instantiates a new instance of the component's GameObject and returns the instance's 
+        /// new component.
         /// </summary>
         /// <remarks>
         /// <para>
@@ -121,7 +121,7 @@ namespace com.lizitt.u3d
         }
 
         /// <summary>
-        /// Randomizes the contents of the array.
+        /// Randomizes the contents of the array.   (In-place randomiziaton.)
         /// </summary>
         /// <param name="items">The array to randomize.</param>
         public static void Randomize<T>(this T[] items)
@@ -138,7 +138,7 @@ namespace com.lizitt.u3d
         }
 
         /// <summary>
-        /// Randomizes the contents of the list.
+        /// Randomizes the contents of the list.  (In-place randomiziaton.)
         /// </summary>
         /// <param name="items">The list to randomize.</param>
         public static void Randomize<T>(this List<T> items)
@@ -173,7 +173,7 @@ namespace com.lizitt.u3d
 
         /// <summary>
         /// Determines whether or not the two points are within range of each other based on a 
-        /// xz-plane radius and a y-axis height.
+        /// xz-plane radius and a y-axis height.  (A cylindrical range check.)
         /// </summary>
         /// <remarks>
         /// <para>
@@ -201,7 +201,7 @@ namespace com.lizitt.u3d
 
         /// <summary>
         /// Determines whether or not the specified vectors are equal within the specified 
-        /// tolerance.
+        /// tolerance. (A sphere range check.)
         /// </summary>
         /// <remarks>
         /// <para>
@@ -222,7 +222,8 @@ namespace com.lizitt.u3d
         }
 
         /// <summary>
-        /// Determines whether or not the specified vectors are equal within the specified tolerance.
+        /// Determines whether or not the specified vectors are equal within the specified 
+        /// tolerance.
         /// </summary>
         /// <remarks>
         /// <para>
@@ -236,7 +237,8 @@ namespace com.lizitt.u3d
         /// <returns>
         /// True if the specified vectors are similar enough to be considered equal.
         /// </returns>
-        public static bool SloppyEquals2D(this Vector2 u, Vector2 v, float tolerance = MathUtil.Tolerance)
+        public static bool SloppyEquals2D(
+            this Vector2 u, Vector2 v, float tolerance = MathUtil.Tolerance)
         {
             // The name is odd because Unity considers 'SloppyEquals' and the Vector3 version
             // to be ambiguous.  Possibly a Mono thing since Visual Studio doesn't complain.
@@ -256,12 +258,16 @@ namespace com.lizitt.u3d
         /// them, relative to the reference direction, if determined.
         /// </para>
         /// <para>
-        /// WARNING: The result of this algorithm is undefined if either of the direction vectors 
+        //  Because this algorithm has no concept of a local up-axis it is it is not suitable 
+        // for some use cases. See <see cref="AxisAngles"/> if a local-space angle is required.
+        /// </para>
+        /// <para>
+        /// Warning: The result of this algorithm is undefined if either of the direction vectors 
         /// has no significant xz-plane projection.  (I.e. The Vector3.up or Vector3.down.)
         /// </para>
         /// </remarks>
         /// <param name="fromDirection">The reference direction.</param>
-        /// <param name="toDirection">The target direction.</param>
+        /// <param name="targetDirection">The target direction.</param>
         /// <returns>The signed y-axis angle. [Range: -180 to 180]</returns>
         public static float SignedAngleY(this Vector3 fromDirection, Vector3 toDirection)
         {
@@ -270,17 +276,6 @@ namespace com.lizitt.u3d
             float angleB = Mathf.Atan2(toDirection.x, toDirection.z) * Mathf.Rad2Deg;
 
             return Mathf.DeltaAngle(angleA, angleB);
-
-            // TODO: Check performance against this other algorithm. (Not unit tested.)
-
-            //if (toDirection == Vector3.zero)
-            //    return 0;
-
-            //float angle = Vector3.Angle(fromDirection, toDirection);
-            //Vector3 normal = Vector3.Cross(fromDirection, toDirection);
-            //angle = Mathf.Sign(Vector3.Dot(normal, Vector3.up));
-
-            //return angle;
         }
 
         /// <summary>
@@ -289,7 +284,11 @@ namespace com.lizitt.u3d
         /// </summary>
         /// <remarks>
         /// <para>
-        /// WARNING: The result of this algorithm is undefined if either of the rotations has 
+        /// Because this algorithm ignores the quaterion up-axis it is not suitable for some
+        /// use cases.  If a local-space angle is required, then see <see cref="AxisAngles"/>.
+        /// </para>
+        /// <para>
+        /// Warning: The result of this algorithm is undefined if either of the rotations has 
         /// no xz-plane component.  (I.e. The look direction is Vector3.up or Vector3.down.)
         /// </para>
         /// </remarks>
@@ -503,6 +502,83 @@ namespace com.lizitt.u3d
         }
 
         /// <summary>
+        /// Gets the signed local-space horizontal (x) and vertical (y) angles from the reference 
+        /// to the target direction. (Degrees) [Limits: -180 to 180, both axes]
+        /// </summary>
+        /// <para>
+        /// The angles represent the right/left and up/down angles necessary to aim 
+        /// <paramref name="reference"/> toward <see cref="targetDirection"/>.  This is similar to
+        /// yaw and pitch.  The angles are useful in situations where local-space 2D angles are
+        /// needed. E.g. For animation aim blending.
+        /// </para>
+        /// <para>
+        /// The horzontal angle (x) represents the angle around the local y-axis from 
+        /// <paramref name="reference"/>'s forward to <see cref="targetDirection"/>.  
+        /// Negative values represent a right 'turn' while positive values prepresent left.
+        /// </para>
+        /// <para>
+        /// The vertical angle (y) represents the angle around the local x-axis from
+        /// <paramref name="reference"/>'s forward to <see cref="targetDirection"/>.
+        /// Negative values represent a pitch upward while positive values prepresent downward.
+        /// (Note: This value often needs to be negated for use in animation blend
+        /// graphs since they often define positive angles as up.)
+        /// </para>
+        /// <para>
+        /// Warning: The result is undefined if the normalized direction vector from
+        /// <paramref name="reference"/> to <paramref name="targetDirection"/> 
+        /// is either Vector3.up or Vector3.down.  This is a limitation of the math.
+        /// (There is no such thing as a horizontal angle when aiming straight up/down.)
+        /// </para>
+        /// <para>
+        /// The angles can be converted into a local-space direction as follows.
+        /// (Useful for debug display purposes):
+        /// </para>
+        /// <para>
+        /// <code>
+        /// var rot = Quaternion.Euler(new Vector3(angle.y, angle.x, 0));
+        /// dir = reference.TransformDirection(rot * Vector3.forward);
+        /// </code>
+        /// </para>
+        /// </remarks>
+        /// <param name="reference">The tranform that represents the world-space forward.
+        /// </param>
+        /// <param name="targetDirection">
+        /// The world-space aim direction. (E.g. The direction from <see cref="reference"/> 
+        /// to a target poition.)
+        /// </param>
+        /// <returns>
+        /// The signed local-space horizontal (x) and vertical (y) angles from the reference 
+        /// to the target direction. (Degrees) [Limits: -180 to 180, both axes]
+        /// </returns>
+        public static Vector2 AimAngles(this Transform reference, Vector3 targetDirection)
+        {
+            var fwd = Vector3.forward;
+            var dir = reference.InverseTransformDirection(targetDirection);
+            dir.y = 0;
+
+            var horizAngle = Vector3.Angle(fwd, dir) * (dir.x > 0 ? 1 : -1);
+
+            // These next steps remove the influence of the horizontal angle from the shared
+            // z-value. (The horizontal angle is derived via projection onto the xz-plane 
+            // while the vertical angle is derived via projection onto the yz-plane.  So the
+            // z-value contains shared information.) 
+
+            // This matix operation is equivalent to InvertTransformDirection.
+
+            var matrix = Matrix4x4.TRS(
+                Vector3.zero,
+                reference.rotation * Quaternion.Euler(new Vector3(0, horizAngle, 0)),
+                Vector3.one).inverse;
+
+            dir = matrix.MultiplyVector(targetDirection);
+            dir.x = 0;
+
+            var vertAngle = Vector3.Angle(fwd, dir) * (dir.y > 0 ? -1 : 1);
+
+            return new Vector2(horizAngle, vertAngle);
+        }
+
+        /// <summary>
         /// Applies the position to the transform based on the provided settings.
         /// </summary>
         /// <param name="transform">The transform to move.</param>
@@ -562,8 +638,7 @@ namespace com.lizitt.u3d
                 {
                     var original = trans.position;
 
-                    // Hack time!  Using transform to convert from local 
-                    // to world space.
+                    // Hack time!  Using transform to convert from local to world space.
                     trans.localPosition = position;
                     position = trans.position;
 
