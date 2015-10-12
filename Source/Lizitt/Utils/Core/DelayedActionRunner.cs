@@ -33,6 +33,81 @@ namespace com.lizitt.u3d
     /// </remarks>
     public class DelayedActionRunner
     {
+        #region Pooling
+
+        private static SimpleInfinitePool<DelayedActionRunner> m_Pool;
+
+        private static void CheckForPool(
+            int maxPoolSize = 50, int preloadCount = 0, int initCapacity = 10)
+        {
+            if (m_Pool == null)
+            {
+                m_Pool = new SimpleInfinitePool<DelayedActionRunner>(maxPoolSize,
+                    delegate() { return new DelayedActionRunner(); },
+                    delegate(DelayedActionRunner item) { item.Reset(null, 0); }, 
+                    preloadCount, initCapacity);
+            }
+        }
+
+        /// <summary>
+        /// Resets the pool with the specified configuration.
+        /// </summary>
+        /// <param name="maxPoolSize">
+        /// The maximum number of objects that can be stored in the pool. [Limit: >= 1]
+        /// </param>
+        /// <param name="preloadCount">
+        /// The number of objects that will be immediately instantiated and stored in the pool.
+        /// [Limit: 0 &lt;= value &lt= <paramref name="maxPoolSize"/>]
+        /// </param>
+        /// <param name="initPoolCapacity">
+        /// The initial capacity of the pool. 
+        /// [Limit: 0 &lt;= value &lt= <paramref name="maxPoolSize"/>]
+        public static void ResetPool(
+            int maxPoolSize = 50, int preloadCount = 0, int initCapacity = 10)
+        {
+            m_Pool = null;
+            CheckForPool(maxPoolSize, preloadCount, initCapacity);
+        }
+
+        /// <summary>
+        /// Gets a runner form the pool with the specified duration.
+        /// </summary>
+        /// <param name="action">The action to run after the specified delay. (May be null.)</param>
+        /// <param name="delay">
+        /// The number of seconds to wait before calling the action. [Limit: >=0]
+        /// </param>
+        /// <returns>A runner reference the pool or a new runner if the pool is empty.</returns>
+        public static DelayedActionRunner GetFromPool(System.Action action, float delay)
+        {
+            CheckForPool();
+
+            var result = m_Pool.GetPooledObject();
+            result.Reset(action, Mathf.Max(0, delay));  // Don't wan't accidental -1.
+
+            return result;
+        }
+
+        /// <summary>
+        /// Return a runner to the pool if there is room.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Important: All external references to the runner should be nulled.
+        /// </para>
+        /// </remarks>
+        /// <param name="item">The runner to return.</param>
+        /// <returns>
+        /// True if the pool had room for the runner.  
+        /// False if the runner was reset and released for garbage collection.
+        /// </returns>
+        public static bool ReturnToPool(DelayedActionRunner item)
+        {
+            CheckForPool();
+            return m_Pool.PoolObject(item);
+        }
+
+        #endregion
+
         private float m_Delay = 1;
         private float m_Time = 0;
 
