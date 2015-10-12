@@ -273,7 +273,8 @@ namespace com.lizitt.u3d.editor
         /// </summary>
         /// <typeparam name="T">The type of asse to create.</typeparam>
         /// <param name="atAsset">The asset where the new asset should be colocated.</param>
-        /// <param name="label">The asset label.</param>
+        /// <param name="name">The name of the asset or object's type name if null.</param>
+        /// <param name="label">The asset label to attach. (If applicable.)</param>
         /// <returns>The new asset.</returns>
         public static T CreateAsset<T>(ScriptableObject atAsset, string name,  string label) 
             where T : ScriptableObject
@@ -307,6 +308,7 @@ namespace com.lizitt.u3d.editor
         /// </para>
         /// </remarks>
         /// <typeparam name="T">The type of asse to create.</typeparam>
+        /// <param name="name">The name of the asset or object's type name if null.</param>
         /// <param name="label">The asset label.</param>
         /// <returns>The new asset.</returns>
         public static T CreateAsset<T>(string name, string label) 

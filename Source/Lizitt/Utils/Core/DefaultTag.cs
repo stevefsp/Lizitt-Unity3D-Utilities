@@ -27,12 +27,39 @@ namespace com.lizitt.u3d
     /// </summary>
     public static class DefaultTag
     {
+        /// <summary>
+        /// The default tag name representing player objects.
+        /// </summary>
         public const string Player = "Player";
+
+        /// <summary>
+        /// The tag name for the main camera.
+        /// </summary>
         public const string MainCamera = "MainCamera";
+
+        /// <summary>
+        /// The default tag name for untagged objected.
+        /// </summary>
         public const string Untagged = "Untagged";
+
+        /// <summary>
+        /// The default tag name for respawn objects.
+        /// </summary>
         public const string Respawn = "Respawn";
+
+        /// <summary>
+        /// The default tag name for finish objects.
+        /// </summary>
         public const string Finish = "Finish";
+
+        /// <summary>
+        /// The tag for objects that are not to be included in non-editor builds.
+        /// </summary>
         public const string EditorOnly = "EditorOnly";
+
+        /// <summary>
+        /// The default tag name for game controller objects.
+        /// </summary>
         public const string GameController = "GameController";
     }
 }

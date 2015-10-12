@@ -240,6 +240,23 @@ namespace com.lizitt.u3d.editor
 
         #endregion
 
+        /// <summary>
+        /// Draws a mask field for the specified enumeration.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Only call this method when it is valid to call EditorGUI methods.
+        /// </para>
+        /// </remarks>
+        /// <param name="position">The draw position.</param>
+        /// <param name="value">The current value of the mask field.</param>
+        /// <param name="enumTyp">The type of enum to display.</param>
+        /// <param name="label">The field label.</param>
+        /// <param name="sort">
+        /// True if the enum names should be sorted, otherwise use the default order provided
+        /// by the system.
+        /// </param>
+        /// <returns>The result of the mask field.</returns>
         public static int DrawEnumFlagsField(
             Rect position, int value, System.Type enumTyp, GUIContent label, bool sort)
         {

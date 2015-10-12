@@ -28,19 +28,44 @@ namespace com.lizitt.u3d
     /// </summary>
     /// <remarks>
     /// Must use UnityEngine.LayerMask for masking since layers are NOT flag values.  
-    /// The values are zero indexed based.  See the Tag & Layers inspector panel in the 
-    /// Unity editor.
+    /// The values are zero indexed based.  (See the Tag and Layers inspector panel in the 
+    /// Unity editor.)
     /// </remarks>
     public static class UnityLayer
     {
+        /// <summary>
+        /// The default layer. (See Unity documentation.)
+        /// </summary>
         public const int Default = 0;
+
+        /// <summary>
+        /// The transparent FX layer. (See Unity documentation.)
+        /// </summary>
         public const int TransparentFX = 1;
+
+        /// <summary>
+        /// The ignore raycast layer. (Same as Physics.IgnoreRaycastLayer)
+        /// </summary>
         public const int IgnoreRaycast = Physics.IgnoreRaycastLayer;
+
+        /// <summary>
+        /// The water layer. (See Unity documentation.)
+        /// </summary>
         public const int Water = 4;
+
+        /// <summary>
+        /// The UI layer. (See Unity documentation.)
+        /// </summary>
         public const int UI = 5;
 
+        /// <summary>
+        /// The default raycast layers.  (Same as Physics.DefaultRaycastLayers)
+        /// </summary>
         public const int DefaultRaycast = Physics.DefaultRaycastLayers;
 
+        /// <summary>
+        /// The value representing all layers.  (Same as Physics.AllLayers)
+        /// </summary>
         public const int All = Physics.AllLayers;
     }
 }
