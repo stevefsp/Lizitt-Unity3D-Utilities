@@ -24,7 +24,7 @@ using UnityEngine;
 namespace com.lizitt.u3d
 {
     /// <summary>
-    /// Settings related to a <see cref="ITrsInterpolator"/> that implements a continuous smooth 
+    /// Settings related to a <see cref="ITrsInterpolationHelper"/> that implements a continuous smooth 
     /// look at behavior.
     /// </summary>
     [System.Serializable]

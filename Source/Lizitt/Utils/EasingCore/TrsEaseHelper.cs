@@ -24,7 +24,7 @@ using UnityEngine;
 namespace com.lizitt.u3d
 {
     /// <summary>
-    /// Settings related to a <see cref="ITrsInterpolator"/> that uses the standard easing
+    /// Settings related to a <see cref="ITrsInterpolationHelper"/> that uses the standard easing
     /// functions.
     /// </summary>
     [System.Serializable]

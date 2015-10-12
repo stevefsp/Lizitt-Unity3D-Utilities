@@ -24,7 +24,7 @@ using UnityEngine;
 namespace com.lizitt.u3d
 {
     /// <summary>
-    /// Provides <see cref="ITrsInterpolator"/> features that uses Mathf.SmootStep for 
+    /// Provides <see cref="ITrsInterpolationHelper"/> features that uses Mathf.SmootStep for 
     /// interpolation.
     /// </summary>
     public abstract class TrsSmoothStepHelper
