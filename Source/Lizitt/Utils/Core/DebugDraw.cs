@@ -34,10 +34,9 @@ namespace com.lizitt.u3d
         private const float Epsilon = 0.001f;
 
         /// <summary>
-        /// Access only through the property.
+        /// Access only through the property.  (It provides an instantiation check.)
         /// </summary>
         private static float[] m_CircleSegmentsXZ;
-
         private static float[] CircleSegmentsXZ
         {
             get
@@ -58,7 +57,7 @@ namespace com.lizitt.u3d
         }
 
         /// <summary>
-        /// Access only through the property.
+        /// Access only through the property.  (It provides an instantiation check.)
         /// </summary>
         private static Material m_SimpleMaterial = null;
 
@@ -71,15 +70,27 @@ namespace com.lizitt.u3d
             {
                 if (!m_SimpleMaterial)
                 {
-                    m_SimpleMaterial = new Material(
-                        "Shader \"Lines/Colored Blended\" {"
-                        + "SubShader { Pass { "
-                        + "	BindChannels { Bind \"Color\",color } "
-                        + "	Blend SrcAlpha OneMinusSrcAlpha "
-                        + "	ZWrite Off Cull Off Fog { Mode Off } "
-                        + "} } }");
+                    // Not supported by Unity 5.2+
+                    //m_SimpleMaterial = new Material(
+                    //    "Shader \"Lines/Colored Blended\" {"
+                    //    + "SubShader { Pass { "
+                    //    + "	BindChannels { Bind \"Color\",color } "
+                    //    + "	Blend SrcAlpha OneMinusSrcAlpha "
+                    //    + "	ZWrite Off Cull Off Fog { Mode Off } "
+                    //    + "} } }");
+                    //m_SimpleMaterial.hideFlags = HideFlags.HideAndDontSave;
+                    //m_SimpleMaterial.shader.hideFlags = HideFlags.HideAndDontSave;
+
+                    var shader = Shader.Find("Hidden/Internal-Colored");
+                    m_SimpleMaterial = new Material(shader);
                     m_SimpleMaterial.hideFlags = HideFlags.HideAndDontSave;
-                    m_SimpleMaterial.shader.hideFlags = HideFlags.HideAndDontSave;
+                    // Turn on alpha blending
+                    m_SimpleMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                    m_SimpleMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                    // Turn backface culling off
+                    m_SimpleMaterial.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
+                    // Turn off depth writes
+                    m_SimpleMaterial.SetInt("_ZWrite", 0);
                 }
                 return m_SimpleMaterial;
             }
