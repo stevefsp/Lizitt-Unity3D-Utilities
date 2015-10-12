@@ -25,9 +25,10 @@ using System.Collections.Generic;
 namespace com.lizitt.u3d
 {
     /// <summary>
-    /// <see cref="SimplePool"/> related settings.
+    /// <see cref="SimplePool{T}"/> related settings.
     /// </summary>
     [System.Serializable]
+    [System.Obsolete("Use SimpleInfinitePoolParams and SimpleInfinitePool.")]
     public struct SimplePoolParams
     {
         /// <summary>
@@ -82,6 +83,7 @@ namespace com.lizitt.u3d
     /// A simple object pool.
     /// </summary>
     /// <typeparam name="T">The type of objects in the pool.</typeparam>
+    [System.Obsolete("Use SimpleInfinitePool.")]
     public class SimplePool<T>
         where T : class
     {
