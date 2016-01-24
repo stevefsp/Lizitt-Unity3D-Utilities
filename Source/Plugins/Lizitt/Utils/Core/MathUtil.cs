@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-namespace com.lizitt.u3d
+namespace com.lizitt
 {
     /// <summary>
     /// Provides various math related constants and utility features.

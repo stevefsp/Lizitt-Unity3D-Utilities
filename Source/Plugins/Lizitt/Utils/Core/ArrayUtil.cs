@@ -21,7 +21,7 @@
  */
 using System.Collections.Generic;
 
-namespace com.lizitt.u3d
+namespace com.lizitt
 {
     /// <summary>
     /// Provides array related utility methods.

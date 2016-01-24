@@ -22,7 +22,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace com.lizitt.u3d.editor
+namespace com.lizitt.editor
 {
     /// <summary>
     /// Provides general purpose GUI utility functions for the Unity Editor.

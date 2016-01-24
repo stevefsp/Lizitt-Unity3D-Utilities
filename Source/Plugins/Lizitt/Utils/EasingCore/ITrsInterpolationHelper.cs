@@ -21,7 +21,7 @@
  */
 using UnityEngine;
 
-namespace com.lizitt.u3d
+namespace com.lizitt
 {
     /// <summary>
     /// Provides an interface for Transform-based translate/rotate/scale interpolators.

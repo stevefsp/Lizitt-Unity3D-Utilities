@@ -21,7 +21,7 @@
  */
 using UnityEngine;
 
-namespace com.lizitt.u3d
+namespace com.lizitt
 {
     /// <summary>
     /// Provides various GL-based drawing methods suitable for debug views.

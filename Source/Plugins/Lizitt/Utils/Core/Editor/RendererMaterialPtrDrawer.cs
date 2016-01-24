@@ -1,9 +1,8 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using com.lizitt.u3d;
 using System.Collections.Generic;
 
-namespace com.lizitt.u3d.editor
+namespace com.lizitt.editor
 {
     [CustomPropertyDrawer(typeof(RendererMaterialPtrAttribute))]
     public class RendererMaterialPtrDrawer

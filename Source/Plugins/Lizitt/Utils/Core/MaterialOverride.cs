@@ -21,7 +21,7 @@
  */
 using UnityEngine;
 
-namespace com.lizitt.u3d
+namespace com.lizitt
 {
     /// <summary>
     /// Represents a material override for a particular renderer's material index.

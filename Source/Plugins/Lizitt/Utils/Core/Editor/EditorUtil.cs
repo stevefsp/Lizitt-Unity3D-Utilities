@@ -24,7 +24,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace com.lizitt.u3d.editor
+namespace com.lizitt.editor
 {
     /// <summary>
     /// Provides general purpose utility functions for the Unity Editor.

@@ -21,7 +21,7 @@
  */
 using UnityEngine;
 
-namespace com.lizitt.u3d
+namespace com.lizitt
 {
     /// <summary>
     /// Sets the target GameObject's active state on start, then Destroys itself.

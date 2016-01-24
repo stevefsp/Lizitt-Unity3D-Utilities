@@ -22,7 +22,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace com.lizitt.u3d
+namespace com.lizitt
 {
     /// <summary>
     /// <see cref="SimplePool{T}"/> related settings.

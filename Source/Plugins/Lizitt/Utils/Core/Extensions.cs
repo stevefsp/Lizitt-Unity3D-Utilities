@@ -23,7 +23,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace com.lizitt.u3d
+namespace com.lizitt
 {
     /// <summary>
     /// Provides a variety of extension methods.

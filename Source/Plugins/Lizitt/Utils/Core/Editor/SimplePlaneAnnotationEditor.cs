@@ -22,7 +22,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace com.lizitt.u3d.editor
+namespace com.lizitt.editor
 {
     public static class SimplePlaneAnnotationEditor
     {

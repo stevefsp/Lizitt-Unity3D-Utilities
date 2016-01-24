@@ -22,7 +22,7 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace com.lizitt.u3d
+namespace com.lizitt
 {
     /// <summary>
     /// A Transform-based translate/rotate/scale interpolator.

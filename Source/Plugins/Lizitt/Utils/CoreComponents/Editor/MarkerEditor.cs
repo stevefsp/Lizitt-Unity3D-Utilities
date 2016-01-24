@@ -21,7 +21,7 @@
  */
 using UnityEditor;
 
-namespace com.lizitt.u3d.editor
+namespace com.lizitt.editor
 {
     /// <summary>
     /// Providers marker features for the editor.

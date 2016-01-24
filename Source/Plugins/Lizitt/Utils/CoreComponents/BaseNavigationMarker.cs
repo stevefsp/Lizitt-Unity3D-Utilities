@@ -22,7 +22,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace com.lizitt.u3d
+namespace com.lizitt
 {
     /// <summary>
     /// The base class for marker's that include rotation information.

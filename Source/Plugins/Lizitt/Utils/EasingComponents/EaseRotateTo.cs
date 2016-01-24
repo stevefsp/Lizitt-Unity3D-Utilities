@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace com.lizitt.u3d
+namespace com.lizitt
 {
     /// <summary>
     /// Interpolates a transform's euler angles using a standard easing function.

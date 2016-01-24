@@ -22,7 +22,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace com.lizitt.u3d
+namespace com.lizitt
 {
     /// <summary>
     /// Automatically destroys the target after the specified number of seconds.

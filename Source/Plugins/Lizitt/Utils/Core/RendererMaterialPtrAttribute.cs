@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace com.lizitt.u3d
+namespace com.lizitt
 {
     /// <summary>
     /// Provides user friendly dropdown selections for renderers on/under the object the

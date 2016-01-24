@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-namespace com.lizitt.u3d
+namespace com.lizitt
 {
     /// <summary>
     /// The string values for the default Unity tags.

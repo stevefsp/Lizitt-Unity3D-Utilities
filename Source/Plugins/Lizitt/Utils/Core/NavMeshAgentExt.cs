@@ -23,7 +23,7 @@ using UnityEngine;
 
 // TODO: This class needs more thorough testing.
 
-namespace com.lizitt.u3d
+namespace com.lizitt
 {
     /// <summary>
     /// Provides NavMeshAgent extension methods.

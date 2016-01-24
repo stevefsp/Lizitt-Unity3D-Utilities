@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  * 
  */
-namespace com.lizitt.u3d
+namespace com.lizitt
 {
     /// <summary>
     /// Represents various easing types/agorithms.

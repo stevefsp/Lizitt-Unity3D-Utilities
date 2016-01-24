@@ -21,7 +21,7 @@
  */
 using UnityEngine;
 
-namespace com.lizitt.u3d
+namespace com.lizitt
 {    
     /// <summary>
     /// An interpolator that continuously and smoothly interpolates a transform to match another

@@ -21,7 +21,7 @@
  */
 using UnityEngine;
 
-namespace com.lizitt.u3d
+namespace com.lizitt
 {
     /// <summary>
     /// Settings related to a <see cref="ITrsInterpolationHelper"/> that uses the standard easing

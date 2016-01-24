@@ -21,7 +21,7 @@
  */
 using System;
 
-namespace com.lizitt.u3d
+namespace com.lizitt
 {
     /// <summary>
     /// Provides various time related features.
