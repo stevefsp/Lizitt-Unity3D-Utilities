@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2011-2015 Stephen A. Pratt
+ * Copyright (c) 2011-2016 Stephen A. Pratt
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -70,17 +70,6 @@ namespace com.lizitt
             {
                 if (!m_SimpleMaterial)
                 {
-                    // Not supported by Unity 5.2+
-                    //m_SimpleMaterial = new Material(
-                    //    "Shader \"Lines/Colored Blended\" {"
-                    //    + "SubShader { Pass { "
-                    //    + "	BindChannels { Bind \"Color\",color } "
-                    //    + "	Blend SrcAlpha OneMinusSrcAlpha "
-                    //    + "	ZWrite Off Cull Off Fog { Mode Off } "
-                    //    + "} } }");
-                    //m_SimpleMaterial.hideFlags = HideFlags.HideAndDontSave;
-                    //m_SimpleMaterial.shader.hideFlags = HideFlags.HideAndDontSave;
-
                     var shader = Shader.Find("Hidden/Internal-Colored");
                     m_SimpleMaterial = new Material(shader);
                     m_SimpleMaterial.hideFlags = HideFlags.HideAndDontSave;

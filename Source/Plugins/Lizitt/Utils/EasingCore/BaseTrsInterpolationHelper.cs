@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2015 Stephen A. Pratt
+ * Copyright (c) 2015-2016 Stephen A. Pratt
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -482,8 +482,7 @@ namespace com.lizitt
                 {
                     var original = ItemToTransform.rotation;
 
-                    // Hack time!  Using transform to convert from local 
-                    // to world space.
+                    // HACK: Using transform to convert from local to world space.
                     ItemToTransform.localRotation = rotation;
                     InterpolatedValue = ItemToTransform.eulerAngles;
                     rotation = Quaternion.Euler(InterpolatedValue);

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2015 Stephen A. Pratt
+ * Copyright (c) 2015-2016 Stephen A. Pratt
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -57,11 +57,11 @@ namespace com.lizitt
         /// </param>
         /// <param name="preloadCount">
         /// The number of objects that will be immediately instantiated and stored in the pool.
-        /// [Limit: 0 &lt;= value &lt= <paramref name="maxPoolSize"/>]
+        /// [Limit: 0 &lt;= value &lt;= <paramref name="maxPoolSize"/>]
         /// </param>
         /// <param name="initPoolCapacity">
         /// The initial capacity of the pool. 
-        /// [Limit: 0 &lt;= value &lt= <paramref name="maxPoolSize"/>]
+        /// [Limit: 0 &lt;= value &lt;= <paramref name="maxPoolSize"/>]
         public static void ResetPool(
             int maxPoolSize = 50, int preloadCount = 0, int initCapacity = 10)
         {
@@ -76,7 +76,7 @@ namespace com.lizitt
         /// <param name="delay">
         /// The number of seconds to wait before calling the action. [Limit: >=0]
         /// </param>
-        /// <returns>A runner reference the pool or a new runner if the pool is empty.</returns>
+        /// <returns>A runner from the pool or a new runner if the pool is empty.</returns>
         public static DelayedActionRunner GetFromPool(System.Action action, float delay)
         {
             CheckForPool();

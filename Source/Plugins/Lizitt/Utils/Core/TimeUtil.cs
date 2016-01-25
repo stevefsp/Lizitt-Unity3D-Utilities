@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2015 Stephen A. Pratt
+ * Copyright (c) 2010-2016 Stephen A. Pratt
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-using System;
-
 namespace com.lizitt
 {
     /// <summary>
@@ -55,7 +53,7 @@ namespace com.lizitt
         /// <returns>The number of milliseconds since the start tick.</returns>
         public static int GetNowDeltaMS(long start)
         {
-            return (int)((DateTime.Now.Ticks - start) * TicksToMS);
+            return (int)((System.DateTime.Now.Ticks - start) * TicksToMS);
         }
 
         /// <summary>
@@ -65,7 +63,7 @@ namespace com.lizitt
         /// <returns>The number of seconds since the start tick.</returns>
         public static int GetNowDeltaSec(long start)
         {
-            return (int)((DateTime.Now.Ticks - start) * TicksToSec);
+            return (int)((System.DateTime.Now.Ticks - start) * TicksToSec);
         }
     }
 }
