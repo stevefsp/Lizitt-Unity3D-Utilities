@@ -24,55 +24,53 @@ using UnityEngine;
 namespace com.lizitt
 {
     /// <summary>
-    /// Provides user friendly GUI element for <see cref="RendererMaterialPtr"/> fields.
+    /// Display the <see cref="MaterialOverrides"/> field as a user friendly reorderable list.
     /// </summary>
-    public class RendererMaterialPtrAttribute
+    /// <remarks>
+    /// <para>
+    /// This attribute is only compatible with non-array <see cref="MaterialOverrides"/> fields.
+    /// E.g. It can't be used with an array of <see cref="MaterialOverrides"/> objects.
+    /// </para>
+    /// </remarks>
+    public class MaterialOverridesAttribute
         : PropertyAttribute
     {
         /// <summary>
-        /// Require all renders to be local to the field's reference object.
-        /// </summary>
-        public bool RequireLocal { get; private set; }
-
-        /// <summary>
-        /// The property search path to use to locate the reference object for local searches.
-        /// (Only applicable if <see cref="RequireLocal"/> is true.)
+        /// The path of the object reference property that contains the target for local searches.
+        /// (Optional)
         /// </summary>
         /// <remarks>
         /// <para>
-        /// The path must be relative to the field's target object.  This is the root Unity object
-        /// the field is attached to.
+        /// Only applicable if <see cref="LocalOnly"/> is true.  If null, the fields target
+        /// object is used.
         /// </para>
         /// <para>
-        /// If null, the field's target object will be searched for renderers.  If non-null the
-        /// path must refer to an object reference field that references a <c>GameObject</c>
-        /// or <c>Component</c>.
+        /// The path must be non-relative.  I.e. From the root of the field's taret object.
         /// </para>
         /// </remarks>
-        public string SearchPropertyPath { get; private set; }
+        public string SearchPropertyPath { get; set; }
 
         /// <summary>
-        /// Constructor.
+        /// If true, then only permit selection of local components.  (E.g. Components on or 
+        /// under the search target.)  Otherwise allow any renderer to be assigned.
         /// </summary>
-        public RendererMaterialPtrAttribute()
-        {
-            RequireLocal = false;
-        }
+        public bool LocalOnly { get; set; }
 
         /// <summary>
-        /// Constructor to restrict selection to only local renderer's.
+        /// Constructor
         /// </summary>
-        /// <remarks>
-        /// See <see cref="SearchPropertyPath"/> for information on the search path.
-        /// </remarks>
         /// <param name="searchPropertyPath">
-        /// The property search path to use to locate the reference object for local searches, 
-        /// or null to use the field's target object.
+        /// The path of the object reference property that contains the target for local searches.
+        /// (If applicable.)
         /// </param>
-        public RendererMaterialPtrAttribute(string searchPropertyPath)
+        /// <param name="localOnly">
+        /// If true, then only permit selection of local components.  (E.g. Components on or 
+        /// under the search target.)  Otherwise allow any renderer to be assigned.
+        /// </param>
+        public MaterialOverridesAttribute(string searchPropertyPath = null, bool localOnly = false)
         {
             SearchPropertyPath = searchPropertyPath;
-            RequireLocal = true;
+            LocalOnly = localOnly;
         }
     }
 }

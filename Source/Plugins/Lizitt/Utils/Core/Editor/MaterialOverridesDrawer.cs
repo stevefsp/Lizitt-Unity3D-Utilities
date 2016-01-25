@@ -1,6 +1,5 @@
-﻿
-/*
- * Copyright (c) 2015-2016 Stephen A. Pratt
+﻿/*
+ * Copyright (c) 2016 Stephen A. Pratt
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,38 +25,45 @@ using UnityEngine;
 namespace com.lizitt.editor
 {
     /// <summary>
-    /// Draws the GUI element for <see cref="RendererMaterialPtr"/> fields with
-    /// <see cref="RendererMaterialPtrAttribute"/> applied.
+    /// The GUI element for fields marked with <see cref="MaterialOverridesAttribute"/>.
     /// </summary>
-    [CustomPropertyDrawer(typeof(RendererMaterialPtrAttribute))]
-    public class RendererMaterialPtrDrawer
+    [CustomPropertyDrawer(typeof(MaterialOverridesAttribute))]
+    public class MaterialOverridesDrawer
         : PropertyDrawer
     {
-        private RendererMaterialPtrControl m_GuiControl;
+        private const string ItemPropName = "m_Items";
 
+        private MaterialOverrideListComponent m_List;
+
+        /// <summary>
+        /// See Unity documentation.
+        /// </summary>
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            CheckInitialized();
-
-            return m_GuiControl.GetPropertyHeight(property, label);
+            CheckInitialized(property);
+            return m_List.GetPropertyHeight(property.FindPropertyRelative(ItemPropName));
         }
 
+        /// <summary>
+        /// See Unity documentation.
+        /// </summary>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            CheckInitialized();
-
-            m_GuiControl.OnGUI(position, property, label);
+            CheckInitialized(property);
+            m_List.OnGUI(position, property.FindPropertyRelative(ItemPropName), label);
         }
 
-        private void CheckInitialized()
+        private void CheckInitialized(SerializedProperty property)
         {
-            if (m_GuiControl == null)
+            if (m_List == null)
             {
-                var attr = attribute as RendererMaterialPtrAttribute;
+                var attr = attribute as MaterialOverridesAttribute;
 
-                m_GuiControl = attr.RequireLocal
-                    ? new RendererMaterialPtrControl(attr.SearchPropertyPath)
-                    : new RendererMaterialPtrControl();
+                property = property.FindPropertyRelative(ItemPropName);
+                if (attr.LocalOnly)
+                    m_List = new MaterialOverrideListComponent(property, attr.SearchPropertyPath);
+                else
+                    m_List = new MaterialOverrideListComponent(property);
             }
         }
     }
