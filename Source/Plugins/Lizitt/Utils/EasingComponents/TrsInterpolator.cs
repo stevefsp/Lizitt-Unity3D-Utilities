@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2015 Stephen A. Pratt
+ * Copyright (c) 2015-2016 Stephen A. Pratt
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,6 @@
  * THE SOFTWARE.
  */
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace com.lizitt
 {
@@ -33,7 +32,7 @@ namespace com.lizitt
         [SerializeField]
         [Tooltip("If true, the component will start playing at component start.  Otherwise"
             + " the Play method must be used to start interpolation.")]
-        [FormerlySerializedAs("m_AutoStart")]
+        [UnityEngine.Serialization.FormerlySerializedAs("m_AutoStart")]
         private bool m_AutoPlay = false;
 
         [SerializeField]
