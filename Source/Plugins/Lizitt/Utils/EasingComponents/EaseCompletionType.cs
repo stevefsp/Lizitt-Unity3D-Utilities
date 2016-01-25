@@ -37,7 +37,7 @@ namespace com.lizitt
         ContinueUpdating,
 
         /// <summary>
-        /// Destory the script on completion.  (Destory self)
+        /// Destroy the script on completion.  (Destroy self)
         /// </summary>
         DestroyScript,
     }

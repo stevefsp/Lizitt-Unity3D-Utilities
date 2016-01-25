@@ -31,7 +31,7 @@ namespace com.lizitt
         /*
          * Design Notes:
          * 
-         * The animator extentions tend to be strict.  By default they either make the changes 
+         * The animator extensions tend to be strict.  By default they either make the changes 
          * safely and completely, or they don't make any at all.  This is because a bad change can
          * result in hard to predict behavior.  For example, sync'ing a state while a source layer
          * is in transition might result in the target animator getting stuck in a state because a 

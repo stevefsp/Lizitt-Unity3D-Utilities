@@ -35,7 +35,7 @@ namespace com.lizitt
         private GameObject m_Target;
 
         [SerializeField]
-        [Tooltip("The number of seconds to wait before destorying the target. [Limit: >= 0]")]
+        [Tooltip("The number of seconds to wait before destroying the target. [Limit: >= 0]")]
         [ClampMinimum(0)]
         private float m_Delay = 1f;
 
@@ -49,7 +49,7 @@ namespace com.lizitt
         }
 
         /// <summary>
-        /// The number of seconds to wait before destorying the target. [Limit: >= 0]
+        /// The number of seconds to wait before destroying the target. [Limit: >= 0]
         /// </summary>
         public float Delay
         {
