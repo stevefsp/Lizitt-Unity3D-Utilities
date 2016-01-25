@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2013-2015 Stephen A. Pratt
+ * Copyright (c) 2013-2016 Stephen A. Pratt
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,16 +19,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using System.Linq;
 
 namespace com.lizitt.editor
 {
+    /*
+     * Keep simple attribute drawers here.  If a drawer gets to complex, then move it to its 
+     * own source file.
+     */
+
+    /// <summary>
+    /// Draws fields marked with the <see cref="ClampAttribute"/>.
+    /// </summary>
     [CustomPropertyDrawer(typeof(ClampAttribute))]
     [CanEditMultipleObjects]
     public sealed class ClampDrawer
         : PropertyDrawer
     {
+        /// <summary>
+        /// See Unity documentation.
+        /// </summary>
+        /// <param name="position">See Unity documentation.</param>
+        /// <param name="property">See Unity documentation.</param>
+        /// <param name="label">See Unity documentation.</param>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             if (property.isArray)
@@ -62,11 +78,20 @@ namespace com.lizitt.editor
         }
     }
 
+    /// <summary>
+    /// Draws fields marked with the <see cref="ClampMinimumAttribute"/>.
+    /// </summary>
     [CustomPropertyDrawer(typeof(ClampMinimumAttribute))]
     [CanEditMultipleObjects]
     public sealed class ClampMinimumDrawer
         : PropertyDrawer
     {
+        /// <summary>
+        /// See Unity documentation.
+        /// </summary>
+        /// <param name="position">See Unity documentation.</param>
+        /// <param name="property">See Unity documentation.</param>
+        /// <param name="label">See Unity documentation.</param>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             if (property.isArray)
@@ -100,10 +125,20 @@ namespace com.lizitt.editor
         }
     }
 
+
+    /// <summary>
+    /// Draws fields marked with the <see cref="EnumFlagsAttribute"/>.
+    /// </summary>
     [CustomPropertyDrawer(typeof(EnumFlagsAttribute))]
     public class EnumFlagsAttributeDrawer 
         : PropertyDrawer
     {
+        /// <summary>
+        /// See Unity documentation.
+        /// </summary>
+        /// <param name="position">See Unity documentation.</param>
+        /// <param name="property">See Unity documentation.</param>
+        /// <param name="label">See Unity documentation.</param>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             var attr = attribute as EnumFlagsAttribute;
@@ -123,14 +158,23 @@ namespace com.lizitt.editor
         }
     }
 
+    /// <summary>
+    /// Draws fields marked with the <see cref="UnityLayerAttribute"/>.
+    /// </summary>
     [CustomPropertyDrawer(typeof(UnityLayerAttribute))]
     public class UnityLayerAttributeDrawer 
         : PropertyDrawer
     {
+        /// <summary>
+        /// See Unity documentation.
+        /// </summary>
+        /// <param name="position">See Unity documentation.</param>
+        /// <param name="property">See Unity documentation.</param>
+        /// <param name="label">See Unity documentation.</param>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             label = EditorGUI.BeginProperty(position, label, property);
-            label.text = label.text + " (" + property.intValue + ")";
+            //label.text = label.text + " (" + property.intValue + ")";  // Just doesn't look good.
 
             EditorGUI.BeginChangeCheck();
 
@@ -140,6 +184,166 @@ namespace com.lizitt.editor
 
             if (EditorGUI.EndChangeCheck())
                 property.intValue = val;
+
+            EditorGUI.EndProperty();
+        }
+    }
+
+
+    /// <summary>
+    /// Draws fields marked with the <see cref="RequiredValueAttribute"/>.
+    /// </summary>
+    [CustomPropertyDrawer(typeof(RequiredValueAttribute))]
+    public class RequiredValueAttributeDrawer
+        : PropertyDrawer
+    {
+        /// <summary>
+        /// See Unity documentation.
+        /// </summary>
+        /// <param name="position">See Unity documentation.</param>
+        /// <param name="property">See Unity documentation.</param>
+        /// <param name="label">See Unity documentation.</param>
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            label = EditorGUI.BeginProperty(position, label, property);
+            label.tooltip = label.tooltip + " (Required)";
+
+            switch (property.propertyType)
+            {
+                case SerializedPropertyType.Float:
+
+                    OnGUIFloat(position, property, label);
+                    break;
+
+                case SerializedPropertyType.Integer:
+
+                    OnGUIInteger(position, property, label);
+                    break;
+
+                case SerializedPropertyType.ObjectReference:
+
+                    OnGUIObject(position, property, label);
+                    break;
+
+                case SerializedPropertyType.String:
+
+                    OnGuiString(position, property, label);
+                    break;
+
+                default:
+
+                    EditorGUI.PropertyField(position, property, label, true);
+                    break;
+            }
+
+            EditorGUI.EndProperty();
+        }
+
+        private void OnGuiString(Rect position, SerializedProperty property, GUIContent label)
+        {
+            // Can't do this.  It can result in the GUI field loosing focus unexpectedly.
+            //if (property.stringValue.Trim().Length > 0)
+            //{
+            //    EditorGUI.PropertyField(position, property, label);
+            //    return;
+            //}
+
+            var style = property.stringValue.Trim().Length == 0
+                ? EditorGUIUtil.RedLabel
+                : EditorStyles.label;
+
+            var rect =
+                new Rect(position.x, position.y, EditorGUIUtility.labelWidth, position.height);
+
+            EditorGUI.LabelField(rect, label, style);
+
+            rect =
+                new Rect(rect.xMax + 5, rect.y, position.width - rect.width - 5, position.height);
+
+            EditorGUI.BeginChangeCheck();
+
+            var val = EditorGUI.TextField(rect, GUIContent.none, property.stringValue);
+
+            if (EditorGUI.EndChangeCheck())
+                property.stringValue = val;
+        }
+
+        private void OnGUIInteger(Rect position, SerializedProperty property, GUIContent label)
+        {
+            EditorGUI.BeginChangeCheck();
+
+            var style = property.intValue == 0 ? EditorGUIUtil.RedLabel : EditorStyles.numberField;
+            var val = EditorGUI.IntField(position, label, property.intValue, style);
+
+            if (EditorGUI.EndChangeCheck())
+                property.intValue = val;
+        }
+
+        private void OnGUIFloat(Rect position, SerializedProperty property, GUIContent label)
+        {
+            EditorGUI.BeginChangeCheck();
+
+            var style = property.floatValue == 0 ? EditorGUIUtil.RedLabel : EditorStyles.numberField;
+
+            var val = EditorGUI.FloatField(position, label, property.floatValue, style);
+
+            if (EditorGUI.EndChangeCheck())
+                property.floatValue = val;
+        }
+
+        private void OnGUIObject(Rect position, SerializedProperty property, GUIContent label)
+        {
+            var attr = attribute as RequiredValueAttribute;
+
+            if (attr.ReferenceType == null || property.objectReferenceValue)
+            {
+                EditorGUI.PropertyField(position, property, label);
+                return;
+            }
+
+            var rect = 
+                new Rect(position.x, position.y, EditorGUIUtility.labelWidth, position.height);
+
+            EditorGUI.LabelField(rect, label, EditorGUIUtil.RedLabel);
+
+            rect =
+                new Rect(rect.xMax + 5, rect.y, position.width - rect.width - 5, position.height);
+
+            EditorGUI.BeginChangeCheck();
+
+            var val = EditorGUI.ObjectField(rect, GUIContent.none, 
+                property.objectReferenceValue, attr.ReferenceType, attr.AllowSceneObjects);
+
+            if (EditorGUI.EndChangeCheck())
+                property.objectReferenceValue = val;
+        }
+    }
+
+
+    /// <summary>
+    /// Draws fields marked with the <see cref="LocalComponentPopupAttribute"/>.
+    /// </summary>
+    [CustomPropertyDrawer(typeof(LocalComponentPopupAttribute))]
+    public class LocalComponentPopupDrawer
+        : PropertyDrawer
+    {
+        LocalComponentPopup m_GuiElement;
+
+        /// <summary>
+        /// See Unity documentation.
+        /// </summary>
+        /// <param name="position">See Unity documentation.</param>
+        /// <param name="property">See Unity documentation.</param>
+        /// <param name="label">See Unity documentation.</param>
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            var attr = (LocalComponentPopupAttribute)attribute;
+
+            if (m_GuiElement == null)
+                m_GuiElement = new LocalComponentPopup(attr.ComponentType, attr.Required);
+
+            m_GuiElement.OnGUI(position, property, label, 
+                EditorGUIUtil.GetReferenceObject(property, attr.SearchPropertyPath, false));
         }
     }
 }

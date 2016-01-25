@@ -187,4 +187,55 @@ namespace com.lizitt
         : PropertyAttribute
     {
     }
+
+    public class RequiredValueAttribute
+        : PropertyAttribute
+    {
+        public System.Type ReferenceType { get; set; }
+        public bool AllowSceneObjects { get; set; }
+
+        public RequiredValueAttribute(
+            System.Type referenceType = null, bool allowSceneObjects = false)
+        {
+            ReferenceType = referenceType;
+            AllowSceneObjects = allowSceneObjects;
+        }
+    }
+
+    /// <summary>
+    /// Display a dropdown containing a list of components attached to the current GameObject or
+    /// any of its children.  (Used to limit assignment to only local components.)
+    /// </summary>
+    public class LocalComponentPopupAttribute
+        : PropertyAttribute
+    {
+        /// <summary>
+        /// The property's component type.  (Used for the local component search.)
+        /// </summary>
+        public System.Type ComponentType { get; set; }
+
+        /// <summary>
+        /// If true, only a non-null property value is valid.
+        /// </summary>
+        public bool Required { get; set; }
+
+        public string SearchPropertyPath { get; set; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="componentType">
+        /// The property's component type.  (Used for the local component search. E.g. Animator)
+        /// </param>
+        /// <param name="required">
+        /// If true, only a non-null property value is valid.  Otherwise null is permitted.
+        /// </param>
+        public LocalComponentPopupAttribute(
+            System.Type componentType, bool required = false, string searchPropertyPath = null)
+        {
+            ComponentType = componentType;
+            Required = required;
+            SearchPropertyPath = searchPropertyPath;
+        }
+    }
 }
