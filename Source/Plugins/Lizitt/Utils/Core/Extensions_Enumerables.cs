@@ -112,7 +112,7 @@ namespace com.lizitt
         /// A new array if compression was needed, or the original array if no compression
         /// was needed.
         /// </returns>
-        public static T[] Compress<T>(this T[] items)
+        public static T[] GetCompressed<T>(this T[] items)
             where T : class
         {
             if (items == null)
@@ -166,6 +166,108 @@ namespace com.lizitt
                 if (!items[i])
                     items.RemoveAt(i);
             }
+        }
+
+        #endregion
+
+        #region Add New Items
+
+        /// <summary>
+        /// Compress the taget array and add non-dulplicate new elements to the end of the array.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// All null and destroyed elements will be removed from the target array.  All non-null, 
+        /// non-destroyed elements that don't already exist in the target array will be added to 
+        /// the end of the array.
+        /// </para>
+        /// <para>
+        /// This method is optimizited to minimize allocations, properly detect destroyed
+        /// Unity Objects, and maintain the order of the target array.  It is especially useful 
+        /// for refreshing component lists. E.g. Perform a component search then add 
+        /// only the newly found components to an existing component list, without disrupting 
+        /// the order.
+        /// </para>
+        /// <para>
+        /// This method does not attempt to detect duplicates in the target array.  Only
+        /// potential new items are checked.
+        /// </para>
+        /// <para>
+        /// Setting <paramref name="destructive"/> to true will potentially save an allocation
+        /// at the cost of altering the content of the <paramref name="from"/> array by
+        /// setting duplicate elements to null.
+        /// </para>
+        /// </remarks>
+        /// <typeparam name="T">The array element type.</typeparam>
+        /// <param name="to">The array to compress and add new items to.</param>
+        /// <param name="destructive">
+        /// If true, all elements in the <paramref name="from"/> array that are duplicates 
+        /// of an element in the target array will be set to null.  Otherwise a copy of 
+        /// <paramref name="from"/> will be used to detect duplicates.
+        /// </param>
+        /// <param name="from">An array of the potential items to add to the target array.</param>
+        /// <returns>
+        /// A reference to the <paramref name="to"/> array if no changes were required,
+        /// otherwise a reference to a new array.</returns>
+        public static T[] CompressAndAddDistinct<T>(
+            this T[] to, bool destructive, params T[] from)
+            where T : class
+        {
+            if (from == null || from.Length == 0)
+                return to.GetCompressed();
+            
+            var ncount = 0;  // New count.
+            for (int i = 0; i < from.Length; i++)
+            {
+                if (from[i] == null || from[i].IsUnityNull())
+                {
+                    // Need this check before Contains()
+                    continue;
+                }
+                else if (to.Contains(from[i]))
+                {
+                    if (!destructive)
+                    {
+                        destructive = true;
+                        from = (T[])from.Clone();
+                    }
+
+                    from[i] = null;
+                }
+                else
+                    ncount++;
+            }
+
+            if (ncount == 0)
+                return to.GetCompressed();
+
+            int ecount = 0;  // Existing count.
+            for (int i = 0; i < to.Length; i++)
+            {
+                if (!(to[i] == null || to[i].IsUnityNull()))
+                    ecount++;
+            }
+
+            var nitems = new T[ecount + ncount];
+
+            var j = 0;
+
+            if (ecount > 0)
+            {
+                for (int i = 0; i < to.Length; i++)
+                {
+                    if (!(to[i] == null || to[i].IsUnityNull()))
+                        nitems[j++] = to[i];
+                }
+            }
+
+            for (int i = 0; i < from.Length; i++)
+            {
+                if (!(from[i] == null || from[i].IsUnityNull())) // Dups were set to null.
+                    nitems[j++] = from[i];
+            }
+
+            return nitems;
         }
 
         #endregion
