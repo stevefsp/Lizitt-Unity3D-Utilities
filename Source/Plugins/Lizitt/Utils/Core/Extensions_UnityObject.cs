@@ -72,5 +72,76 @@ namespace com.lizitt
         {
             obj.name = obj.name.Replace(CloneSuffix, value);
         }
+
+        /// <summary>
+        /// Destroys the object in the correct way depending on whether or not the application
+        /// is playing.
+        /// </summary>
+        /// <param name="obj">The object to destroy.</param>
+        public static void SafeDestroy(this Object obj)
+        {
+            if (Application.isPlaying)
+                GameObject.Destroy(obj);
+            else
+                GameObject.DestroyImmediate(obj);
+        }
+
+        /// <summary>
+        /// Returns true if the object is null or is a destoryed Unity Object.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// A common way of null checking a Unity Object is using a boolean check.
+        /// (E.g. <c>myUnityObject == true</c>)  Such a check is helpful since it takes into
+        /// account the possible destruction of a Unity Object.  This method
+        /// will check a non-null reference to see if it is a Unity Object and perform the
+        /// destruction check.
+        /// </para>
+        /// </remarks>
+        /// <param name="obj">The object to check.</param>
+        /// <returns>
+        /// True if the object is null or is a destoryed Unity Object.
+        /// </returns>
+        public static bool IsUnityNull(this System.Object obj)
+        {
+            if (obj != null)
+            {
+                if (obj is Object)
+                    return !(obj as Object);
+
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Returns true if the object both non-null and non-destroyed.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// A common way of null checking a Unity Object is using a boolean check.
+        /// (E.g. <c>myUnityObject == true</c>)  Such a check is helpful since it takes into
+        /// account the possible destruction of a Unity Object.  This method
+        /// will check a non-null reference to see if it is a Unity Object and perform the
+        /// destruction check.
+        /// </para>
+        /// </remarks>
+        /// <param name="obj">The object to check.</param>
+        /// <returns>
+        /// True if the object both non-null and non-destroyed.
+        /// </returns>
+        public static bool IsNotUnityNull(this System.Object obj)
+        {
+            if (obj != null)
+            {
+                if (obj is Object)
+                    return (obj as Object);
+
+                return true;
+            }
+
+            return false;
+        }
     }
 }
