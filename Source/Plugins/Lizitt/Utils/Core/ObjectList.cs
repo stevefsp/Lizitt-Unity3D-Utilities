@@ -59,15 +59,16 @@ namespace com.lizitt
         }
 
         /// <summary>
-        /// The current size of the object buffer.
+        /// The number of observers.
         /// </summary>
         /// <remarks>
         /// <para>
         /// Because Unity objects can be destroyed, objects added to this list may become
-        /// null after they are added.
+        /// null after they are added.  So this value can only be guarenteed after 
+        /// <see cref="PurgeNulls"/> is run.
         /// </para>
         /// </remarks>
-        public int BufferSize
+        public int Count
         {
             get { return m_Items.Count; }
         }
@@ -76,7 +77,7 @@ namespace com.lizitt
         /// The item at the specified index, or null.
         /// </summary>
         /// <param name="index">
-        /// Item index. [Limit: 0 &lt;= value &lt; <see cref="BufferSize"/>]
+        /// Item index. [Limit: 0 &lt;= value &lt; <see cref="Count"/>]
         /// </param>
         /// <returns>The item at the specified index, or null.</returns>
         public T this[int index]
