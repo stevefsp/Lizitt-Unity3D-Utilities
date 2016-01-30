@@ -22,8 +22,15 @@
 namespace com.lizitt
 {
     /// <summary>
-    /// Common collider status values.
+    /// Collider behavior types.
     /// </summary>
+    /// <remarks>
+    /// <para>
+    /// See the 
+    /// <a href="http://docs.unity3d.com/Manual/CollidersOverview.html">Collider Overview</a>
+    /// page in the Unity Manual for details on collider behaviour under various configuations.
+    /// </para>
+    /// </remarks>
     public enum ColliderStatus
     {
         /// <summary>

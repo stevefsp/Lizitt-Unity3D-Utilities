@@ -65,6 +65,18 @@ namespace com.lizitt
                 : collider.GetComponentInParent<Rigidbody>();
         }
 
+        /// <summary>
+        /// Gets the behavior type of the collider based on its current configuration.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// See the 
+        /// <a href="http://docs.unity3d.com/Manual/CollidersOverview.html">Collider Overview</a>
+        /// page in the Unity Manual for details.
+        /// </para>
+        /// </remarks>
+        /// <param name="collider">The collider.</param>
+        /// <returns>The behavior type of collider based on its current configuration.</returns>
         public static ColliderStatus GetStatus(this Collider collider)
         {
             if (!collider)
@@ -113,6 +125,27 @@ namespace com.lizitt
         private const string BadStaticTransition =
             "Invalid transition: Collider has a Rigidbody component: {0} -> {1}";
 
+        /// <summary>
+        /// Configures the collider for the specified behavior.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// See the 
+        /// <a href="http://docs.unity3d.com/Manual/CollidersOverview.html">Collider Overview</a>
+        /// page in the Unity Manual for details.
+        /// </para>
+        /// <para>
+        /// This method is not appropriate for use with compound rigidbody collider configurations
+        /// since it only updates the specified collider and its ridigbody.  It does not try to
+        /// locate other colliders that might be associated with the rigidbody.
+        /// </para>
+        /// <para>
+        /// Transitions between rigidbody and static behaviors is not supported since doing so
+        /// would required adding and destorying rigidbodys.
+        /// </para>
+        /// </remarks>
+        /// <param name="collider">The collider to update.</param>
+        /// <param name="status">The desired behavior type.</param>
         public static void SetStatus(this Collider collider, ColliderStatus status)
         {
             if (status == ColliderStatus.Disabled && !collider)
