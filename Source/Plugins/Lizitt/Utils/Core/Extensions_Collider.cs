@@ -64,5 +64,169 @@ namespace com.lizitt
                 ? collider.attachedRigidbody
                 : collider.GetComponentInParent<Rigidbody>();
         }
+
+        public static ColliderStatus GetStatus(this Collider collider)
+        {
+            if (!collider)
+                return ColliderStatus.Disabled;
+
+            var rigidbody = collider.GetAssociatedRigidBody();
+
+            if (rigidbody)
+            {
+                if (rigidbody.detectCollisions)
+                {
+                    if (collider.enabled)
+                    {
+                        if (collider.isTrigger)
+                        {
+                            return rigidbody.isKinematic
+                                ? ColliderStatus.KinematicTrigger
+                                : ColliderStatus.RigidbodyTrigger;
+                        }
+                        else
+                        {
+                            return rigidbody.isKinematic
+                                ? ColliderStatus.KinematicCollider
+                                : ColliderStatus.RigidbodyCollider;
+                        }
+                    }
+                    else
+                        return ColliderStatus.Disabled;
+                }
+                else
+                    return ColliderStatus.Disabled;
+            }
+            else if (collider.enabled)
+            {
+                return collider.isTrigger
+                    ? ColliderStatus.StaticTrigger
+                    : ColliderStatus.StaticCollider;
+            }
+            else
+                return ColliderStatus.Disabled;
+        }
+
+        private const string BadRigidBodyTransition =
+            "Invalid transition: Collider does not have a Rigidbody component: {0} -> {1}";
+
+        private const string BadStaticTransition =
+            "Invalid transition: Collider has a Rigidbody component: {0} -> {1}";
+
+        public static void SetStatus(this Collider collider, ColliderStatus status)
+        {
+            if (status == ColliderStatus.Disabled && !collider)
+                return;
+
+            var rigidbody = collider.GetAssociatedRigidBody();
+
+            switch (status)
+            {
+                case ColliderStatus.KinematicCollider:
+
+                    if (rigidbody)
+                    {
+                        rigidbody.detectCollisions = true;
+                        rigidbody.isKinematic = true;
+                        collider.isTrigger = false;
+                        collider.enabled = true;
+                    }
+                    else
+                    {
+                        Debug.LogErrorFormat(
+                            collider, BadRigidBodyTransition, collider.GetStatus(), status);
+                    }
+
+                    break;
+
+                case ColliderStatus.KinematicTrigger:
+
+                    if (rigidbody)
+                    {
+                        rigidbody.detectCollisions = true;
+                        rigidbody.isKinematic = true;
+                        collider.isTrigger = true;
+                        collider.enabled = true;
+                    }
+                    else
+                    {
+                        Debug.LogErrorFormat(
+                            collider, BadRigidBodyTransition, collider.GetStatus(), status);
+                    }
+
+                    break;
+
+                case ColliderStatus.Disabled:
+
+                    if (collider)
+                        collider.enabled = false;
+
+                    break;
+
+                case ColliderStatus.RigidbodyCollider:
+
+                    if (rigidbody)
+                    {
+                        rigidbody.detectCollisions = true;
+                        rigidbody.isKinematic = false;
+                        collider.isTrigger = false;
+                        collider.enabled = true;
+                    }
+                    else
+                    {
+                        Debug.LogErrorFormat(
+                            collider, BadRigidBodyTransition, collider.GetStatus(), status);
+                    }
+
+                    break;
+
+                case ColliderStatus.RigidbodyTrigger:
+
+                    if (rigidbody)
+                    {
+                        rigidbody.detectCollisions = true;
+                        rigidbody.isKinematic = false;
+                        collider.isTrigger = true;
+                        collider.enabled = true;
+                    }
+                    else
+                    {
+                        Debug.LogErrorFormat(
+                            collider, BadRigidBodyTransition, collider.GetStatus(), status);
+                    }
+
+                    break;
+
+                case ColliderStatus.StaticCollider:
+
+                    if (rigidbody)
+                    {
+                        Debug.LogErrorFormat(
+                            collider, BadStaticTransition, collider.GetStatus(), status);
+                    }
+                    else
+                    {
+                        collider.isTrigger = false;
+                        collider.enabled = true;
+                    }
+
+                    break;
+
+                case ColliderStatus.StaticTrigger:
+
+                    if (rigidbody)
+                    {
+                        Debug.LogErrorFormat(
+                            collider, BadStaticTransition, collider.GetStatus(), status);
+                    }
+                    else
+                    {
+                        collider.isTrigger = true;
+                        collider.enabled = true;
+                    }
+
+                    break;
+            }
+        }
     }
 }
