@@ -33,7 +33,7 @@ namespace com.lizitt.editor
     {
         private const string ItemPropName = "m_Items";
 
-        private MaterialOverrideListComponent m_List;
+        private MaterialOverrideListControl m_List;
 
         /// <summary>
         /// See Unity documentation.
@@ -61,9 +61,9 @@ namespace com.lizitt.editor
 
                 property = property.FindPropertyRelative(ItemPropName);
                 if (attr.LocalOnly)
-                    m_List = new MaterialOverrideListComponent(property, attr.SearchPropertyPath);
+                    m_List = new MaterialOverrideListControl(property, attr.SearchPropertyPath);
                 else
-                    m_List = new MaterialOverrideListComponent(property);
+                    m_List = new MaterialOverrideListControl(property);
             }
         }
     }

@@ -35,9 +35,9 @@ namespace com.lizitt.editor
     /// element drawing and element add behavior.
     /// </para>
     /// </remarks>
-    /// <seealso cref="ReferenceListComponent"/>
+    /// <seealso cref="ReferenceListControl"/>
     /// <see cref="ObjectListDrawer"/>
-    public class ReorderableListComponent
+    public class ReorderableListControl
     {
         private static readonly float HeaderHeight =
             EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
@@ -80,7 +80,7 @@ namespace com.lizitt.editor
         /// <param name="onAddElement">
         /// The method to use for adding new elements, or null for default Unity behavior.
         /// </param>
-        public ReorderableListComponent(SerializedProperty listProperty, 
+        public ReorderableListControl(SerializedProperty listProperty, 
             string headerTitle, bool singleClickDelete, float elementHeight,
             DrawElement onDrawElement, UpdateListElement onAddElement = null)
         {

@@ -46,11 +46,11 @@ namespace com.lizitt.editor
     /// to implement custom validations.
     /// </para>
     /// </remarks>
-    /// <seealso cref="ReferenceListComponent"/>
+    /// <seealso cref="ReferenceListControl"/>
     public abstract class ObjectListDrawer
         : PropertyDrawer
     {
-        ReorderableListComponent m_GuiElement;
+        ReorderableListControl m_GuiElement;
 
         /// <summary>
         /// See Unity documentation.
@@ -86,7 +86,7 @@ namespace com.lizitt.editor
         {
             if (m_GuiElement == null)
             {
-                m_GuiElement = new ReorderableListComponent(listProperty, HeaderTitle, true,
+                m_GuiElement = new ReorderableListControl(listProperty, HeaderTitle, true,
                     EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing * 3, 
                     DrawElement, HandleAddElement);
             }

@@ -31,7 +31,7 @@ namespace com.lizitt.editor
     /// Draws a user friendly GUI element for a list of <see cref="MaterialOverride"/> objects,
     /// including optional restriction of selections to local renderers.
     /// </summary>
-    public class MaterialOverrideListComponent
+    public class MaterialOverrideListControl
     {
         private struct Props
         {
@@ -173,7 +173,7 @@ namespace com.lizitt.editor
         /// <param name="property">
         /// A property representing an array <see cref="MaterialOverride"/> references.
         /// </param>
-        public MaterialOverrideListComponent(SerializedProperty property)
+        public MaterialOverrideListControl(SerializedProperty property)
         {
             m_LocalOnly = false;
 
@@ -190,7 +190,7 @@ namespace com.lizitt.editor
         /// The path (from the serialized object root) of the property that will supply the
         /// reference object, or null if the referene object is the property's target object.
         /// </param>
-        public MaterialOverrideListComponent(SerializedProperty property, string searchPropertyPath)
+        public MaterialOverrideListControl(SerializedProperty property, string searchPropertyPath)
         {
             m_SearchPropertyPath = searchPropertyPath;
             m_LocalOnly = true;

@@ -41,7 +41,7 @@ namespace com.lizitt.editor
     /// </para>
     /// </remarks>
     /// <seealso cref="ObjectListDrawer"/>
-    public class ReferenceListComponent
+    public class ReferenceListControl
     {
         // TODO: Synchroized the behavior of this class and the ObjectListDrawer.
 
@@ -57,7 +57,7 @@ namespace com.lizitt.editor
 
         private ReorderableList m_List;
 
-        public ReferenceListComponent(
+        public ReferenceListControl(
             SerializedProperty listProperty, string headerTitle, bool singleClickRemove)
         {
             m_List = CreateList(listProperty, headerTitle, singleClickRemove);
