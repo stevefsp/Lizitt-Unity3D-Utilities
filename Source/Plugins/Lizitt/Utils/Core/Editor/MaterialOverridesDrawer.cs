@@ -25,10 +25,10 @@ using UnityEngine;
 namespace com.lizitt.editor
 {
     /// <summary>
-    /// The GUI element for fields marked with <see cref="MaterialOverridesAttribute"/>.
+    /// The GUI element for fields marked with <see cref="MaterialOverrideGroupAttribute"/>.
     /// </summary>
-    [CustomPropertyDrawer(typeof(MaterialOverridesAttribute))]
-    public class MaterialOverridesDrawer
+    [CustomPropertyDrawer(typeof(MaterialOverrideGroupAttribute))]
+    public class MaterialOverrideGroupDrawer
         : PropertyDrawer
     {
         private const string ItemPropName = "m_Items";
@@ -57,7 +57,7 @@ namespace com.lizitt.editor
         {
             if (m_List == null)
             {
-                var attr = attribute as MaterialOverridesAttribute;
+                var attr = attribute as MaterialOverrideGroupAttribute;
 
                 property = property.FindPropertyRelative(ItemPropName);
                 if (attr.LocalOnly)

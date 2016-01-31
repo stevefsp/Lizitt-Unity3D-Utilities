@@ -24,15 +24,15 @@ using UnityEngine;
 namespace com.lizitt
 {
     /// <summary>
-    /// Display the <see cref="MaterialOverrides"/> field as a user friendly reorderable list.
+    /// Display the <see cref="MaterialOverrideGroup"/> field as a user friendly reorderable list.
     /// </summary>
     /// <remarks>
     /// <para>
-    /// This attribute is only compatible with non-array <see cref="MaterialOverrides"/> fields.
-    /// E.g. It can't be used with an array of <see cref="MaterialOverrides"/> objects.
+    /// This attribute is only compatible with non-array <see cref="MaterialOverrideGroup"/> fields.
+    /// E.g. It can't be used with an array of <see cref="MaterialOverrideGroup"/> objects.
     /// </para>
     /// </remarks>
-    public class MaterialOverridesAttribute
+    public class MaterialOverrideGroupAttribute
         : PropertyAttribute
     {
         /// <summary>
@@ -67,7 +67,7 @@ namespace com.lizitt
         /// If true, then only permit selection of local components.  (E.g. Components on or 
         /// under the search target.)  Otherwise allow any renderer to be assigned.
         /// </param>
-        public MaterialOverridesAttribute(string searchPropertyPath = null, bool localOnly = false)
+        public MaterialOverrideGroupAttribute(string searchPropertyPath = null, bool localOnly = false)
         {
             SearchPropertyPath = searchPropertyPath;
             LocalOnly = localOnly;

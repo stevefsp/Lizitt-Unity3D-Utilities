@@ -30,18 +30,18 @@ namespace com.lizitt
     /// <remarks>
     /// <para>
     /// Designed for use as a field in a Unity component.  When used with 
-    /// <see cref="MaterialOverridesAttribute"/>, it provides a better editor experience than 
+    /// <see cref="MaterialOverrideGroupAttribute"/>, it provides a better editor experience than 
     /// is available with arrays.
     /// </para>
     /// <para>
     /// Warning: Not suitable for use with arrays of arrays.  E.g. An array of 
-    /// <see cref="MaterialOverrides"/> objects, or an array of objects that contain
-    /// a <see cref="MaterialOverrides"/> field.  Basically, if there is more than one of overrides
+    /// <see cref="MaterialOverrideGroup"/> objects, or an array of objects that contain
+    /// a <see cref="MaterialOverrideGroup"/> field.  Basically, if there is more than one of overrides
     /// group in a single serialized object the inspector GUI will not behave correctly.
     /// </para>
     /// </remarks>
     [System.Serializable]
-    public struct MaterialOverrides
+    public struct MaterialOverrideGroup
     {
         /*
          * Design notes:
@@ -68,7 +68,7 @@ namespace com.lizitt
         /// Constructor
         /// </summary>
         /// <param name="size">The number of accessories.</param>
-        public MaterialOverrides(int size)
+        public MaterialOverrideGroup(int size)
         {
             m_Items = new MaterialOverride[Mathf.Max(0, size)];
         }
