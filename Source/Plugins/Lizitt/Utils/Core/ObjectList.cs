@@ -183,11 +183,7 @@ namespace com.lizitt
         /// </remarks>
         public void PurgeNulls()
         {
-            for (int i = m_Items.Count - 1; i >= 0; i--)
-            {
-                if (!m_Items[i])
-                    m_Items.RemoveAt(i);
-            }
+            m_Items.PurgeNulls();
         }
 
         /// <summary>
