@@ -155,9 +155,9 @@ namespace com.lizitt
         }
 
         /// <summary>
-        /// Removes all null or destroyed Unity objects from the list.
+        /// Removes all null and destroyed Unity objects from the list.
         /// </summary>
-        /// <param name="items">The list of objects to operate on.</param>
+        /// <param name="items">The object list.</param>
         public static void PurgeNulls<T>(this List<T> items)
             where T : UnityEngine.Object
         {

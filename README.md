@@ -7,7 +7,7 @@ This project implements various useful utilities for [Unity3D](http://unity3d.co
 API Status: Pre-release Alpha  
 Test Status: Beta  
 Language: C#  
-Target: Unity3D 5.0+ (Personal & Professional)
+Target: Unity3D 5.0+ (Personal & Professional)  
 Lastest release tested in: Unity3D 5.3.1 Professional
 
 ## Installation
@@ -27,8 +27,6 @@ There is no online documentation at this point.  But all code is documented usin
 ## Miscellaneous
 
 All members are located under the `com.lizitt` namespace.
-
-API changes mostly involve additions rather than changes to existing members.  But this project will remain in pre-release until test coverage is complete.  (Or as complete as possible for Unity.)
 
 
 
