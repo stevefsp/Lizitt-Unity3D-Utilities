@@ -319,7 +319,6 @@ namespace com.lizitt.editor
         }
     }
 
-
     /// <summary>
     /// Draws fields marked with the <see cref="LocalComponentPopupAttribute"/>.
     /// </summary>
@@ -344,6 +343,53 @@ namespace com.lizitt.editor
 
             m_GuiElement.OnGUI(position, property, label, 
                 EditorGUIUtil.GetReferenceObject(property, attr.SearchPropertyPath, false));
+        }
+    }
+
+
+
+
+    /// <summary>
+    /// Draws fields marked with the <see cref="RequiredValueAttribute"/>.
+    /// </summary>
+    [CustomPropertyDrawer(typeof(RequireObjectTypeAttribute))]
+    public class RequireObjectTypeAttributeDrawer
+        : PropertyDrawer
+    {
+        /// <summary>
+        /// See Unity documentation.
+        /// </summary>
+        /// <param name="position">See Unity documentation.</param>
+        /// <param name="property">See Unity documentation.</param>
+        /// <param name="label">See Unity documentation.</param>
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            label = EditorGUI.BeginProperty(position, label, property);
+
+            if (property.propertyType == SerializedPropertyType.ObjectReference)
+            {
+                var orig = property.objectReferenceValue;
+
+                EditorGUI.PropertyField(position, property);
+
+                var value = property.objectReferenceValue;
+                var typ = (attribute as RequireObjectTypeAttribute).RequiredType;
+                if (value && !typ.IsInstanceOfType(value))
+                {
+                    Debug.LogErrorFormat(null, 
+                        "Invalid observer: {0} does not implement {1}.", value.GetType().Name, typ.Name);
+
+                    property.objectReferenceValue = orig;
+                }
+            }
+            else
+            {
+                Debug.LogWarningFormat(
+                    "Property is not an opject reference: {0} ({1}", property.propertyPath, property.propertyType);
+                EditorGUI.PropertyField(position, property);
+            }
+
+            EditorGUI.EndProperty();
         }
     }
 }

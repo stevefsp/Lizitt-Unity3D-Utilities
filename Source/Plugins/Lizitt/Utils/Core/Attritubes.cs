@@ -188,14 +188,30 @@ namespace com.lizitt
     {
     }
 
+    /// <summary>
+    /// Displays a GUI element that will display an visual error if the assigned value is null, zero, or an empty 
+    /// string.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Supports float, int, object reference, and strings.  Any other values will display their default
+    /// GUI element.  For strings, a string with the contains only white space is considered an empty string.
+    /// </para>
+    /// </remarks>
     public class RequiredValueAttribute
         : PropertyAttribute
     {
         public System.Type ReferenceType { get; set; }
         public bool AllowSceneObjects { get; set; }
 
-        public RequiredValueAttribute(
-            System.Type referenceType = null, bool allowSceneObjects = false)
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="referenceType">The object type for object reference fields, or null if not applicable.</param>
+        /// <param name="allowSceneObjects">
+        /// If true, allow selection of scene objects.  (Only applicable to object reference fields.
+        /// </param>
+        public RequiredValueAttribute(System.Type referenceType = null, bool allowSceneObjects = false)
         {
             ReferenceType = referenceType;
             AllowSceneObjects = allowSceneObjects;
@@ -203,8 +219,8 @@ namespace com.lizitt
     }
 
     /// <summary>
-    /// Display a dropdown containing a list of components attached to the current GameObject or
-    /// any of its children.  (Used to limit assignment to only local components.)
+    /// Display a dropdown containing a list of components attached to the search oject or or any of its children.  
+    /// (Used to limit assignment to only local components.)
     /// </summary>
     public class LocalComponentPopupAttribute
         : PropertyAttribute
@@ -219,6 +235,14 @@ namespace com.lizitt
         /// </summary>
         public bool Required { get; set; }
 
+        /// <summary>
+        /// The property path of the object to search for local components.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// See <see cref="EditorGUIUtil.GetReferenceObject"/> for details on interpretation of this field.
+        /// </para>
+        /// </remarks>
         public string SearchPropertyPath { get; set; }
 
         /// <summary>
@@ -230,12 +254,46 @@ namespace com.lizitt
         /// <param name="required">
         /// If true, only a non-null property value is valid.  Otherwise null is permitted.
         /// </param>
+        /// <param name="searchPropertyPath">
+        /// The property path of the object to search for local components.  
+        /// (<see cref="EditorGUIUtil.GetReferenceObject"/> for details.)
+        /// </param>
         public LocalComponentPopupAttribute(
             System.Type componentType, bool required = false, string searchPropertyPath = null)
         {
             ComponentType = componentType;
             Required = required;
             SearchPropertyPath = searchPropertyPath;
+        }
+    }
+
+    /// <summary>
+    /// Require only objects of the specified type to be assigned.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Only useful for object reference fields.
+    /// </para>
+    /// <para>
+    /// This attribute is useful when an assigned object needs to implement a non-Unity Object API, such as
+    /// an interface.  (E.g. A Unity Object must implement the IAgent interface.)
+    /// </para>
+    /// </remarks>
+    public class RequireObjectTypeAttribute
+        : PropertyAttribute
+    {
+        /// <summary>
+        /// The required object type.
+        /// </summary>
+        public System.Type RequiredType { get; set; }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="requiredType">The required object type.</param>
+        public RequireObjectTypeAttribute(System.Type requiredType)
+        {
+            RequiredType = requiredType;
         }
     }
 }
