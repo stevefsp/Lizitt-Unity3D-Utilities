@@ -24,14 +24,64 @@ using System.Collections.Generic;
 
 namespace com.lizitt
 {
+    /// <summary>
+    /// Display an array or list of object reference fields as a reorderable list of single line reference fields.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This is suitable for use when a field's object type is a class or structure that wraps an array or list.
+    /// Each array element is displayed on a single line with no label.  <see cref="ObjectList"/> for an example
+    /// of the expected structure.  <see cref="ObjectList"/> can't be serialized since it is generic.  But any class
+    /// the extends <see cref="ObjectList"/> and is not generic, or a class that follows the same pattern as
+    /// <see cref="ObjectList"/>, can use this attribute.
+    /// </para>
+    /// </remarks>
     public class ObjectListAttribute
         : PropertyAttribute
     {
+        /// <summary>
+        /// The required type of all assignments, or null if no type validation is needed.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Sometimes the scope of the objects in the array is wider than what should be assigned.  If so, this
+        /// property will restrict the the assignments to only what can be cast to this type.  For example,
+        /// <see cref="ObjectList"/> stores all elements as Unity Objects.  But an extension may want only IAgent
+        /// objects to be stored in the list.  So the required type would be <c>typeOf(IAgent)</c>.  If there is no
+        /// need for this type of validation, then set this property to null.
+        /// </para>
+        /// </remarks>
         public System.Type RequiredType { get; private set; }
+
+        /// <summary>
+        /// The label that will be displayed in the header of the reorderable list. 
+        /// </summary>
         public string HeaderTitle { get; private set; }
+
+        /// <summary>
+        /// The name of the child field within the serialized field that is the array or list to be displayed.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This is the path from the serialized object root.
+        /// </para>
+        /// </remarks>
         public string ListPropertyPath { get; private set; }
 
-        public ObjectListAttribute(string headerTitle, System.Type requiredType, string listPropertyPath = "m_Items")
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="headerTitle">
+        /// The label that will be displayed in the header of the reorderable list.  (Required)
+        /// </param>
+        /// <param name="requiredType">
+        /// The required type of all assignments, or null if no type validation is needed.
+        /// </param>
+        /// <param name="listPropertyPath">
+        /// The name of the child field within the serialized field that is the array or list to be displayed.
+        /// (Required)
+        /// </param>
+        public ObjectListAttribute(string headerTitle, System.Type requiredType = null, string listPropertyPath = "m_Items")
         {
             RequiredType = requiredType;
             HeaderTitle = headerTitle;

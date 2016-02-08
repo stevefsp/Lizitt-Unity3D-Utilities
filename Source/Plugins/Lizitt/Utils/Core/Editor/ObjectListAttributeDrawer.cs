@@ -50,7 +50,7 @@ namespace com.lizitt.editor
         protected override bool ValidateComponent(Object obj)
         {
             var typ = Attr.RequiredType;
-            if (!typ.IsInstanceOfType(obj))
+            if (typ != null && !typ.IsInstanceOfType(obj))
             {
                 Debug.LogErrorFormat(null, "Invalid observer: {0} does not implement {1}.",
                     obj.GetType().Name, typ.Name);
