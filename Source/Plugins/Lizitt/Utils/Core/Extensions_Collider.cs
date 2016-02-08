@@ -141,7 +141,7 @@ namespace com.lizitt
         /// </para>
         /// <para>
         /// Transitions between rigidbody and static behaviors is not supported since doing so
-        /// would required adding and destorying rigidbodys.
+        /// would required adding and destroying rigidbodys.
         /// </para>
         /// </remarks>
         /// <param name="collider">The collider to update.</param>
