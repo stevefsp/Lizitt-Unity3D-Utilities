@@ -50,7 +50,8 @@ namespace com.lizitt.editor
     public abstract class ObjectListDrawer
         : PropertyDrawer
     {
-        ReorderableListControl m_GuiElement;
+        private ReorderableListControl m_GuiElement;
+        private SerializedProperty m_ListProperty;
 
         /// <summary>
         /// See Unity documentation.
@@ -75,11 +76,13 @@ namespace com.lizitt.editor
         /// <param name="label">See Unity documentation.</param>
         public sealed override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var listProp = GetListProperty(property);
+            m_ListProperty = GetListProperty(property);
 
-            CheckInitialized(listProp);
+            CheckInitialized(m_ListProperty);
 
-            m_GuiElement.OnGUI(position, listProp, label);
+            m_GuiElement.OnGUI(position, m_ListProperty, label);
+
+            m_ListProperty = null;
         }
 
         private void CheckInitialized(SerializedProperty listProperty)
@@ -103,11 +106,29 @@ namespace com.lizitt.editor
             position = EditorGUIUtil.SingleLinePosition(
                 position, EditorGUIUtility.standardVerticalSpacing);
 
+            var orig = elementProperty.objectReferenceValue;
+
             EditorGUI.PropertyField(position, elementProperty, GUIContent.none);
 
             var comp = elementProperty.objectReferenceValue;
-            if (comp && !ValidateComponent(comp))
-                elementProperty.objectReferenceValue = null;
+            if (comp)
+            {
+                if (!ValidateComponent(comp))
+                    elementProperty.objectReferenceValue = null;
+
+                if (orig && orig != comp)
+                {
+                    int count = 0;
+                    for (int i = 0; i < m_ListProperty.arraySize; i++)
+                        count = m_ListProperty.GetArrayElementAtIndex(i).objectReferenceValue == comp ? 1 : 0;
+
+                    if (count > 1)
+                    {
+                        Debug.LogError("Duplicate objects are not allowed in list.");
+                        elementProperty.objectReferenceValue = null;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -116,15 +137,16 @@ namespace com.lizitt.editor
         protected abstract string HeaderTitle { get; }
 
         /// <summary>
-        /// The list property being drawn.
+        /// The property path for the list field.  (E.g. m_Items)
         /// </summary>
-        /// <param name="property">
-        /// The property from <see cref="OnGUI"/>  and <see cref="GetPropertyHeight"/>.
-        /// </param>
-        /// <returns>The list property being drawn.</returns>
-        protected virtual SerializedProperty GetListProperty(SerializedProperty property)
+        protected virtual string ListPropertyPath
         {
-            return property;
+            get { return "m_Items"; }
+        }
+
+        private SerializedProperty GetListProperty(SerializedProperty property)
+        {
+            return property.FindPropertyRelative(ListPropertyPath);
         }
 
         /// <summary>
