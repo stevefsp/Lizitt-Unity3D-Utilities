@@ -19,6 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+using UnityEngine;
+
 namespace com.lizitt
 {
     /// <summary>
@@ -30,6 +32,35 @@ namespace com.lizitt
         /// A name suffix used to label baked items.  (E.g. The baked version of a skinned mesh.)
         /// </summary>
         public const string BakeSuffix = "_Baked";
+
+        /// <summary>
+        /// Returns true if the object is null or is a destroyed Unity Object.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// A common way of null checking a Unity Object is using a boolean check.
+        /// (E.g. <c>myUnityObject == true</c>)  Such a check is helpful since it takes into
+        /// account the possible destruction of the object.  This method
+        /// will check a non-null reference to see if it is a Unity Object and perform the
+        /// destruction check.
+        /// </para>
+        /// </remarks>
+        /// <param name="obj">The object to check.</param>
+        /// <returns>
+        /// True if the object is null or is a destroyed Unity Object.
+        /// </returns>
+        public static bool IsUnityDestroyed(this System.Object obj)
+        {
+            if (obj != null)
+            {
+                if (obj is Object)
+                    return !(obj as Object);
+
+                return false;
+            }
+
+            return true;
+        }
 
         #region Unity Editor
 

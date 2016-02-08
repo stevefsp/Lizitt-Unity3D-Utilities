@@ -219,7 +219,7 @@ namespace com.lizitt
             var ncount = 0;  // New count.
             for (int i = 0; i < from.Length; i++)
             {
-                if (from[i] == null || from[i].IsUnityNull())
+                if (LizittUtil.IsUnityDestroyed(from[i]))
                 {
                     // Need this check before Contains()
                     continue;
@@ -244,7 +244,7 @@ namespace com.lizitt
             int ecount = 0;  // Existing count.
             for (int i = 0; i < to.Length; i++)
             {
-                if (!(to[i] == null || to[i].IsUnityNull()))
+                if (!LizittUtil.IsUnityDestroyed(to[i]))
                     ecount++;
             }
 
@@ -256,14 +256,14 @@ namespace com.lizitt
             {
                 for (int i = 0; i < to.Length; i++)
                 {
-                    if (!(to[i] == null || to[i].IsUnityNull()))
+                    if (!LizittUtil.IsUnityDestroyed(to[i]))
                         nitems[j++] = to[i];
                 }
             }
 
             for (int i = 0; i < from.Length; i++)
             {
-                if (!(from[i] == null || from[i].IsUnityNull())) // Dups were set to null.
+                if (!LizittUtil.IsUnityDestroyed(from[i])) // Dups were set to null.
                     nitems[j++] = from[i];
             }
 
