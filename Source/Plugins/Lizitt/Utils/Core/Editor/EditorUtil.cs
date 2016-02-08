@@ -23,9 +23,22 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
+using System.Reflection;
 
 namespace com.lizitt.editor
 {
+    public struct SerializedFieldInfo
+    {
+        public string name;
+        public bool isHidden;
+        public System.Type typ;
+
+        public override string ToString()
+        {
+            return string.Format("Name: {0}, Type: {1}, IsHidden: {2}", name, typ, isHidden);
+        }
+    }
+
     /// <summary>
     /// Provides general purpose utility functions for the Unity Editor.
     /// </summary>
@@ -388,6 +401,48 @@ namespace com.lizitt.editor
                 dir = "Assets";
 
             return AssetDatabase.GenerateUniqueAssetPath(dir + "/" + name + ".asset");
+        }
+
+        /// <summary>
+        /// Get the serialized field information a Monobehaviour script.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This information can be usedful when creating custom editors.
+        /// </para>
+        /// </remarks>
+        /// <typeparam name="T">The type of Monobehaviour script.</typeparam>
+        /// <param name="list">The list to add the infomration to.  (List will not be cleared.) (Optional)</param>
+        /// <returns>
+        /// A reference to <paramref name="list"/> if if was provided, or a new list if <paramref name="list"/> 
+        /// was null.
+        /// </returns>
+        public static List<SerializedFieldInfo> AddSerializedFields<T>(List<SerializedFieldInfo> list = null)
+            where T : MonoBehaviour
+        {
+            if (list == null)
+                list = new List<SerializedFieldInfo>();
+
+            var typ = typeof(T);
+
+            while (typ != typeof(MonoBehaviour))
+            {
+                foreach (var info in typ.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                {
+                    if (info.IsPublic || info.GetCustomAttributes(typeof(SerializeField), true).Length != 0)
+                    {
+                        var data = new SerializedFieldInfo();
+                        data.name = info.Name;
+                        data.typ = info.FieldType;
+                        data.isHidden = info.GetCustomAttributes(typeof(HideInInspector), true).Length != 0;
+                        list.Add(data);
+                    }
+                }
+
+                typ = typ.BaseType;
+            }
+
+            return list;
         }
     }
 }
