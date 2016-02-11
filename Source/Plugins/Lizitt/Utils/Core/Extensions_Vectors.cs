@@ -45,13 +45,13 @@ namespace com.lizitt
         }
 
         /// <summary>
-        /// Determines whether or not the two points are within range of each other based on 
-        /// xz-plane radius and a y-axis height.  (A cylindrical range check.)
+        /// Determines whether or not the two points are within range of each other based on  xz-plane radius and 
+        /// a y-axis height.  (A cylindrical range check.)
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Essentially, one point defines the centroid of a cylinder and the other is 
-        /// tested for inclusion.  The height test is <c>(Math.Abs(deltaY) &lt; height)</c>
+        /// Essentially, one point defines the centroid of a cylinder and the other is tested for inclusion.  
+        /// The height test is <c>(Math.Abs(deltaY) &lt; height)</c>
         /// </para>
         /// <para>
         /// See <see cref="SloppyEquals(Vector3, Vector3, float)"/> for a more traditional
@@ -73,13 +73,13 @@ namespace com.lizitt
         }
 
         /// <summary>
-        /// Determines whether or not the specified vectors are equal within the specified 
-        /// tolerance. (A sphere range check.)
+        /// Determines whether or not the specified vectors are equal within the specified tolerance. 
+        /// (A sphere range check.)
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Equality is based on a range check.  Is u within tolerance distance of v?
-        /// This type of check is valid for both position and direction vectors.
+        /// Equality is based on a range check.  Is u within tolerance distance of v? This type of check is valid
+        /// for both position and direction vectors.
         /// </para>
         /// </remarks>
         /// <param name="u">Vector u.</param>
@@ -95,13 +95,53 @@ namespace com.lizitt
         }
 
         /// <summary>
-        /// Determines whether or not the specified vectors are equal within the specified 
-        /// tolerance.
+        /// Determines whether or not the specified vectors that represent euler angles are equal within the specified
+        /// tolerance.  (Each angle within tolerance.)
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Equality is based on a range check.  Is u within tolerance distance of v?
-        /// This type of check is valid for both position and direction vectors.
+        /// Comparing the equality of euler angles is complicated by the fact that angles are cyclic. (0 == 360 == 720)
+        /// This method takes this into account. Each angle is compared against the tolerance.  If any angle check 
+        /// fails, the check fails.
+        /// </para>
+        /// </remarks>
+        /// <param name="eulerAnglesA">Euler angles u. (Degrees)</param>
+        /// <param name="eulerAnglesB">Euler angles v. (Degrees)</param>
+        /// <param name="tolerance">The allowed tolerance. [Limit: >= 0] (Degrees)</param>
+        /// <returns>True if the euler angles are close enough to be considered equal.</returns>
+        public static bool SloppyEqualsAngles(
+            this Vector3 eulerAnglesA, Vector3 eulerAnglesB, float tolerance = MathUtil.Tolerance)
+        {
+            eulerAnglesA = Quaternion.Euler(eulerAnglesA).eulerAngles;
+            eulerAnglesB = Quaternion.Euler(eulerAnglesB).eulerAngles;
+
+            return !((Mathf.Abs(eulerAnglesA.x - eulerAnglesB.x) > tolerance)
+                || (Mathf.Abs(eulerAnglesA.y - eulerAnglesB.y) > tolerance)
+                || (Mathf.Abs(eulerAnglesA.z - eulerAnglesB.z) > tolerance));
+        }
+
+        /// <summary>
+        /// Updates the euler angles so they are all within the standard quaternion range. (0 &lt;= value &lt; 360)
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// In this context, 'standard' means the angle range returned by Quaterion.eulerAngles.
+        /// </para>
+        /// </remarks>
+        /// <param name="eulerAngles">The euler angles. (Degrees)</param>
+        /// <returns>The euler angles in the standard quaternion range. (0 &lt;= value &lt; 360)</returns>
+        public static Vector3 StandardizeAngles(this Vector3 eulerAngles)
+        {
+            return Quaternion.Euler(eulerAngles).eulerAngles;
+        }
+
+        /// <summary>
+        /// Determines whether or not the specified vectors are equal within the specified tolerance.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Equality is based on a range check.  Is u within tolerance distance of v? This type of check is valid
+        /// for both position and direction vectors.
         /// </para>
         /// </remarks>
         /// <param name="u">Vector u.</param>
@@ -122,21 +162,21 @@ namespace com.lizitt
         }
 
         /// <summary>
-        /// Gets the signed angle around the y-axis between the two direction vectors where up 
-        /// is world up.  [Range: -180 to 180]
+        /// Gets the signed angle around the y-axis between the two direction vectors where up is world up.  
+        /// [Range: -180 to 180]
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Basically, the direction vectors are projected onto the xz-plane and the angle between
-        /// them, relative to the reference direction, is determined.
+        /// Basically, the direction vectors are projected onto the xz-plane and the angle between them, relative 
+        /// to the reference direction, is determined.
         /// </para>
         /// <para>
-        ///  Because this algorithm has no concept of a local up-axis it is not suitable 
-        /// for some use cases. See <see cref="AimAngles"/> if a local-space angle is required.
+        /// Because this algorithm has no concept of a local up-axis it is not suitable for some use cases. 
+        /// See <see cref="AimAngles"/> if a local-space angle is required.
         /// </para>
         /// <para>
-        /// Warning: The result of this algorithm is undefined if either of the direction vectors 
-        /// has no significant xz-plane projection.  (I.e. The Vector3.up or Vector3.down.)
+        /// Warning: The result of this algorithm is undefined if either of the direction vectors has no significant
+        /// xz-plane projection.  (I.e. The Vector3.up or Vector3.down.)
         /// </para>
         /// </remarks>
         /// <param name="fromDirection">The reference direction.</param>
