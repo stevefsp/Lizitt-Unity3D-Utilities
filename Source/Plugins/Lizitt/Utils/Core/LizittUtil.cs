@@ -45,11 +45,11 @@ namespace com.lizitt
         /// destruction check.
         /// </para>
         /// </remarks>
-        /// <param name="obj">The object to check.</param>
+        /// <param name="obj">The reference to check.</param>
         /// <returns>
         /// True if the object is null or is a destroyed Unity Object.
         /// </returns>
-        public static bool IsUnityDestroyed(this System.Object obj)
+        public static bool IsUnityDestroyed<T>(this T obj) where T : class
         {
             if (obj != null)
             {
