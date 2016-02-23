@@ -61,6 +61,9 @@ namespace com.lizitt.editor
         /// <returns>See Unity documentation.</returns>
         public sealed override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
+            if (property.propertyType == SerializedPropertyType.ObjectReference && !property.objectReferenceValue)
+                return EditorGUIUtility.singleLineHeight * 1.1f;
+
             var listProp = GetListProperty(property);
 
             CheckInitialized(listProp);
@@ -76,6 +79,13 @@ namespace com.lizitt.editor
         /// <param name="label">See Unity documentation.</param>
         public sealed override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
+            if (property.propertyType == SerializedPropertyType.ObjectReference && !property.objectReferenceValue)
+            {
+                position = EditorGUIUtil.SingleLinePosition(position);
+                EditorGUI.PropertyField(position, property);
+                return;
+            }
+
             m_ListProperty = GetListProperty(property);
 
             CheckInitialized(m_ListProperty);
@@ -147,7 +157,9 @@ namespace com.lizitt.editor
 
         private SerializedProperty GetListProperty(SerializedProperty property)
         {
-            return property.FindPropertyRelative(ListPropertyPath);
+            return property.propertyType == SerializedPropertyType.ObjectReference
+                ? new SerializedObject(property.objectReferenceValue).FindProperty(ListPropertyPath)
+                : property.FindPropertyRelative(ListPropertyPath);
         }
 
         /// <summary>
