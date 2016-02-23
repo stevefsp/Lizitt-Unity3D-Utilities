@@ -47,7 +47,7 @@ namespace com.lizitt
         /// Sometimes the scope of the objects in the array is wider than what should be assigned.  If so, this
         /// property will restrict the the assignments to only what can be cast to this type.  For example,
         /// <see cref="ObjectList"/> stores all elements as Unity Objects.  But an extension may want only IAgent
-        /// objects to be stored in the list.  So the required type would be <c>typeOf(IAgent)</c>.  If there is no
+        /// objects to be stored in the list, so the required type would be <c>typeOf(IAgent)</c>.  If there is no
         /// need for this type of validation, then set this property to null.
         /// </para>
         /// </remarks>
@@ -120,18 +120,19 @@ namespace com.lizitt
          * 
          * One of the primary design requirements of this class is to make it Editor GUI friendly.  That is why it
          * doesn't try to directly extend the List class.  (Need 'array' inside of a class.)
+         * 
          */
 
         [SerializeField]
         private List<Object> m_Items;
 
         /// <summary>
-        /// Constructor
+        /// Constructor.
         /// </summary>
-        /// <param name="bufferSize">The initial size of the object buffer.</param>
-        public ObjectList(int bufferSize)
+        /// <param name="initialCapacity">The initial capacity of the list.</param>
+        public ObjectList(int initialCapacity)
         {
-            m_Items = new List<Object>(bufferSize);
+            m_Items = new List<Object>(initialCapacity);
         }
 
         /// <summary>
@@ -329,7 +330,7 @@ namespace com.lizitt
         /// </summary>
         /// <remarks>
         /// <para>
-        /// This method treats a destroyed object as null.  So it will never return true for a destroyed object.
+        /// This method treats a destroyed object as null, so it will never return true for a destroyed object.
         /// <see cref="Remove"/> should be used to check for and remove destroyed objects if that is the intention.
         /// </para>
         /// </remarks>
