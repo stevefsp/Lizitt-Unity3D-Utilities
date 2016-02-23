@@ -252,8 +252,7 @@ namespace com.lizitt.editor
                 ? EditorGUIUtil.RedLabel
                 : EditorStyles.label;
 
-            var rect =
-                new Rect(position.x, position.y, EditorGUIUtility.labelWidth, position.height);
+            var rect = new Rect(position.x, position.y, EditorGUIUtility.labelWidth, position.height);
 
             EditorGUI.LabelField(rect, label, style);
 
@@ -301,8 +300,7 @@ namespace com.lizitt.editor
                 return;
             }
 
-            var rect = 
-                new Rect(position.x, position.y, EditorGUIUtility.labelWidth, position.height);
+            var rect = new Rect(position.x, position.y, EditorGUIUtility.labelWidth, position.height);
 
             EditorGUI.LabelField(rect, label, EditorGUIUtil.RedLabel);
 

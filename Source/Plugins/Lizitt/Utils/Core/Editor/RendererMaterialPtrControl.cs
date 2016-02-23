@@ -234,15 +234,14 @@ namespace com.lizitt.editor
             if (hasLabel)
                 EditorGUI.LabelField(rect, label);
 
-            var origLabelWidth = EditorGUIUtility.labelWidth;
-            EditorGUIUtility.labelWidth = 80;
+            EditorGUIUtil.BeginLabelWidth(80);
 
             if (m_SearchInfo != null)
                 DrawLocal(rect, property, hasLabel);
             else
                 DrawBasic(rect, property, hasLabel);
 
-            EditorGUIUtility.labelWidth = origLabelWidth;
+            EditorGUIUtil.EndLabelWidth();
 
             EditorGUI.EndProperty();
         }

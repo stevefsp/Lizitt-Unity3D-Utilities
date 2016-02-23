@@ -309,8 +309,7 @@ namespace com.lizitt.editor
 
         private void LocalGUI(Rect position, SerializedProperty property)
         {
-            var origLabelWidth = EditorGUIUtility.labelWidth;
-            EditorGUIUtility.labelWidth = 80;
+            EditorGUIUtil.BeginLabelWidth(80);
 
             var props = new Props(property);
             var info = m_LocalInfo;
@@ -356,7 +355,7 @@ namespace com.lizitt.editor
             rect = EditorGUIUtil.NextGuiElementPosition(rect, 0, false);
             EditorGUI.PropertyField(rect, props.material, MaterialLabel);
 
-            EditorGUIUtility.labelWidth = origLabelWidth;
+            EditorGUIUtil.EndLabelWidth();
         }
 
         private void StandardGUI(Rect position, SerializedProperty property)

@@ -22,6 +22,7 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEditorInternal;
+using System.Collections.Generic;
 
 namespace com.lizitt.editor
 {
@@ -158,6 +159,8 @@ namespace com.lizitt.editor
 
         #endregion
 
+        #region Formatting
+
         #region Indent Sections (Obsolete)
 
         private static int IndentAmount = 2;
@@ -179,6 +182,35 @@ namespace com.lizitt.editor
         }
 
         #endregion
+
+        private static Stack<float> m_WidthStack = null;
+
+        /// <summary>
+        /// Sets the label width, preserving the original label width for restoration using <see cref="EndLabelWidth"/>
+        /// </summary>
+        /// <param name="width">The desired label width.</param>
+        public static void BeginLabelWidth(float width)
+        {
+            if (m_WidthStack == null)
+                m_WidthStack = new Stack<float>();
+
+            m_WidthStack.Push(EditorGUIUtility.labelWidth);
+            EditorGUIUtility.labelWidth = width;
+        }
+
+        /// <summary>
+        /// Restores the label width to the value it was before the last <see cref="BeginLabelWidth"/> call.
+        /// </summary>
+        public static void EndLabelWidth()
+        {
+            if (m_WidthStack.Count > 0)
+                EditorGUIUtility.labelWidth = m_WidthStack.Pop();
+            else
+                Debug.LogError("EndLabelWidth() called without BeginLabelWidth()");
+        }
+
+        #endregion
+
 
         #region SerializedObject
 
@@ -497,5 +529,7 @@ namespace com.lizitt.editor
         }
 
         #endregion
+
+
     }
 }
