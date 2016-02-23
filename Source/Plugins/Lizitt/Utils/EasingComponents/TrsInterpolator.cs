@@ -369,8 +369,8 @@ namespace com.lizitt
         /// </summary>
         public void Reset()
         {
-            // Design note: Children can capture the reset by overriding OnStatusChange().
-            // So don't make this virtual.
+            // Design note: Children can capture the reset by overriding OnStatusChange(),
+            // so don't make this virtual.
 
             if (Helper != null)
                 // Always reset helper.  Helper may need internal refresh.

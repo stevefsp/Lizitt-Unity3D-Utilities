@@ -99,7 +99,7 @@ namespace com.lizitt.editor
         /// Global assets are singleton assets that exist in a well known path within the project.
         /// </para>
         /// <para>
-        /// If the global asset does not exist a new one will be created.  So this method will
+        /// If the global asset does not exist a new one will be created, so this method will
         /// return null only on error.
         /// </para>
         /// </remarks>
@@ -158,7 +158,7 @@ namespace com.lizitt.editor
             bool origChanged = GUI.changed;
             GUI.changed = false;
 
-            // Never allow nulls.  So get rid of them first.
+            // Never allow nulls, so get rid of them first.
             for (int i = items.Count - 1; i >= 0; i--)
             {
                 if (items[i] == null)

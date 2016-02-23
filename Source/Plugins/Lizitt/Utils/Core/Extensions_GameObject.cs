@@ -69,7 +69,7 @@ namespace com.lizitt
                 var outfitRenderObjects =
                     new System.Collections.Generic.Dictionary<string, GameObject>();
 
-                // A newly instantiated mesh starts in its bind pose.  So have to bake the
+                // A newly instantiated mesh starts in its bind pose, so have to bake the
                 // skinned meshes from the source outfit to the target outfit.
 
                 var origTargetName = target.name;

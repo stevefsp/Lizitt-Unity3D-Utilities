@@ -28,7 +28,7 @@ namespace com.lizitt
     /// </summary>
     /// <remarks>
     /// <para>
-    /// This is meant for use in the Unity editor.  So it is often best to attach via code using 
+    /// This is meant for use in the Unity editor, so it is often best to attach via code using 
     /// something like the following so the component is only created in the editor:
     /// </para>
     /// <code>

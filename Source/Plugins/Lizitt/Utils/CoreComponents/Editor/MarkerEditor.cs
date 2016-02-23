@@ -41,7 +41,7 @@ namespace com.lizitt.editor
              * It is unusally preferred to place all gizmo code in an editor class.  
              * But Unity behavior is to call the gizmo method for all classes in 
              * an objects heirarchy.  E.g.  NavigationMarker is a sub-class of Marker.  If
-             * both have DrawGizmo methods, then both methods will be called.  So each concrete 
+             * both have DrawGizmo methods, then both methods will be called, so each concrete 
              * class needs to know how to draw itself with only this one draw gizmo method
              * defined.
              * 

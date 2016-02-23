@@ -69,7 +69,7 @@ namespace com.lizitt
 
         /// <summary>
         /// The number of pooled items that should be pre-instantiated. 
-        /// [Limit: 0 &lt;= value &lt= <paramref name="MaximumPoolSize"/>]
+        /// [Limit: 0 &lt;= value &lt;= <paramref name="MaximumPoolSize"/>]
         /// </summary>
         public int PreloadCount
         {
@@ -83,7 +83,7 @@ namespace com.lizitt
 
         /// <summary>
         /// The initial capacity of the pool. 
-        /// [Limit: 0 &lt;= value &lt= <paramref name="MaximumPoolSize"/>]
+        /// [Limit: 0 &lt;= value &lt;= <paramref name="MaximumPoolSize"/>]
         /// </summary>
         public int InitialPoolCapacity
         {
@@ -129,7 +129,7 @@ namespace com.lizitt
         /// </param>
         /// <param name="preloadCount">
         /// The number of objects that will be immediately instantiated and stored in the pool.
-        /// [Limit: 0 &lt;= value &lt= <paramref name="maxPoolSize"/>]
+        /// [Limit: 0 &lt;= value &lt;= <paramref name="maxPoolSize"/>]
         /// </param>
         /// <param name="resetMethod">
         /// The method used to set the object to a "not in use" status prior to storage in the pool.
@@ -137,7 +137,7 @@ namespace com.lizitt
         /// </param>
         /// <param name="initialPoolCapacity">
         /// The initial capacity of the pool. 
-        /// [Limit: 0 &lt;= value &lt= <paramref name="maxPoolSize"/>]
+        /// [Limit: 0 &lt;= value &lt;= <paramref name="maxPoolSize"/>]
         /// </param>
         public SimpleInfinitePool(int maxPoolSize,
             System.Func<T> factoryMethod, System.Action<T> resetMethod = null,

@@ -114,7 +114,7 @@ namespace com.lizitt
 
             // These next steps remove the influence of the horizontal angle from the shared
             // z-value. (The horizontal angle is derived via projection onto the xz-plane 
-            // while the vertical angle is derived via projection onto the yz-plane.  So the
+            // while the vertical angle is derived via projection onto the yz-plane, so the
             // z-value contains shared information.) 
 
             // This matix operation is equivalent to InvertTransformDirection.

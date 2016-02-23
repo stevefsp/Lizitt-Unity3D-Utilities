@@ -61,8 +61,8 @@
  * License.
  * 
  * The section of source that includes code covered by the above license is contained in the region
- * labeled "Easing Curves".  Much of the code within this section is significantly modified.  
- * So it is not the original code and any ulgliness is not necessarily from the original author.
+ * labeled "Easing Curves".  Much of the code within this section is significantly modified,  
+ * so it is not the original code and any ulgliness is not necessarily from the original author.
  * 
  */
 using UnityEngine;

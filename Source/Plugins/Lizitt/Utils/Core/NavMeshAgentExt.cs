@@ -37,7 +37,7 @@ namespace com.lizitt
         /// <para>
         /// The minimum/maximum distance is used to control the desired travel range.
         /// But the minimum distance is a soft value.  If an obstacle is hit before the desired
-        /// minimum distance then hardMinimum is used to determine success or failure.  So the
+        /// minimum distance then hardMinimum is used to determine success or failure, so the
         /// true minimum is hardMinimum.  E.g. I want to move a distance of between 10 and 20
         /// in a random direction.  If an obstacle is hit in the chosen direction, then fail if 
         /// the distance is less than 1.

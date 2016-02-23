@@ -87,8 +87,8 @@ namespace com.lizitt.editor
             // TODO: Add a simpler 5.3+ version.  (GetComponentsInChildren now works on prefabs.)
             private void LoadComponents(GameObject gameObject, System.Type typ)
             {
-                // Game object can be null when the 'search object' is unassigned.
-                // So a null is not an error.
+                // Game object can be null when the 'search object' is unassigned,
+                // so a null is not an error.
                 if (gameObject)
                 {
                     foreach (var item in gameObject.GetComponents(typ))

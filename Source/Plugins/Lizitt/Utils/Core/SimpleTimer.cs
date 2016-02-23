@@ -63,11 +63,11 @@ namespace com.lizitt
         /// </param>
         /// <param name="preloadCount">
         /// The number of objects that will be immediately instantiated and stored in the pool.
-        /// [Limit: 0 &lt;= value &lt= <paramref name="maxPoolSize"/>]
+        /// [Limit: 0 &lt;= value &lt;= <paramref name="maxPoolSize"/>]
         /// </param>
         /// <param name="initPoolCapacity">
         /// The initial capacity of the pool. 
-        /// [Limit: 0 &lt;= value &lt= <paramref name="maxPoolSize"/>]
+        /// [Limit: 0 &lt;= value &lt;= <paramref name="maxPoolSize"/>]
         public static void ResetPool(
             int maxPoolSize = 50, int preloadCount = 0, int initCapacity = 10)
         {

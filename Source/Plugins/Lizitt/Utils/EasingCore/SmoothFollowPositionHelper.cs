@@ -46,7 +46,7 @@ namespace com.lizitt
         /// </summary>
         /// <remarks>
         /// <para>
-        /// <paramref name="settings"/> is stored as a reference, not a copy.  So changes to
+        /// <paramref name="settings"/> is stored as a reference, not a copy, so changes to
         /// the settings object will be reflected in the interpolator.
         /// </para>
         /// </remarks>

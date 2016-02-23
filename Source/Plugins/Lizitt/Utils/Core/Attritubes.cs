@@ -29,7 +29,7 @@ namespace com.lizitt
     /// <remarks>
     /// <para>
     /// Similar to the built in Range attribute, except it only uses a normal edit box, 
-    /// rather than a slider.  So it is more suitable for large range properties.
+    /// rather than a slider, so it is more suitable for large range properties.
     /// </para>
     /// </remarks>
     public class ClampAttribute

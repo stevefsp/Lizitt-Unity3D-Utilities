@@ -156,7 +156,7 @@ namespace com.lizitt
         /// </summary>
         /// <remarks>
         /// <para>
-        /// A null material will be ignored.  So it is not possible to use the method to apply 
+        /// A null material will be ignored, so it is not possible to use the method to apply 
         /// a null material.
         /// </para>
         /// <para>
