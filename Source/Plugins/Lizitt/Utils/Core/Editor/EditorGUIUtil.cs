@@ -30,7 +30,7 @@ namespace com.lizitt.editor
     /// </summary>
     public static class EditorGUIUtil
     {
-        #region Label Styles
+        #region GUI Styles
 
         private static GUIStyle m_RedLabel;
 
@@ -46,6 +46,7 @@ namespace com.lizitt.editor
                     m_RedLabel = new GUIStyle(EditorStyles.label);
                     m_RedLabel.fontStyle = FontStyle.Bold;
                     m_RedLabel.normal.textColor = Color.red;
+                    m_RedLabel.name = "RedBoldLabel";
                 }
 
                 return m_RedLabel;
@@ -66,9 +67,31 @@ namespace com.lizitt.editor
                     m_RedPopup = new GUIStyle(EditorStyles.popup);
                     m_RedPopup.normal.textColor = Color.red;
                     m_RedPopup.focused.textColor = Color.red;
+                    m_RedPopup.name = "RedPopup";
                 }
 
                 return m_RedPopup;
+            }
+        }
+
+        private static GUIStyle m_RedButton;
+
+        /// <summary>
+        /// A red button style.
+        /// </summary>
+        public static GUIStyle RedButton
+        {
+            get
+            {
+                if (m_RedButton == null)
+                {
+                    m_RedButton = new GUIStyle(GUI.skin.button);
+                    m_RedButton.normal.textColor = Color.red;
+                    m_RedButton.focused.textColor = Color.red;
+                    m_RedButton.name = "RedButton";
+                }
+
+                return m_RedButton;
             }
         }
 
@@ -86,9 +109,31 @@ namespace com.lizitt.editor
                     m_YellowLabel = new GUIStyle(EditorStyles.label);
                     m_YellowLabel.fontStyle = FontStyle.Bold;
                     m_YellowLabel.normal.textColor = Color.yellow;
+                    m_YellowLabel.name = "YellowBoldLabel";
                 }
 
                 return m_YellowLabel;
+            }
+        }
+
+        private static GUIStyle m_YellowButton;
+
+        /// <summary>
+        /// A yellow button style.
+        /// </summary>
+        public static GUIStyle YellowButton
+        {
+            get
+            {
+                if (m_YellowButton == null)
+                {
+                    m_YellowButton = new GUIStyle(GUI.skin.button);
+                    m_YellowButton.normal.textColor = Color.yellow;
+                    m_YellowButton.focused.textColor = Color.yellow;
+                    m_YellowButton.name = "YellowButton";
+                }
+
+                return m_YellowButton;
             }
         }
 
@@ -443,7 +488,7 @@ namespace com.lizitt.editor
 
             arrayProperty.DeleteArrayElementAtIndex(index);
 
-            // The above call may just null the content of the element.  So need to really delete 
+            // The above call may just null the content of the element, so need to really delete 
             // it.
             if (count == arrayProperty.arraySize)
                 arrayProperty.DeleteArrayElementAtIndex(index);
