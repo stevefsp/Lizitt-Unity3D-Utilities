@@ -143,6 +143,7 @@ namespace com.lizitt.editor
         /// <summary>
         /// A bold label style.
         /// </summary>
+        [System.Obsolete("Use EditorStyles.boldLabel instead.")]
         public static GUIStyle BoldLabel
         {
             get
@@ -165,7 +166,8 @@ namespace com.lizitt.editor
 
         private static int IndentAmount = 2;
 
-        [System.Obsolete("Use the standard Unity Header attribute to mimic this behavior.")]
+        [System.Obsolete("Mostly replaced by HeaderAttribute.  Also, EditorGUI.indentLevel doesn't play well with"
+            + " EditorGUILayout horizontal layout methods.")]
         public static void BeginSection(string headingLabel)
         {
             EditorGUILayout.Separator();
@@ -175,7 +177,8 @@ namespace com.lizitt.editor
             EditorGUI.indentLevel += IndentAmount;
         }
 
-        [System.Obsolete("Use the standard Unity Header attribute to mimic this behavior.")]
+        [System.Obsolete("Mostly replaced by HeaderAttribute.  Also, EditorGUI.indentLevel doesn't play well with"
+            + " EditorGUILayout horizontal layout methods.")]
         public static void EndSection()
         {
             EditorGUI.indentLevel -= IndentAmount;

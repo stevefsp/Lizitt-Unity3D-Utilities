@@ -180,5 +180,31 @@ namespace com.lizitt.editor
             if (label != null)
                 EditorGUI.EndProperty();
         }
+
+        public Component OnGUI(Rect position, Component currentValue, GUIContent label, GameObject gameObject)
+        {
+            if (m_ListInfo == null || m_ListInfo.GameObject != gameObject)
+            {
+                m_ListInfo = m_ListInfo == null ? new Info() : m_ListInfo;
+                m_ListInfo.Refresh(gameObject, m_ComponentType, Required);
+            }
+
+            int iOrig = 0;
+            GUIStyle style = EditorStyles.popup;
+
+            if (currentValue)
+            {
+                iOrig = m_ListInfo.Items.IndexOf(currentValue);
+                iOrig = iOrig == -1 ? 0 : iOrig;
+            }
+            else if (Required)
+                style = EditorGUIUtil.RedPopup;
+
+            int iSel = (label == null)
+                ? EditorGUI.Popup(position, iOrig, m_ListInfo.ItemLabels, style)
+                : EditorGUI.Popup(position, label, iOrig, m_ListInfo.ItemLabels, style);
+
+            return m_ListInfo.Items[iSel];
+        }
     }
 }

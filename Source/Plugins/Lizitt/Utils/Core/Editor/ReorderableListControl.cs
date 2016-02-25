@@ -97,6 +97,9 @@ namespace com.lizitt.editor
         /// <summary>
         /// The draw height for the list.
         /// </summary>
+        /// <remarks>
+        /// <para>Can be used with EditorGUILayout.GetControlRect() to get a position Rect.</para>
+        /// </remarks>
         /// <param name="listProperty">
         /// The array property. (The same field used in the constructor.)
         /// </param>
@@ -110,6 +113,12 @@ namespace com.lizitt.editor
         /// <summary>
         /// Draw the GUI element.
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Depending on the situation, it may be necessary to use SerializedObject.Update()
+        /// and SerializedObject.ApplyModifiedProperties() to record changes.
+        /// </para>
+        /// </remarks>
         /// <param name="position">The position of the GUI element.</param>
         /// <param name="listProperty">
         /// The array property. (The same field used in the constructor.)

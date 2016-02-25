@@ -29,6 +29,33 @@ namespace com.lizitt.editor
 {
     public class RendererMaterialPtrControl
     {
+        #region Property Access
+
+        private const string RendererFieldName = "m_Renderer";
+        private const string IndexFieldName = "m_MaterialIndex";
+
+        /// <summary>
+        /// Gets the renderer property from a <see cref="RendererMaterialPtr"/> property.
+        /// </summary>
+        /// <param name="property">A <see cref="RendererMaterialPtr"/> property</param>
+        /// <returns>The renderer property from a <see cref="RendererMaterialPtr"/> property.</returns>
+        public static SerializedProperty FindRendererProperty(SerializedProperty property)
+        {
+            return property.FindPropertyRelative(RendererFieldName);
+        }
+
+        /// <summary>
+        /// Gets the index property from a <see cref="RendererMaterialPtr"/> property.
+        /// </summary>
+        /// <param name="property">A <see cref="RendererMaterialPtr"/> property</param>
+        /// <returns>The index property from a <see cref="RendererMaterialPtr"/> property.</returns
+        public static SerializedProperty FindIndexProperty(SerializedProperty property)
+        {
+            return property.FindPropertyRelative(IndexFieldName);
+        }
+
+        #endregion
+
         #region Label Related Members
 
         private static readonly GUIContent RendererLabel = new GUIContent(
@@ -40,7 +67,7 @@ namespace com.lizitt.editor
         private static readonly GUIContent[] NoneAvailableLabels = 
             new GUIContent[1] { new GUIContent("<None Available>") };
 
-        public static readonly GUIContent NoneMaterial =
+        private static readonly GUIContent NoneMaterial =
             new GUIContent("None", "Renderer not assigned.");
 
         private static GUIContent[] GetMaterialLabels(Renderer renderer)
@@ -69,8 +96,8 @@ namespace com.lizitt.editor
 
             public Props(SerializedProperty property)
             {
-                renderer = property.FindPropertyRelative("m_Renderer");
-                index = property.FindPropertyRelative("m_MaterialIndex");
+                renderer = FindRendererProperty(property);
+                index = FindIndexProperty(property);
             }
         }
 

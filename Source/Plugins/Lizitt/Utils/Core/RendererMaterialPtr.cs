@@ -108,7 +108,11 @@ namespace com.lizitt
             get
             {
                 if (IsDefined)
-                    return m_Renderer.sharedMaterials[m_MaterialIndex];
+                {
+                    var mats = m_Renderer.sharedMaterials;
+                    if (m_MaterialIndex < mats.Length)  // Check is needed so editors don't get stuck in exceptions.
+                        return mats[m_MaterialIndex];
+                }
 
                 return null;
             }
