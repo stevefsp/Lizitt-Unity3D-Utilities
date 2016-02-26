@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2015 Stephen A. Pratt
+ * Copyright (c) 2015-2016 Stephen A. Pratt
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,17 @@ namespace com.lizitt
     public abstract class BaseNavigationMarker
         : Marker, IEnumerable<BaseNavigationMarker>
     {
+        /*
+         * Design notes:
+         * 
+         * This base class allows navigation markers of all typs to be linked together.
+         * 
+         * Bug:
+         * 
+         * There is a bug as of Unity 5.3.1 where this abstract class shows up in the editor Gizmos list, but 
+         * there is no effect.
+         */
+
         /// <summary>
         /// The standard tolerance to use when matching rotation.
         /// </summary>
@@ -53,22 +64,10 @@ namespace com.lizitt
         /// </remarks>
         /// <param name="direction">The direction to test.</param>
         /// <param name="tolerance">The angle tolerance in degrees.</param>
-        /// <returns>True if the direction vector matches the rotation required by the marker 
-        /// within the specified tolerance.</returns>
+        /// <returns>
+        /// True if the direction vector matches the rotation required by the marker within the specified tolerance.
+        /// </returns>
         public abstract bool IsAtRotation(Vector3 direction, float tolerance = DirectionTolerance);
-
-        /*
-         * Warning for IsAtRotation: 
-         * 
-         * As of Unity 5.0.2 a 'Key duplication' Mono compile error may occur when 
-         * a script uses the default tolerance.  E.g. myMarker.IsAtRotation(myDirection)
-         * 
-         * The workaround is to explicitly provide the tolerance.
-         * E.g. myMarker.IsAtRotation(myDirection, 5)
-         * 
-         * This Mono-only bug began to exhibit when this abstract class was inserted between
-         * Marker and NavigationMarker.  Up until that point there were no problems.
-         */
 
         /// <summary>
         /// Determines whether the specified position and direction is considered on mark.
@@ -78,13 +77,34 @@ namespace com.lizitt
         /// <param name="direction">The direction to test.</param>
         /// <param name="directionTolerance">The angle tolerance in degrees.</param>
         /// <returns>True if the values meet the range and rotation checks.</returns>
-        public abstract bool IsOnMark(
-            Vector3 position, Vector3 direction, float directionTolerance = DirectionTolerance);
+        public abstract bool IsOnMark(Vector3 position, Vector3 direction, float directionTolerance);
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // HACK: Unity 5.3.1: Workaround for Mono's optional parameter key duplication bug.
+
+        /// <summary>
+        /// Determines whether the specified position and direction is considered on mark using 
+        /// <see cref="DirectionTolerance"/>. (Performs both the range and rotation checks.)
+        /// </summary>
+        /// <param name="position">The position to test.</param>
+        /// <param name="direction">The direction to test.</param>
+        /// <returns>True if the values meet the range and rotation checks.</returns>
+        public bool IsOnMark(Vector3 position, Vector3 direction)
+        {
+            return IsOnMark(position, direction, DirectionTolerance);
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         #endregion
 
         #region Iteration Members
 
+        /// <summary>
+        /// Get the link at the specified index.
+        /// </summary>
+        /// <param name="index">The index. [0 &lt;= value &lt; <see cref="LinkCount"/></param>
+        /// <returns>The link, or null if there is none.</returns>
         public abstract BaseNavigationMarker GetLink(int index);
 
         /// <summary>

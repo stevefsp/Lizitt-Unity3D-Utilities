@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2015 Stephen A. Pratt
+ * Copyright (c) 2015-2016 Stephen A. Pratt
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -60,5 +60,16 @@ namespace com.lizitt
             get { return m_Offset; }
             set { m_Offset = value; }
         }
+
+        #region Gizmo
+
+        void OnDrawGizmos()
+        {
+            Gizmos.color = Color;
+            Gizmos.matrix = transform.localToWorldMatrix;
+            Gizmos.DrawCube(PositionOffset, new Vector3(1, 0.01f, 1));
+        }
+
+        #endregion
     }
 }

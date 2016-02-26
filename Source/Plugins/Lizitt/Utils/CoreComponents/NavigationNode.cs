@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2015 Stephen A. Pratt
+ * Copyright (c) 2015-2016 Stephen A. Pratt
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,8 +29,8 @@ namespace com.lizitt
     /// </summary>
     /// <remarks>
     /// <para>
-    /// This is similar to a waypoint graph, but each node can have an arbitrary number of
-    /// exit nodes instead of just one.
+    /// This is similar to a waypoint graph, but each node can have an arbitrary number of exit nodes instead 
+    /// of just one.
     /// </para>
     /// </remarks>
     public class NavigationNode
@@ -46,8 +46,7 @@ namespace com.lizitt
         /// Gets the specified link's node.
         /// </summary>
         /// <param name="index">
-        /// The index of the link to retrieve.  
-        /// [Limits: 0 &lt;= value &lt; <see cref="LinkCount"/>]
+        /// The index of the link to retrieve. [Limits: 0 &lt;= value &lt; <see cref="LinkCount"/>]
         /// </param>
         /// <returns>The specified link's node.</returns>
         public BaseNavigationMarker this[int index]
@@ -55,11 +54,19 @@ namespace com.lizitt
             get { return m_Links[index]; }
         }
 
+        /// <summary>
+        /// Get the link at the specified index.
+        /// </summary>
+        /// <param name="index">The index. [0 &lt;= value &lt; <see cref="LinkCount"/></param>
+        /// <returns>The link, or null if there is none.</returns>
         public override BaseNavigationMarker GetLink(int index)
         {
             return m_Links[index];
         }
 
+        /// <summary>
+        /// The number of outgoing links.
+        /// </summary>
         public override int LinkCount
         {
             get {return m_Links.Length; }
@@ -85,26 +92,20 @@ namespace com.lizitt
         /// <summary>
         /// The color to use for Gizmos.
         /// </summary>
-        public override Color GizmoColor
+        protected override Color GizmoColor
         {
             get { return ColorUtil.Cyan; }
         }
 
-        /// <summary>
-        /// Draw the gizmo.  (Only call from Gizmo-legal methods.)
-        /// </summary>
-        public override void DrawGizmo()
+        protected override void OnDrawGizmos()
         {
             foreach (var item in this)
             {
                 if (item)
-                {
-                    AnnotationUtil.DrawArrowGizmo(
-                        transform.position, item.transform.position, 0, 0.5f, GizmoColor);
-                }
+                    AnnotationUtil.DrawArrowGizmo(transform.position, item.transform.position, 0, 0.5f, GizmoColor);
             }
 
-            base.DrawGizmo();
+            base.OnDrawGizmos();
         }
 
         #endregion

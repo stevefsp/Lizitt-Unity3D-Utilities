@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2015 Stephen A. Pratt
+ * Copyright (c) 2015-2016 Stephen A. Pratt
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -64,20 +64,19 @@ namespace com.lizitt
                 trans.MoveToSafe(transform.position, Space.World);
         }
 
-        /// <summary>
-        /// The color to use for gizmos.
-        /// </summary>
-        public virtual Color GizmoColor
+        #region Gizmo Members
+
+        protected virtual void OnDrawGizmos()
         {
-            get { return ColorUtil.Blue; }
+            DrawStandardGizmo(transform, Range, GizmoColor, false);
         }
 
         /// <summary>
-        /// Draw the gizmo.  (Only call from Gizmo-legal methods.)
+        /// The color to use for gizmos.
         /// </summary>
-        public virtual void DrawGizmo()
+        protected virtual Color GizmoColor
         {
-            DrawStandardGizmo(transform, Range, GizmoColor, false);
+            get { return ColorUtil.Blue; }
         }
 
         /// <summary>
@@ -95,5 +94,7 @@ namespace com.lizitt
             AnnotationUtil.DrawCircleGizmo(transform, Vector3.zero, range, color);
             AnnotationUtil.DrawMarkerGizmo(transform, Vector3.zero, color, includeRotation);
         }
+
+        #endregion
     }
 }

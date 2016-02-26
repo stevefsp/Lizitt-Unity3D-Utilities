@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2015 Stephen A. Pratt
+ * Copyright (c) 2015-2016 Stephen A. Pratt
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -127,17 +127,20 @@ namespace com.lizitt
         /// <summary>
         /// The color to use for gizmos.
         /// </summary>
-        public override Color GizmoColor
+        protected override Color GizmoColor
         {
             get { return ColorUtil.Magenta; }
         }
 
-        /// <summary>
-        /// Draw the gizmo.  (Only call reference Gizmo-legal methods.)
-        /// </summary>
-        public override void DrawGizmo()
+        protected override void OnDrawGizmos()
         {
-            DrawStandardGizmo(transform, Range, GizmoColor, m_UseRotation);
+            if (m_UseRotation)
+            {
+                AnnotationUtil.DrawArrowGizmo(
+                        transform.position, transform.position + transform.forward * Range, 0, 0.1f, GizmoColor);
+            }
+
+            base.OnDrawGizmos();
         }
 
         #endregion

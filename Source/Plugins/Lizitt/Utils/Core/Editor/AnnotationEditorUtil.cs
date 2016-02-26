@@ -24,6 +24,7 @@ using UnityEditor;
 namespace com.lizitt.editor
 {
     [InitializeOnLoad]
+    [System.Obsolete("AnnotationUtil.drawAlways is obsolete, which obsoltes this class.")]
     public static class AnnotationEditorUtil
     {
         private const string DrawPref = "com.lizitt.u3d.DrawAnnotations";
