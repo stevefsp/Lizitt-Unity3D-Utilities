@@ -51,6 +51,9 @@ namespace com.lizitt
         /// </returns>
         public static bool IsUnityDestroyed<T>(this T obj) where T : class
         {
+            // Note: This method is here instead of in Extensions because it is useful to call it directly as
+            // partr of a null check.
+
             if (obj != null)
             {
                 if (obj is Object)

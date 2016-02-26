@@ -44,14 +44,35 @@ namespace com.lizitt.editor
     /// </summary>
     public static class EditorUtil
     {
+        #region Menu Related Menus
+
+        /// <summary>
+        /// The tools menu.
+        /// </summary>
+        public const string BaseToolsMenu = "Tools/";
+
+        /// <summary>
+        /// The root Lizitt menu name.
+        /// </summary>
+        public const string LizittToolsMenu = BaseToolsMenu + "Lizitt/";
+
+        /// <summary>
+        /// The Lizitt view menu name.
+        /// </summary>
+        public const string ViewMenu = LizittToolsMenu + "View/";
+
+        #region Obsolete
+
         /// <summary>
         /// The base priority for the Lizitt asset creation menu.
         /// </summary>
+        [System.Obsolete("No longer in use")]
         public const int AssetGroup = 1000;
 
         /// <summary>
         /// The base priority for the Lizitt game object creation menu.
         /// </summary>
+        [System.Obsolete("No longer in use")]
         public const int GameObjectGroup = 2000;
 
         /// <summary>
@@ -59,34 +80,37 @@ namespace com.lizitt.editor
         /// </summary>
         public const int ViewGroup = 3000;
 
+        [System.Obsolete("No longer in use.")]
         public const int UtilityGroup = 4000;
 
         /// <summary>
         /// The base priority for the Lizitt manager menu group.
         /// </summary>
+        [System.Obsolete("No longer in use")]
         public const int ManagerGroup = 9000;
 
         /// <summary>
         /// The base priority for the global menu group.
         /// </summary>
+        [System.Obsolete("No longer in use")]
         public const int GlobalGroup = 10000;
 
-        /// <summary>
-        /// The root Lizitt menu name.
-        /// </summary>
-        public const string MainMenu = "Tools/Lizitt/";
+        [System.Obsolete("No longer in use")]
+        public const string AssetCreateMenu = LizittToolsMenu + "Create Asset/";
 
-        /// <summary>
-        /// The Lizitt view menu name.
-        /// </summary>
-        public const string ViewMenu = MainMenu + "View/";
-
-        public const string AssetCreateMenu = MainMenu + "Create Asset/";
-
+        [System.Obsolete("No longer in use.  Superceeded by LizittUtil members.")]
         public const string UnityAssetCreateMenu = "Assets/Create/Lizitt/";
 
-        public const string UtilityMenu = MainMenu + "Utilities/";
+        [System.Obsolete("No longer in use")]
+        public const string UtilityMenu = LizittToolsMenu + "Utilities/";
 
+        #endregion
+
+        #endregion
+
+        /// <summary>
+        /// The storage location for global assets.
+        /// </summary>
         public const string GlobalAssetPath = "Assets/GlobalAssets/";
 
         // TODO: Create a generic global asset method in the main EditorUtil class, then have
@@ -404,7 +428,7 @@ namespace com.lizitt.editor
         }
 
         /// <summary>
-        /// Get the serialized field information a Monobehaviour script.
+        /// Get the serialized field information for a Monobehaviour script.
         /// </summary>
         /// <remarks>
         /// <para>
