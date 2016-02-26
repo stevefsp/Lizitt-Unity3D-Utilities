@@ -354,7 +354,7 @@ namespace com.lizitt.editor
                 var iOrig = Mathf.Clamp(indexProperty.intValue, 0, labels.Length);
 
                 var iSel = EditorGUI.Popup(position, TargetLabel, iOrig, labels);
-                if (iSel != iOrig)
+                if (iSel != indexProperty.intValue)  // Use actual value, not the clamped value.
                     indexProperty.intValue = iSel;
             }
         }
