@@ -99,8 +99,14 @@ namespace com.lizitt
         {
             if (target.runtimeAnimatorController != source.runtimeAnimatorController)
             {
-                // Can't force this.
+                // Ignore the force parameter.
                 Debug.LogError("Different runtime animator controllers.", target);
+                return false;
+            }
+
+            if (!Application.isPlaying)
+            {
+                Debug.LogError("Can only synchronize runtime animator controllers in play mode.", target);
                 return false;
             }
 
