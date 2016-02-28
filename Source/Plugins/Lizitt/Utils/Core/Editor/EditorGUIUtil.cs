@@ -478,6 +478,39 @@ namespace com.lizitt.editor
             return val;
         }
 
+        /// <summary>
+        /// Draws a popup wit the enumeration names sorted.
+        /// </summary>
+        /// <param name="position">The draw position.</param>
+        /// <param name="selectedValue">The current value of the mask field.</param>
+        /// <param name="label">The field label.</param>
+        /// <param name="enumTyp">The type of enum to display.</param>
+        /// <returns>The selected enumeration value.</returns>
+        public static int DrawSortedEnumPopup(Rect position, GUIContent label, int selectedValue, System.Type enumTyp)
+        {
+            EditorGUI.LabelField(EditorGUIUtil.LabelPosition(position, EditorGUIUtility.labelWidth), label);
+
+            return DrawEnumSortedPopup(EditorGUIUtil.LabelAfter(
+                position, EditorGUIUtility.labelWidth, 0), selectedValue, enumTyp);
+        }
+
+        /// <summary>
+        /// Draws a popup wit the enumeration names sorted.  (Without a label.)
+        /// </summary>
+        /// <param name="position">The draw position.</param>
+        /// <param name="selectedValue">The current value of the mask field.</param>
+        /// <param name="enumTyp">The type of enum to display.</param>
+        /// <returns>The selected enumeration value.</returns>
+        public static int DrawEnumSortedPopup(Rect position, int selectedValue, System.Type enumTyp)
+        {
+            var itemNames = System.Enum.GetNames(enumTyp);
+            var itemValues = System.Enum.GetValues(enumTyp) as int[];
+            System.Array.Sort(itemNames, itemValues);
+            System.Array.Sort(itemNames);
+
+            return EditorGUI.IntPopup(position, selectedValue, itemNames, itemValues);
+        }
+
         #endregion
 
         #region Old Style Array Handling

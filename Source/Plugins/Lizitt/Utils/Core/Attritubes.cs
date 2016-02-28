@@ -155,7 +155,6 @@ namespace com.lizitt
         /// </summary>
         public readonly bool displayValue;
 
-
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -171,6 +170,33 @@ namespace com.lizitt
             this.enumType = enumType;
             this.sort = sort;
             this.displayValue = displaValue;
+        }
+    }    
+    
+    /// <summary>
+    /// Displays an field popup with the enumeration names sorted.
+    /// </summary>
+    public class SortedEnumPopupAttribute
+        : PropertyAttribute
+    {
+        /// <summary>
+        /// The enum type.
+        /// </summary>
+        public readonly System.Type enumType;
+
+        /// <summary>
+        /// If true, include the label, otherwise only diplay the enum selector.
+        /// </summary>
+        public readonly bool includeLabel;
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="enumType">The enum type.</param>
+        public SortedEnumPopupAttribute(System.Type enumType, bool includeLabel = true)
+        {
+            this.enumType = enumType;
+            this.includeLabel = includeLabel;
         }
     }
 

@@ -125,9 +125,8 @@ namespace com.lizitt.editor
         }
     }
 
-
     /// <summary>
-    /// Draws fields marked with the <see cref="EnumFlagsAttribute"/>.
+    /// Draws fields marked with <see cref="EnumFlagsAttribute"/>.
     /// </summary>
     [CustomPropertyDrawer(typeof(EnumFlagsAttribute))]
     public class EnumFlagsAttributeDrawer 
@@ -144,7 +143,6 @@ namespace com.lizitt.editor
             var attr = attribute as EnumFlagsAttribute;
 
             label = EditorGUI.BeginProperty(position, label, property);
-            label.text = label.text;
             if (attr.displayValue)
                 label.text += " (" + property.intValue + ")";
 
@@ -155,6 +153,40 @@ namespace com.lizitt.editor
 
             if (EditorGUI.EndChangeCheck())
                 property.intValue = val;
+
+            EditorGUI.EndProperty();
+        }
+    }
+
+    /// <summary>
+    /// Draws fields marked with <see cref="SortedEnumPopupAttribute"/>.
+    /// </summary>
+    [CustomPropertyDrawer(typeof(SortedEnumPopupAttribute))]
+    public class SortedEnumPopupAttributeDrawer
+        : PropertyDrawer
+    {
+        /// <summary>
+        /// See Unity documentation.
+        /// </summary>
+        /// <param name="position">See Unity documentation.</param>
+        /// <param name="property">See Unity documentation.</param>
+        /// <param name="label">See Unity documentation.</param>
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            var attr = attribute as SortedEnumPopupAttribute;
+
+            label = EditorGUI.BeginProperty(position, label, property);
+
+            EditorGUI.BeginChangeCheck();
+
+            int val = attr.includeLabel
+                ? EditorGUIUtil.DrawSortedEnumPopup(position, label, property.intValue, attr.enumType)
+                : EditorGUIUtil.DrawEnumSortedPopup(position, property.intValue, attr.enumType);
+
+            if (EditorGUI.EndChangeCheck())
+                property.intValue = val;
+
+            EditorGUI.EndProperty();
         }
     }
 
