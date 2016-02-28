@@ -61,8 +61,9 @@
  * License.
  * 
  * The section of source that includes code covered by the above license is contained in the region
- * labeled "Easing Curves".  Much of the code within this section is significantly modified,  
- * so it is not the original code and any ulgliness is not necessarily from the original author.
+ * labeled "Easing Curves".  Much of the code within this section is significantly modified (mostly 
+ * reformatting and method name changes to match C# standards), so it is not the original code and 
+ * any ulgliness is not necessarily from the original author.
  * 
  */
 using UnityEngine;
@@ -83,16 +84,15 @@ namespace com.lizitt
     /// </summary>
     /// <remarks>
     /// <para>
-    /// Most of these functions are similar or the same as the common easing functions found in 
-    /// CSS3, Javascript, jQuery, etc. Examples of most of the algorithms can be found at 
-    /// <a href="http://easings.net/">easings.net</a>.  You can hover over the example graphs 
-    /// to see a demonstration the algorithm.  More details and links can be found at
-    /// <a href="http://www.robertpenner.com/easing/">Robert Penner's Easing Site</a>.  
+    /// Most of these functions are similar or the same as the common easing functions found in CSS3, Javascript, 
+    /// jQuery, etc. Examples of most of the algorithms can be found at <a href="http://easings.net/">easings.net</a>. 
+    /// You can hover over the example graphs to see a demonstration the algorithm.  More details and links can be 
+    /// found at <a href="http://www.robertpenner.com/easing/">Robert Penner's Easing Site</a>.  
     /// </para>
     /// <para>
-    /// The general naming convention uses 'in' to mean 'special behavior at the start' and 
-    /// 'out' to mean 'special behavior change at the end'.  For example, an algorithm may
-    /// have slower change at the beginning, special occilations at the end, etc.
+    /// The general naming convention uses 'in' to mean 'special behavior at the start' and 'out' to mean 'special
+    /// behavior change at the end'.  For example, an algorithm may have slower change at the beginning, special
+    /// occilations at the end, etc.
     /// </para>
     /// </remarks>
     public static class Easing
@@ -185,8 +185,8 @@ namespace com.lizitt
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Useful for interpolating angles such as Transform.eulerAngles so easing will
-        /// occur in the correct (shortest) direction.
+        /// Useful for interpolating angles such as Transform.eulerAngles so easing will occur in the 
+        /// correct (shortest) direction.
         /// </para>
         /// </remarks>
         /// <param name="start">The value to ease from. (Value at <see cref="time"/> 0.0)</param>
@@ -216,8 +216,7 @@ namespace com.lizitt
 
         #region Easing Curves  (Covered by the Easing Equations License)
 
-        // Note: The structure of these methods (names and parameters) have been altered from 
-        // their original form.
+        // Note: The structure of these methods (names and parameters) have been altered from their original form.
 
         /// <summary>
         /// Spring easing.
@@ -673,8 +672,7 @@ namespace com.lizitt
                 s = p / (2 * Mathf.PI) * Mathf.Asin(end / a);
             }
 
-            return -(a * Mathf.Pow(2, 10 * (value -= 1)) * Mathf.Sin((value * d - s) 
-                * (2 * Mathf.PI) / p)) + start;
+            return -(a * Mathf.Pow(2, 10 * (value -= 1)) * Mathf.Sin((value * d - s) * (2 * Mathf.PI) / p)) + start;
         }
 
         /// <summary>
@@ -707,8 +705,7 @@ namespace com.lizitt
                 s = p / (2 * Mathf.PI) * Mathf.Asin(end / a);
             }
 
-            return (a * Mathf.Pow(2, -10 * value) * Mathf.Sin((value * d - s) 
-                * (2 * Mathf.PI) / p) + end + start);
+            return (a * Mathf.Pow(2, -10 * value) * Mathf.Sin((value * d - s) * (2 * Mathf.PI) / p) + end + start);
         }
 
         /// <summary>
@@ -743,12 +740,12 @@ namespace com.lizitt
 
             if (value < 1)
             {
-                return -0.5f * (a * Mathf.Pow(2, 10 * (value -= 1))
-                    * Mathf.Sin((value * d - s) * (2 * Mathf.PI) / p)) + start;
+                return -0.5f * (a * Mathf.Pow(2, 10 * (value -= 1)) * Mathf.Sin((value * d - s) * (2 * Mathf.PI) / p)) 
+                    + start;
             }
 
-            return a * Mathf.Pow(2, -10 * (value -= 1)) * Mathf.Sin((value * d - s) 
-                * (2 * Mathf.PI) / p) * 0.5f + end + start;
+            return a * Mathf.Pow(2, -10 * (value -= 1)) * Mathf.Sin((value * d - s) * (2 * Mathf.PI) / p) 
+                * 0.5f + end + start;
         }
 
         #endregion
