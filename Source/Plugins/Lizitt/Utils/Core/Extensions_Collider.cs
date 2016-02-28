@@ -38,7 +38,7 @@ namespace com.lizitt
          * TranformExt, etc.  
          * 
          * Only when a particular type deserves its own utility class will extensions be
-         * considered for movement.  (See: AnimatorUtil, ColorUtil, etc.)
+         * considered for movement.  (See: MecanimUtil, ColorUtil, etc.)
          */
 
         /// <summary>

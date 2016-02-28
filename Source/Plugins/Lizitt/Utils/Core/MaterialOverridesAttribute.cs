@@ -51,8 +51,8 @@ namespace com.lizitt
         public string SearchPropertyPath { get; set; }
 
         /// <summary>
-        /// If true, then only permit selection of local components.  (E.g. Components on or 
-        /// under the search target.)  Otherwise allow any renderer to be assigned.
+        /// If true, then only permit selection of components on or  under the search target.  
+        /// Otherwise allow any renderer to be assigned.
         /// </summary>
         public bool LocalOnly { get; set; }
 
