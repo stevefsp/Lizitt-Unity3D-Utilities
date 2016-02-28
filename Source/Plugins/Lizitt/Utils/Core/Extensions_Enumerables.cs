@@ -183,7 +183,7 @@ namespace com.lizitt
         /// </para>
         /// <para>
         /// This method is optimizited to minimize allocations, properly detect destroyed
-        /// Unity Objects, and maintain the order of the target array.  It is especially useful 
+        /// UnityEngine.Objects, and maintain the order of the target array.  It is especially useful 
         /// for refreshing component lists. E.g. Perform a component search then add 
         /// only the newly found components to an existing component list, without disrupting 
         /// the order.

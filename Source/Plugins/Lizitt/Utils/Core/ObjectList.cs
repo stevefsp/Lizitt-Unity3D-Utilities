@@ -46,7 +46,7 @@ namespace com.lizitt
         /// <para>
         /// Sometimes the scope of the objects in the array is wider than what should be assigned.  If so, this
         /// property will restrict the the assignments to only what can be cast to this type.  For example,
-        /// <see cref="ObjectList"/> stores all elements as Unity Objects.  But an extension may want only IAgent
+        /// <see cref="ObjectList"/> stores all elements as UnityEngine.Objects.  But an extension may want only IAgent
         /// objects to be stored in the list, so the required type would be <c>typeOf(IAgent)</c>.  If there is no
         /// need for this type of validation, then set this property to null.
         /// </para>
@@ -90,7 +90,7 @@ namespace com.lizitt
     }
 
     /// <summary>
-    /// A list of distinct Unity Objects of the specified type.
+    /// A list of distinct UnityEngine.Objects of the specified type.
     /// </summary>
     /// <remarks>
     /// <para>
@@ -103,7 +103,7 @@ namespace com.lizitt
     /// </para>
     /// <para>
     /// This class is useful for serialization of objects that are known to be Unity objects
-    /// but present a non-Unity Object interface during normal use.  E.g. A list of Unity objects
+    /// but present a non-UnityEngine.Object interface during normal use.  E.g. A list of Unity objects
     /// that all implement the IAgent interface.
     /// </para>
     /// <para>
@@ -176,11 +176,11 @@ namespace com.lizitt
         /// </summary>
         /// <remarks>
         /// <para>
-        /// The value must be a non-null, non-destroyed Unity Object that is not already in the list.
+        /// The value must be a non-null, non-destroyed UnityEngine.Object that is not already in the list.
         /// </para>
         /// </remarks>
         /// <param name="index">The index.</param>
-        /// <param name="value">A valid Unity Object that is not already in the list. (Required)</param>
+        /// <param name="value">A valid UnityEngine.Object that is not already in the list. (Required)</param>
         /// <param name="refObj">An object reference to use for more error reporting. (Optional)</param>
         /// <returns>True if the item was successfully added.</returns>
         public bool SetItem(int index, T value, Object refObj = null)
@@ -188,7 +188,7 @@ namespace com.lizitt
             var obj = value as Object;
             if (!obj)
             {
-                Debug.LogError("Item is null, destroyed, or not a Unity Object.", refObj);
+                Debug.LogError("Item is null, destroyed, or not a UnityEngine.Object.", refObj);
                 return false;
             }
             if (m_Items.IndexOf(obj) != -1)
@@ -207,14 +207,14 @@ namespace com.lizitt
         /// </summary>
         /// <remarks>
         /// <para>
-        /// The item must be a non-null, non-destroyed Unity Object
+        /// The item must be a non-null, non-destroyed UnityEngine.Object
         /// </para>
         /// <para>
         /// Duplicates are not allowed.  If an attempt to add a duplicate is detected, its current index will 
         /// be returned.
         /// </para>
         /// </remarks>
-        /// <param name="item">A valid Unity Object. (Required)</param>
+        /// <param name="item">A valid UnityEngine.Object. (Required)</param>
         /// <param name="refObj">An object reference to use for error reporting. (Optional)</param>
         /// <returns>The index where the items was stored, or -1 if the item was rejected.</returns>
         public int Add(T item, Object refObj = null)
@@ -222,7 +222,7 @@ namespace com.lizitt
             var obj = item as Object;
             if (!obj)
             {
-                Debug.LogErrorFormat(typeof(T).Name + " item is not a Unity Object: " + item, refObj);
+                Debug.LogErrorFormat(typeof(T).Name + " item is not a UnityEngine.Object: " + item, refObj);
                 return -1;
             }
 
@@ -241,7 +241,7 @@ namespace com.lizitt
         /// </summary>
         /// <remarks>
         /// <para>
-        /// All items must be non-null, non-destroyed Unity Objects.  All items will be rejected if there are any 
+        /// All items must be non-null, non-destroyed UnityEngine.Objects.  All items will be rejected if there are any 
         /// invalid items.
         /// </para>
         /// <para>
@@ -262,7 +262,7 @@ namespace com.lizitt
                 if (!obj)
                 {
                     Debug.LogErrorFormat(refObj, 
-                        "{0} item at index {1} is null, destroyed, or not a Unity Object", typeof(T).Name, i);
+                        "{0} item at index {1} is null, destroyed, or not a UnityEngine.Object", typeof(T).Name, i);
                     return 0;
                 }
             }

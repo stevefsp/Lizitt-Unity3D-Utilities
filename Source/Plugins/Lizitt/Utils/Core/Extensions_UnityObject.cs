@@ -29,7 +29,7 @@ namespace com.lizitt
     public static partial class Extensions
     {       
         /*
-         * Unity Object exentions
+         * UnityEngine.Object exentions
          */
 
         /// <summary>

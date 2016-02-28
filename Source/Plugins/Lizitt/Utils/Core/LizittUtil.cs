@@ -34,20 +34,20 @@ namespace com.lizitt
         public const string BakeSuffix = "_Baked";
 
         /// <summary>
-        /// Returns true if the object is null or is a destroyed Unity Object.
+        /// Returns true if the object is null or is a destroyed UnityEngine.Object.
         /// </summary>
         /// <remarks>
         /// <para>
-        /// A common way of null checking a Unity Object is using a boolean check.
+        /// A common way of null checking a UnityEngine.Object is using a boolean check.
         /// (E.g. <c>myUnityObject == true</c>)  Such a check is helpful since it takes into
         /// account the possible destruction of the object.  This method
-        /// will check a non-null reference to see if it is a Unity Object and perform the
+        /// will check a non-null reference to see if it is a UnityEngine.Object and perform the
         /// destruction check.
         /// </para>
         /// </remarks>
         /// <param name="obj">The reference to check.</param>
         /// <returns>
-        /// True if the object is null or is a destroyed Unity Object.
+        /// True if the object is null or is a destroyed UnityEngine.Object.
         /// </returns>
         public static bool IsUnityDestroyed<T>(this T obj) where T : class
         {

@@ -301,8 +301,8 @@ namespace com.lizitt
     /// Only useful for object reference fields.
     /// </para>
     /// <para>
-    /// This attribute is useful when an assigned object needs to implement a non-Unity Object API, such as
-    /// an interface.  (E.g. A Unity Object must implement the IAgent interface.)
+    /// This attribute is useful when an assigned object needs to implement a non-UnityEngine.Object API, such as
+    /// an interface.  (E.g. A UnityEngine.Object must implement the IAgent interface.)
     /// </para>
     /// </remarks>
     public class RequireObjectTypeAttribute
