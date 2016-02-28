@@ -215,7 +215,7 @@ namespace com.lizitt
         /// <param name="i">An integer value to create the color from.</param>
         /// <param name="alpha">The color's alpha.</param>
         /// <returns>A color based on the integer value.</returns>
-        public static Color IntColor(int i, float alpha)
+        public static Color IntColor(int i, float alpha = 1)
         {
             // r, g, and b are constrained to between 1 and 4 inclusive.
             const float factor = 63f / 255f;  // Approximately 0.25.
@@ -236,7 +236,7 @@ namespace com.lizitt
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Hue shifts the base color where any mutiple of 360 will result in no color change.
+        /// Hue shifts the base color where any mutiple of 360 will result in no color change. 
         /// Saturation shifts the color along the grayscale/color axis.
         /// Value shifts the color along the black/color axis.
         /// </para>
@@ -258,8 +258,7 @@ namespace com.lizitt
         /// Value multiplier. (Black/Color) [Limit: value >= 0]
         /// </param>
         /// <returns>The color shifted by the HSV values.</returns>
-        public static Color TransformHSV(
-            this Color color, float hueShift, float saturation, float value)
+        public static Color TransformHSV(this Color color, float hueShift, float saturation = 1, float value = 1)
         {
             saturation = Mathf.Max(0, saturation);
             value = Mathf.Max(0, value);

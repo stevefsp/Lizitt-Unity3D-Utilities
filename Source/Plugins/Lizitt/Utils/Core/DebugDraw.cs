@@ -609,7 +609,7 @@ namespace com.lizitt
         /// The scale of the endpoint B arrow head.(Or zero for no head.)
         /// </param>
         public static void AppendArrow(Vector3 pointA, Vector3 pointB
-            , float headScaleA, float headScaleB)
+            , float headScaleA = 0, float headScaleB = 0.2f)
         {
             GL.Vertex(pointA);
             GL.Vertex(pointB);
