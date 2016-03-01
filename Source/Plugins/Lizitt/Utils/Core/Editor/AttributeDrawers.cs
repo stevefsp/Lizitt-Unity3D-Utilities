@@ -109,14 +109,14 @@ namespace com.lizitt.editor
                 var val = EditorGUI.IntField(position, label, property.intValue);
 
                 if (EditorGUI.EndChangeCheck())
-                    property.intValue = Mathf.Max(attr.intMinimum, val);
+                    property.intValue = Mathf.Max(attr.IntegerMinimum, val);
             }
             else if (property.propertyType == SerializedPropertyType.Float)
             {
                 var val = EditorGUI.FloatField(position, label, property.floatValue);
 
                 if (EditorGUI.EndChangeCheck())
-                    property.floatValue = Mathf.Max(attr.floatMinimum, val);
+                    property.floatValue = Mathf.Max(attr.FloatMinimum, val);
             }
             else if (!property.isArray)
                 throw new System.InvalidOperationException("Property is not an integer or float.");
@@ -143,13 +143,13 @@ namespace com.lizitt.editor
             var attr = attribute as EnumFlagsAttribute;
 
             label = EditorGUI.BeginProperty(position, label, property);
-            if (attr.displayValue)
+            if (attr.DisplayValue)
                 label.text += " (" + property.intValue + ")";
 
             EditorGUI.BeginChangeCheck();
 
             int val =
-                EditorGUIUtil.DrawEnumFlagsField(position, property.intValue, attr.enumType, label, attr.sort);
+                EditorGUIUtil.DrawEnumFlagsField(position, property.intValue, attr.EnumType, label, attr.Sort);
 
             if (EditorGUI.EndChangeCheck())
                 property.intValue = val;
@@ -179,9 +179,9 @@ namespace com.lizitt.editor
 
             EditorGUI.BeginChangeCheck();
 
-            int val = attr.includeLabel
-                ? EditorGUIUtil.DrawSortedEnumPopup(position, label, property.intValue, attr.enumType)
-                : EditorGUIUtil.DrawEnumSortedPopup(position, property.intValue, attr.enumType);
+            int val = attr.IncludeLabel
+                ? EditorGUIUtil.DrawSortedEnumPopup(position, label, property.intValue, attr.EnumType)
+                : EditorGUIUtil.DrawEnumSortedPopup(position, property.intValue, attr.EnumType);
 
             if (EditorGUI.EndChangeCheck())
                 property.intValue = val;

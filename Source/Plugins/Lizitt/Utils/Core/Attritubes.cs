@@ -35,11 +35,18 @@ namespace com.lizitt
     public class ClampAttribute
         : PropertyAttribute
     {
-        private readonly float floatMinimum;
-        private readonly float floatMaximum;
+        private readonly float FloatMinimum;
+        private readonly float FloatMaximum;
 
-        private readonly int intMinimum;
-        private readonly int intMaximum;
+        private int IntegerMinimum
+        {
+            get { return (int)FloatMinimum; }
+        }
+
+        private int IntegerMaximum
+        {
+            get { return (int)FloatMaximum; }
+        }
 
         /// <summary>
         /// Float constructor.
@@ -48,11 +55,8 @@ namespace com.lizitt
         /// <param name="maximum">The maximum value. (Inclusive.)</param>
         public ClampAttribute(float minimum, float maximum)
         {
-            this.floatMinimum = minimum;
-            this.intMinimum = (int)minimum;
-
-            this.floatMaximum = maximum;
-            this.intMaximum = (int)maximum;
+            this.FloatMinimum = minimum;
+            this.FloatMaximum = maximum;
         }
 
         /// <summary>
@@ -62,11 +66,8 @@ namespace com.lizitt
         /// <param name="maximum">The maximum value. (Inclusive.)</param>
         public ClampAttribute(int minimum, int maximum)
         {
-            this.floatMinimum = (float)minimum;
-            this.intMinimum = minimum;
-
-            this.floatMaximum = (float)maximum;
-            this.intMaximum = maximum;
+            this.FloatMinimum = (float)minimum;
+            this.FloatMaximum = (float)maximum;
         }
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace com.lizitt
         /// <returns>The clamped value.</returns>
         public float Clamp(float value)
         {
-            return Mathf.Clamp(value, floatMinimum, floatMaximum);
+            return Mathf.Clamp(value, FloatMinimum, FloatMaximum);
         }
 
         /// <summary>
@@ -86,7 +87,7 @@ namespace com.lizitt
         /// <returns>The clamped value.</returns>
         public int Clamp(int value)
         {
-            return Mathf.Clamp(value, intMinimum, intMaximum);
+            return Mathf.Clamp(value, IntegerMinimum, IntegerMaximum);
         }
     }
 
@@ -99,12 +100,15 @@ namespace com.lizitt
         /// <summary>
         /// The minimum allowed float value. (Inclusive.)
         /// </summary>
-        public readonly float floatMinimum;
+        public readonly float FloatMinimum;
 
         /// <summary>
         /// The minimum allowed integer value. (Inclusive.)
         /// </summary>
-        public readonly int intMinimum;
+        public int IntegerMinimum
+        {
+            get { return (int)FloatMinimum; }
+        }
 
         /// <summary>
         /// Float constructor.
@@ -112,8 +116,7 @@ namespace com.lizitt
         /// <param name="minimum">The minimum allowed value. (Inclusive.)</param>
         public ClampMinimumAttribute(float minimum)
         {
-            this.floatMinimum = minimum;
-            this.intMinimum = (int)minimum;
+            this.FloatMinimum = minimum;
         }
 
         /// <summary>
@@ -122,8 +125,7 @@ namespace com.lizitt
         /// <param name="minimum">The minimum allowed value. (Inclusive.)</param>
         public ClampMinimumAttribute(int minimum)
         {
-            this.floatMinimum = (float)minimum;
-            this.intMinimum = minimum;
+            this.FloatMinimum = (float)minimum;
         }
     }
 
@@ -143,17 +145,17 @@ namespace com.lizitt
         /// <summary>
         /// The flag type.
         /// </summary>
-        public readonly System.Type enumType;
+        public readonly System.Type EnumType;
 
         /// <summary>
         /// True if the flag names should be sorted.  Otherwise use default sorting.
         /// </summary>
-        public readonly bool sort;
+        public readonly bool Sort;
 
         /// <summary>
         /// True if the flag value should be displayed after the property name.
         /// </summary>
-        public readonly bool displayValue;
+        public readonly bool DisplayValue;
 
         /// <summary>
         /// Constructor.
@@ -167,9 +169,9 @@ namespace com.lizitt
         /// </param>
         public EnumFlagsAttribute(System.Type enumType, bool sort = false, bool displaValue = false)
         {
-            this.enumType = enumType;
-            this.sort = sort;
-            this.displayValue = displaValue;
+            this.EnumType = enumType;
+            this.Sort = sort;
+            this.DisplayValue = displaValue;
         }
     }    
     
@@ -182,12 +184,12 @@ namespace com.lizitt
         /// <summary>
         /// The enum type.
         /// </summary>
-        public readonly System.Type enumType;
+        public readonly System.Type EnumType;
 
         /// <summary>
         /// If true, include the label, otherwise only diplay the enum selector.
         /// </summary>
-        public readonly bool includeLabel;
+        public readonly bool IncludeLabel;
 
         /// <summary>
         /// Constructor.
@@ -195,8 +197,8 @@ namespace com.lizitt
         /// <param name="enumType">The enum type.</param>
         public SortedEnumPopupAttribute(System.Type enumType, bool includeLabel = true)
         {
-            this.enumType = enumType;
-            this.includeLabel = includeLabel;
+            this.EnumType = enumType;
+            this.IncludeLabel = includeLabel;
         }
     }
 
@@ -227,8 +229,8 @@ namespace com.lizitt
     public class RequiredValueAttribute
         : PropertyAttribute
     {
-        public System.Type ReferenceType { get; set; }
-        public bool AllowSceneObjects { get; set; }
+        public readonly System.Type ReferenceType;
+        public readonly bool AllowSceneObjects;
 
         /// <summary>
         /// Constructor.
@@ -254,12 +256,12 @@ namespace com.lizitt
         /// <summary>
         /// The property's component type.  (Used for the local component search.)
         /// </summary>
-        public System.Type ComponentType { get; set; }
+        public readonly System.Type ComponentType;
 
         /// <summary>
         /// If true, only a non-null property value is valid.
         /// </summary>
-        public bool Required { get; set; }
+        public readonly bool Required;
 
         /// <summary>
         /// The property path of the object to search for local components.
@@ -269,7 +271,7 @@ namespace com.lizitt
         /// See <see cref="EditorGUIUtil.GetReferenceObject"/> for details on interpretation of this field.
         /// </para>
         /// </remarks>
-        public string SearchPropertyPath { get; set; }
+        public readonly string SearchPropertyPath;
 
         /// <summary>
         /// Constructor
@@ -311,7 +313,7 @@ namespace com.lizitt
         /// <summary>
         /// The required object type.
         /// </summary>
-        public System.Type RequiredType { get; set; }
+        public readonly System.Type RequiredType;
 
         /// <summary>
         /// Constructor.
