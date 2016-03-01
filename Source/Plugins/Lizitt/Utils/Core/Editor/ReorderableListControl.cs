@@ -26,13 +26,12 @@ using UnityEngine;
 namespace com.lizitt.editor
 {
     /// <summary>
-    /// A GUI element representing a reorderable list of complex objects
-    /// for an arbitrary array.
+    /// A GUI element representing a reorderable list of objects for an arbitrary array.  (Supports complex objects.)
     /// </summary>
     /// <remarks>
     /// <para>
-    /// This GUI element manages high level drawing of the list, but allows custom 
-    /// element drawing and element add behavior.
+    /// This GUI element manages high level drawing of the list, but allows custom element drawing and new element
+    /// initialization.
     /// </para>
     /// </remarks>
     /// <seealso cref="ReferenceListControl"/>
@@ -44,6 +43,14 @@ namespace com.lizitt.editor
 
         private static readonly float FooterHeight =
             EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+
+        /// <summary>
+        /// A single line element height with enough extra vertical spacing to separate the elements.
+        /// </summary>
+        public static float SingleElementHeight
+        {
+            get { return EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing * 3; }
+        }
 
         /// <summary>
         /// An upate action for a list element.
@@ -66,30 +73,43 @@ namespace com.lizitt.editor
         private readonly UpdateListElement m_OnAddElement;
         private readonly DrawElement m_OnDrawElement;
 
+        [System.Obsolete("Use the other constructor.  Parameter order is better.  Will be removed at v0.2")]
+        public ReorderableListControl(SerializedProperty listProperty, 
+            string headerTitle, bool singleClickDelete, float elementHeight,
+            DrawElement onDrawElement = null, UpdateListElement onAddElement = null)
+        {
+            m_ElementHeight = elementHeight;
+            m_OnAddElement = onAddElement;
+            m_OnDrawElement = onDrawElement == null ? DefaultDrawElement : onDrawElement;
+
+            m_List = CreateList(listProperty, headerTitle, singleClickDelete);
+        }
+
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="listProperty">The array property to be drawn.</param>
         /// <param name="headerTitle">The title to display in the list header.</param>
-        /// <param name="singleClickDelete">
-        /// If true, the list will support single click deleting of elements.  Otherwise the
-        /// default Unity behavior will be used.
+        /// <param name="elementHeight">
+        /// The total draw height of each array element.  (Hint: Include a extra space for a vertical buffer between
+        /// elements.  EditorGUIUtility.standardVerticalSpacing * 3 is usually good.)
         /// </param>
-        /// <param name="elementHeight">The draw height of each element.</param>
-        /// <param name="onDrawElement">The method to use for drawing an element. (Required)</param>
+        /// <param name="onDrawElement"> 
+        /// The method to use for drawing an element, or null to use the Unity default.
+        /// </param>
         /// <param name="onAddElement">
         /// The method to use for adding new elements, or null for default Unity behavior.
         /// </param>
-        public ReorderableListControl(SerializedProperty listProperty, 
-            string headerTitle, bool singleClickDelete, float elementHeight,
-            DrawElement onDrawElement, UpdateListElement onAddElement = null)
+        /// <param name="singleClickDelete">
+        /// If true, the list will support single click deleting of reference elements.  Otherwise the default 
+        /// Unity behavior will be used.
+        /// </param>
+        public ReorderableListControl(SerializedProperty listProperty, string headerTitle, float elementHeight, 
+            DrawElement onDrawElement = null, UpdateListElement onAddElement = null, bool singleClickDelete = false)
         {
-            if (onDrawElement == null)
-                throw new System.ArgumentNullException("onDrawElement");
-
             m_ElementHeight = elementHeight;
             m_OnAddElement = onAddElement;
-            m_OnDrawElement = onDrawElement;
+            m_OnDrawElement = onDrawElement == null ? DefaultDrawElement : onDrawElement;
 
             m_List = CreateList(listProperty, headerTitle, singleClickDelete);
         }
@@ -100,13 +120,11 @@ namespace com.lizitt.editor
         /// <remarks>
         /// <para>Can be used with EditorGUILayout.GetControlRect() to get a position Rect.</para>
         /// </remarks>
-        /// <param name="listProperty">
-        /// The array property. (The same field used in the constructor.)
-        /// </param>
+        /// <param name="listProperty">The array property. (The same field used in the constructor.) </param>
         /// <returns>The draw height fo the list.</returns>
         public float GetPropertyHeight(SerializedProperty listProperty)
         {
-            return HeaderHeight + FooterHeight + EditorGUIUtility.singleLineHeight
+            return HeaderHeight + FooterHeight + EditorGUIUtility.singleLineHeight // Some extra buffer.
                 + (m_ElementHeight * Mathf.Max(1, listProperty.arraySize));
         }
 
@@ -115,14 +133,12 @@ namespace com.lizitt.editor
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Depending on the situation, it may be necessary to use SerializedObject.Update()
-        /// and SerializedObject.ApplyModifiedProperties() to record changes.
+        /// Depending on the situation, it may be necessary to use SerializedObject.Update() and 
+        /// SerializedObject.ApplyModifiedProperties() to record changes.
         /// </para>
         /// </remarks>
         /// <param name="position">The position of the GUI element.</param>
-        /// <param name="listProperty">
-        /// The array property. (The same field used in the constructor.)
-        /// </param>
+        /// <param name="listProperty">The array property. (The same field used in the constructor.)</param>
         /// <param name="label">The property label.</param>
         public void OnGUI(Rect position, SerializedProperty listProperty, GUIContent label)
         {
@@ -134,17 +150,14 @@ namespace com.lizitt.editor
             EditorGUI.EndProperty();
         }
 
-        private ReorderableList CreateList(
-            SerializedProperty listProperty, string headerTitle, bool singleClickDelete)
+        private ReorderableList CreateList(SerializedProperty listProperty, string headerTitle, bool singleClickDelete)
         {
-            var list = new ReorderableList(listProperty.serializedObject
-                , listProperty, true, true, true, true);
+            var list = new ReorderableList(listProperty.serializedObject, listProperty, true, true, true, true);
 
             list.headerHeight = HeaderHeight;
             list.footerHeight = FooterHeight;
 
-            list.drawHeaderCallback = 
-                rect => { EditorGUI.LabelField(rect, headerTitle); };
+            list.drawHeaderCallback = rect => { EditorGUI.LabelField(rect, headerTitle); };
 
             list.elementHeight = m_ElementHeight;
 
@@ -156,8 +169,7 @@ namespace com.lizitt.editor
 
             if (m_OnAddElement != null)
             {
-                list.onAddCallback =
-                    roList => { roList.index = AddPrototype(roList.serializedProperty); };
+                list.onAddCallback = roList => { roList.index = AddPrototype(roList.serializedProperty); };
             }
 
             if (singleClickDelete)
@@ -179,6 +191,17 @@ namespace com.lizitt.editor
             listProperty.serializedObject.ApplyModifiedProperties();
 
             return nidx;
+        }
+
+        private static void DefaultDrawElement(
+            Rect position, SerializedProperty elementProperty, bool isActive, bool isFocused)
+        {
+            // The extra vertical offset is pretty much always needed in order to align properly with the 
+            // list element handle.
+            var offset = EditorGUIUtility.standardVerticalSpacing * 1.5f;
+            position.height -= offset;
+            position = EditorGUIUtil.SingleLinePosition(position, offset);
+            EditorGUI.PropertyField(position, elementProperty, GUIContent.none);  // Don't want 'Element0' type labels.
         }
     }
 }

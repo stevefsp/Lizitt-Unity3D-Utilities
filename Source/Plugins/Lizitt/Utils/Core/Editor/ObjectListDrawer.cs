@@ -62,7 +62,7 @@ namespace com.lizitt.editor
         public sealed override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             if (property.propertyType == SerializedPropertyType.ObjectReference && !property.objectReferenceValue)
-                return EditorGUIUtility.singleLineHeight * 1.1f;
+                return ReorderableListControl.SingleElementHeight;
 
             var listProp = GetListProperty(property);
 
@@ -99,9 +99,9 @@ namespace com.lizitt.editor
         {
             if (m_GuiElement == null)
             {
-                m_GuiElement = new ReorderableListControl(listProperty, HeaderTitle, true,
-                    EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing * 3, 
-                    DrawElement, HandleAddElement);
+                m_GuiElement = new ReorderableListControl(listProperty, HeaderTitle,
+                    ReorderableListControl.SingleElementHeight, 
+                    DrawElement, HandleAddElement, true);
             }
         }
 
