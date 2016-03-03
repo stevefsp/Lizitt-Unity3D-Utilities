@@ -324,4 +324,61 @@ namespace com.lizitt
             RequiredType = requiredType;
         }
     }
+
+    /// <summary>
+    /// Draw a popup that only contains the collider status types for the specified category.
+    /// </summary>
+    public class FilteredColliderStatusAttribute
+        : PropertyAttribute
+    {
+        /// <summary>
+        /// The category of status types to include.
+        /// </summary>
+        public readonly ColliderStatusCategory FilterType;
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="filerType">The category of status types to include.</param>
+        public FilteredColliderStatusAttribute(ColliderStatusCategory filerType)
+        {
+            FilterType = filerType;
+        }
+    }
+
+    /// <summary>
+    /// Draw a popup that only contains collider status options that are relavent to a reference collider.
+    /// </summary>
+    public class DynamicColliderStatusAttribute
+        : PropertyAttribute
+    {
+        /// <summary>
+        /// The serialized object path to the object that is, or contains, the reference collider. Or null to use
+        /// <c>SerializedObject.targetObject</c>.
+        /// </summary>
+        public readonly string ReferencePath;
+
+        /// <summary>
+        /// If true, <see cref="ReferencePath"/> is relative to the current property, otherwise is relative to
+        /// <c>SerializedProperty.serializedObject</c>.
+        /// </summary>
+        public readonly bool PathIsRelative;
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="referencePath">
+        /// The serialized object path to the object that is, or contains, the reference collider. Or null to use
+        /// <c>SerializedObject.targetObject</c>.
+        /// </param>
+        /// <param name="referenceIsAbsolute">
+        /// If true, <paramref name="referencePath"/> is relative to the current property, otherwise is relative to
+        /// <c>SerializedProperty.serializedObject</c>.
+        /// </param>
+        public DynamicColliderStatusAttribute(string referencePath = null, bool referenceIsAbsolute = false)
+        {
+            ReferencePath = referencePath;
+            PathIsRelative = referenceIsAbsolute;
+        }
+    }
 }

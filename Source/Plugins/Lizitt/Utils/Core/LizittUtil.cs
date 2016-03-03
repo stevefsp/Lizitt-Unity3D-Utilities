@@ -28,10 +28,16 @@ namespace com.lizitt
     /// </summary>
     public static class LizittUtil
     {
+        #region Constants
+
         /// <summary>
         /// A name suffix used to label baked items.  (E.g. The baked version of a skinned mesh.)
         /// </summary>
         public const string BakeSuffix = "_Baked";
+
+        #endregion
+
+        #region Extensions
 
         /// <summary>
         /// Returns true if the object is null or is a destroyed UnityEngine.Object.
@@ -65,6 +71,47 @@ namespace com.lizitt
             return true;
         }
 
+        #endregion
+
+        #region Collider Status
+
+        // Note: There isn't really any better place to put this right now, at least not without cluttering up
+        // the namespace.  It isn't useful enough to implement as an extension, so it should'nt go there.
+
+        /// <summary>
+        /// Attempts to derive a collider from a UnityEngine.Object.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This method detects the type of <paramref name="obj"/> then uses the most appropriate method.
+        /// (I.e. Simple casting, a component search, etc.)
+        /// </para>
+        /// <para>
+        /// Can be called lazily.  A null object will return a null collider.
+        /// </para>
+        /// </remarks>
+        /// <param name="obj">The object to attept to get a collider from. (Can be null)</param>
+        /// <param name="searchChildren">
+        /// If true and a component search is required, then include children in the search, otherwise only search 
+        /// the Component or GameObject.</param>
+        /// <returns></returns>
+        public static Collider DeriveCollider(Object obj, bool searchChildren = true)
+        {
+            if (!obj)
+                return null;
+            if (obj is Collider)
+                return obj as Collider;
+            if (obj is GameObject)
+                return (obj as GameObject).GetComponentInChildren<Collider>();
+            if (obj is Component)
+                return (obj as Component).GetComponentInChildren<Collider>();
+
+            // This may be ok.  Reference may not yet be set.
+            return null;
+        }
+
+        #endregion
+
         #region Unity Editor
 
         /*
@@ -73,14 +120,14 @@ namespace com.lizitt
          */
 
         /// <summary>
-        /// The base order for menu items in the Lizitt asset creation menu.
+        /// The base order for menu items in the Lizitt menus.
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Used for the <c>order</c> parameter of the <c>CreateAssetMenu</c> attribute.
+        /// Used for the <c>order</c> parameter of the <c>CreateAssetMenu</c> and <c>AddComponentMenu</c> attributes.
         /// E.g <c>order = LizittUtil.BaseMenuOrder + 10</c></para>
         /// </remarks>
-        public const int BaseMenuOrder = 1000;
+        public const int LizittMenuOrder = 1000;
 
         /// <summary>
         /// The Lizitt menu name in path form.

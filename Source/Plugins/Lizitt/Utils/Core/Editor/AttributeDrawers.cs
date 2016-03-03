@@ -149,7 +149,7 @@ namespace com.lizitt.editor
             EditorGUI.BeginChangeCheck();
 
             int val =
-                EditorGUIUtil.DrawEnumFlagsField(position, property.intValue, attr.EnumType, label, attr.Sort);
+                EditorGUIDraw.EnumFlagsField(position, property.intValue, attr.EnumType, label, attr.Sort);
 
             if (EditorGUI.EndChangeCheck())
                 property.intValue = val;
@@ -180,8 +180,8 @@ namespace com.lizitt.editor
             EditorGUI.BeginChangeCheck();
 
             int val = attr.IncludeLabel
-                ? EditorGUIUtil.DrawSortedEnumPopup(position, label, property.intValue, attr.EnumType)
-                : EditorGUIUtil.DrawEnumSortedPopup(position, property.intValue, attr.EnumType);
+                ? EditorGUIDraw.SortedEnumPopup(position, label, property.intValue, attr.EnumType)
+                : EditorGUIDraw.SortedEnumPopup(position, property.intValue, attr.EnumType);
 
             if (EditorGUI.EndChangeCheck())
                 property.intValue = val;
@@ -376,9 +376,6 @@ namespace com.lizitt.editor
         }
     }
 
-
-
-
     /// <summary>
     /// Draws fields marked with the <see cref="RequiredValueAttribute"/>.
     /// </summary>
@@ -420,6 +417,47 @@ namespace com.lizitt.editor
             }
 
             EditorGUI.EndProperty();
+        }
+    }
+
+    /// <summary>
+    /// Draws fields marked with the <see cref="FilteredColliderStatusAttribute"/>.
+    /// </summary>
+    [CustomPropertyDrawer(typeof(FilteredColliderStatusAttribute))]
+    public class FilteredColliderStatusAttributeDrawer
+        : PropertyDrawer
+    {
+        /// <summary>
+        /// See Unity documentation.
+        /// </summary>
+        /// <param name="position">See Unity documentation.</param>
+        /// <param name="property">See Unity documentation.</param>
+        /// <param name="label">See Unity documentation.</param>
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            var attr = attribute as FilteredColliderStatusAttribute;
+
+            EditorGUIDraw.FilteredColliderStatusPopup(position, label, property, attr.FilterType);
+        }
+    }
+
+    /// <summary>
+    /// Draws fields marked with the <see cref="DynamicColliderStatusAttribute"/>.
+    /// </summary>
+    [CustomPropertyDrawer(typeof(DynamicColliderStatusAttribute))]
+    public class DynamicColliderStatusAttributeDrawer
+        : PropertyDrawer
+    {
+        /// <summary>
+        /// See Unity documentation.
+        /// </summary>
+        /// <param name="position">See Unity documentation.</param>
+        /// <param name="property">See Unity documentation.</param>
+        /// <param name="label">See Unity documentation.</param>
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            var attr = attribute as DynamicColliderStatusAttribute;
+            EditorGUIDraw.FilteredColliderStatusPopup(position, property, label, attr.ReferencePath, attr.PathIsRelative);
         }
     }
 }

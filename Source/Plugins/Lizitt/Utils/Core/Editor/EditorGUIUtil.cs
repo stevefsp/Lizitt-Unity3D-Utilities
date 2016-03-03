@@ -27,7 +27,7 @@ using System.Collections.Generic;
 namespace com.lizitt.editor
 {
     /// <summary>
-    /// Provides general purpose GUI utility functions for the Unity Editor.
+    /// Provides GUI utility functions for the Unity Editor.
     /// </summary>
     public static class EditorGUIUtil
     {
@@ -213,7 +213,6 @@ namespace com.lizitt.editor
         }
 
         #endregion
-
 
         #region SerializedObject
 
@@ -410,7 +409,7 @@ namespace com.lizitt.editor
 
         #endregion
 
-        #region Special Draw Handlers
+        #region Generalized Enumeration Draw Members
 
         /// <summary>
         /// Draws a mask field for the specified enum type.
@@ -429,6 +428,7 @@ namespace com.lizitt.editor
         /// by the system.
         /// </param>
         /// <returns>The result of the mask field.</returns>
+        [System.Obsolete("Use the equivalent method in UnityGUIDraw.")]
         public static int DrawEnumFlagsField(
             Rect position, int value, System.Type enumTyp, GUIContent label, bool sort)
         {
@@ -486,6 +486,7 @@ namespace com.lizitt.editor
         /// <param name="label">The field label.</param>
         /// <param name="enumTyp">The type of enum to display.</param>
         /// <returns>The selected enumeration value.</returns>
+        [System.Obsolete("Use the equivalent method in UnityGUIDraw.")]
         public static int DrawSortedEnumPopup(Rect position, GUIContent label, int selectedValue, System.Type enumTyp)
         {
             EditorGUI.LabelField(EditorGUIUtil.LabelPosition(position, EditorGUIUtility.labelWidth), label);
@@ -501,6 +502,7 @@ namespace com.lizitt.editor
         /// <param name="selectedValue">The current value of the mask field.</param>
         /// <param name="enumTyp">The type of enum to display.</param>
         /// <returns>The selected enumeration value.</returns>
+        [System.Obsolete("Use the equivalent method in UnityGUIDraw.")]
         public static int DrawEnumSortedPopup(Rect position, int selectedValue, System.Type enumTyp)
         {
             var itemNames = System.Enum.GetNames(enumTyp);
@@ -565,7 +567,5 @@ namespace com.lizitt.editor
         }
 
         #endregion
-
-
     }
 }
