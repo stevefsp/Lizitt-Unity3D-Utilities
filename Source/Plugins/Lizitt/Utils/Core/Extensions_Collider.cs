@@ -86,30 +86,27 @@ namespace com.lizitt
 
             if (rigidbody)
             {
-                if (rigidbody.detectCollisions)
+                if (collider.enabled && rigidbody.detectCollisions)
                 {
-                    if (collider.enabled)
+                    if (collider.isTrigger)
                     {
-                        if (collider.isTrigger)
-                        {
-                            return rigidbody.isKinematic
-                                ? ColliderStatus.KinematicTrigger
-                                : ColliderStatus.RigidbodyTrigger;
-                        }
-                        else
-                        {
-                            return rigidbody.isKinematic
-                                ? ColliderStatus.KinematicCollider
-                                : ColliderStatus.RigidbodyCollider;
-                        }
+                        return rigidbody.isKinematic
+                            ? ColliderStatus.KinematicTrigger
+                            : ColliderStatus.RigidbodyTrigger;
                     }
                     else
-                        return ColliderStatus.Disabled;
+                    {
+                        return rigidbody.isKinematic
+                            ? ColliderStatus.KinematicCollider
+                            : ColliderStatus.RigidbodyCollider;
+                    }
                 }
-                else
+                else if (rigidbody.isKinematic || !rigidbody.useGravity)
                     return ColliderStatus.Disabled;
+                else
+                    return ColliderStatus.GravityBody;
             }
-            else if (collider.enabled)
+            else if (collider.enabled)  // No rigidbody.
             {
                 return collider.isTrigger
                     ? ColliderStatus.StaticTrigger
@@ -193,6 +190,8 @@ namespace com.lizitt
 
                     if (collider)
                         collider.enabled = false;
+                    if (rigidbody)
+                        rigidbody.isKinematic = true;   // Yes, this is needed.
 
                     break;
 
@@ -259,7 +258,43 @@ namespace com.lizitt
                     }
 
                     break;
+
+                case ColliderStatus.GravityBody:
+
+                    if (rigidbody)
+                    {
+                        rigidbody.isKinematic = false;
+                        rigidbody.useGravity = true;
+                        collider.enabled = false;
+                    }
+                    else
+                    {
+                        Debug.LogErrorFormat(collider, BadRigidBodyTransition, collider.GetStatus(), status);
+                    }
+
+                    break;
             }
+        }
+
+        public static void SetStatus(this Collider collider, ColliderStatus status, bool useGravity)
+        {
+            var rigidbody = collider.GetAssociatedRigidBody();
+
+            if (useGravity && !rigidbody)
+            {
+                Debug.LogError("Can't set a collider without a rigidbody to use gravity.", collider);
+                return;
+            }
+
+            if (status == ColliderStatus.GravityBody && !useGravity)
+            {
+                Debug.LogErrorFormat(collider, "Invalid opetation: A status of {0} is not compatible with"
+                    + " a 'useGravity' value of false.", status);
+                return;
+            }
+
+            rigidbody.useGravity = useGravity;
+            SetStatus(collider, status); 
         }
     }
 }

@@ -22,6 +22,29 @@
 namespace com.lizitt
 {
     /// <summary>
+    /// Collider statuc categories.
+    /// </summary>
+    public enum ColliderStatusCategory
+    {
+        /*
+         * Design notes:
+         * 
+         * Various custom editors must be updated to handle any changes made to this enumeration.
+         * 
+         */
+
+        /// <summary>
+        /// Only allow static collider status values.
+        /// </summary>
+        Static = 0,
+
+        /// <summary>
+        /// Only allow rigidbody collider status values.
+        /// </summary>
+        RigidBody,
+    }
+
+    /// <summary>
     /// Collider behavior types.
     /// </summary>
     /// <remarks>
@@ -33,6 +56,12 @@ namespace com.lizitt
     /// </remarks>
     public enum ColliderStatus
     {
+        /*
+         * Custom editor note:  There is a custom editor for this enumeration.  The editor will need to be updated
+         * if any members are added or removed, or if the values are changed in a way that alters their 
+         * rigidbody/static category. 
+         */
+
         /// <summary>
         /// Not a collider, or collision detection disabled.
         /// </summary>
@@ -113,6 +142,16 @@ namespace com.lizitt
         /// </para>
         /// </remarks>
         KinematicTrigger,
+
+        /// <summary>
+        /// A Rigidbody effected by gravity, but with either no collider or a disabled collider.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Is not involved in any collision or trigger events.
+        /// </para>
+        /// </remarks>
+        GravityBody,
 
         /// <summary>
         /// Static Collider
