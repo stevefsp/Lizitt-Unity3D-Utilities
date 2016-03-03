@@ -61,16 +61,21 @@ namespace com.lizitt.editor
         /// Load/reload all visible properties of the serialized object.  (Does not enter children.) 
         /// </summary>
         /// <param name="serializedObject">The serialized property of the Monobehaviour.</param>
-        /// <param name="ignoreScript">If true, the script reference property will be ignored.</param>
-        public void LoadProperties(SerializedObject serializedObject, bool ignoreScript)
+        /// <param name="includeScript">If true, include the script reference property.  Otherwise ignore it.</param>
+        public void LoadProperties(SerializedObject serializedObject, bool includeScript = true)
         {
             var prop = serializedObject.GetIterator();
-            if (ignoreScript)
+            if (!includeScript)
                 prop.NextVisible(true);
 
+            bool didFirst = !includeScript;
+
             m_Properties.Clear();
-            while (prop.NextVisible(false))
+            while (prop.NextVisible(didFirst ? false : true))
+            {
+                didFirst = true;
                 m_Properties.Add(serializedObject.FindProperty(prop.propertyPath));
+            }
         }
 
         /// <summary>
@@ -107,7 +112,51 @@ namespace com.lizitt.editor
         }
 
         /// <summary>
-        /// Draw the GUI elements for all properties remaining in the property list.
+        /// Returns the property information if it was found, or a default information object if not found.
+        /// </summary>
+        /// <param name="property">The property.</param>
+        /// <returns>The property information if it was found, or a default information object if not found.</returns>
+        public SerializedFieldInfo GetPropertyInfo(SerializedProperty property)
+        {
+            if (property != null)
+            {
+                foreach (var info in m_FieldInfo)
+                {
+                    if (property.propertyPath == info.name)
+                        return info;
+                }
+            }
+
+            return new SerializedFieldInfo();
+        }
+
+        /// <summary>
+        /// The current property.  (The next one that will be drawn.)
+        /// </summary>
+        public SerializedProperty CurrentProperty
+        {
+            get { return m_Properties.Count == 0 ? null : m_Properties[0]; }
+        }
+
+        /// <summary>
+        /// Draw and remove the current property.
+        /// </summary>
+        /// <returns>The property that was drawn, or null if there are no more properties.</returns>
+        public SerializedProperty DrawCurrentProperty()
+        {
+            if (m_Properties.Count > 0)
+            {
+                var prop = m_Properties[0];
+                m_Properties.RemoveAt(0);  // In case of error.  Don't want to get struck here.
+                EditorGUILayout.PropertyField(prop);
+                return prop;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Draw the GUI controls for all properties remaining in the property list.
         /// </summary>
         /// <remarks>
         /// <para>
