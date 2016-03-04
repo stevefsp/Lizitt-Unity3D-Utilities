@@ -44,7 +44,7 @@ namespace com.lizitt.editor
     /// </summary>
     public static class EditorUtil
     {
-        #region Menu Related Menus
+        #region Menu Related Members
 
         /// <summary>
         /// The tools menu.

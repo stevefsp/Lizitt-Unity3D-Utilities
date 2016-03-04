@@ -29,29 +29,13 @@ namespace com.lizitt
     /// </summary>
     /// <remarks>
     /// <para>
-    /// Designed for use as a field in a Unity component.  When used with 
-    /// <see cref="MaterialOverrideGroupAttribute"/>, it provides a better editor experience than 
-    /// is available with arrays.
-    /// </para>
-    /// <para>
-    /// Warning: Not suitable for use with arrays of arrays.  E.g. An array of 
-    /// <see cref="MaterialOverrideGroup"/> objects, or an array of objects that contain
-    /// a <see cref="MaterialOverrideGroup"/> field.  Basically, if there is more than one of overrides
-    /// group in a single serialized object the inspector GUI will not behave correctly.
+    /// Designed for use as a field in a Unity component.  It it provides a better editor experience when used with 
+    /// <see cref="MaterialOverrideGroupAttribute"/>.
     /// </para>
     /// </remarks>
     [System.Serializable]
     public struct MaterialOverrideGroup
     {
-        /*
-         * Design notes:
-         * 
-         * This design uses an anti-pattern.  Unity doesn't support custom drawers for array fields.  
-         * Drawers apply to the elements in the array, not the array itself.  This design solves 
-         * the problem.
-         * 
-         */
-
         [SerializeField]
         private MaterialOverride[] m_Items;
         private MaterialOverride[] Items
