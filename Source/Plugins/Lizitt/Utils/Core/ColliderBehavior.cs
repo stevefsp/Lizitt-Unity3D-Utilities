@@ -34,12 +34,12 @@ namespace com.lizitt
          */
 
         /// <summary>
-        /// Only allow static collider status values.
+        /// Only behaviors for colliders that don't have a rigidbody.
         /// </summary>
         Static = 0,
 
         /// <summary>
-        /// Only allow rigidbody collider status values.
+        /// Only behaviors for colliders that have a rigidbody.
         /// </summary>
         RigidBody,
     }
@@ -66,28 +66,45 @@ namespace com.lizitt
          */
 
         /// <summary>
-        /// Not a collider, or collision detection disabled.
+        /// Collision detection is disabled.  (No behavior.)
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Exchanges no collision or trigger events with any other objects.
+        /// Behaviours
         /// </para>
         /// <para>
-        /// Not detectable by raycast.
+        /// <ul>
+        /// <li>Collider does not exchange any collision events.</li>
+        /// <li>Collider does not exchange any trigger events.</li>
+        /// <li>Collider is not detectable by raycasts.</li>
+        /// </ul>
+        /// </para>
+        /// <para>
+        /// All collision detection is disabled if any of the following conditions exist:
+        /// </para>
+        /// <para>
+        /// <ul>
+        /// <li>The collider's rigidbody <c>Rigidbody.detectCollisions</c> is false. (This is a non-serializable 
+        /// setting.)</li>
+        /// <li>The collider is disabled.</li>
+        /// </ul>
         /// </para>
         /// </remarks>
         Disabled = 0,
 
         /// <summary>
-        /// Non-Kinematic Rigidbody Collider
+        /// Non-kinematic rigidbody collider
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Exchanges collision events with all collider types and trigger events with all 
-        /// trigger types.
+        /// Behaviours
         /// </para>
         /// <para>
-        /// Detectable by raycasts.
+        /// <ul>
+        /// <li>Collider exchanges collision events with colliders of all types.</li>
+        /// <li>Collider exchanges trigger events with triggers of all types.</li>
+        /// <li>Collider is detectable by raycasts.</li>
+        /// </ul>
         /// </para>
         /// </remarks>
         RigidbodyCollider,
@@ -97,86 +114,79 @@ namespace com.lizitt
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Exchanges collision events with rigidbody colliders, and trigger events with all 
-        /// trigger types.
+        /// Behaviours
         /// </para>
         /// <para>
-        /// Exchanges no events of any type with static colliders or other kinematic rigidbody 
-        /// objects.
-        /// </para>
-        /// <para>
-        /// Detectable by raycasts.
-        /// </para>
+        /// <ul>
+        /// <li>Collider exchanges collision events only with rigidbody colliders. (Not with static or other
+        /// kinematic colliders.)</li>
+        /// <li>Collider exchanges trigger events with all trigger types.</li>
+        /// <li>Collider is detectable by raycasts.</li>
+        /// </ul>
         /// </remarks>
         KinematicCollider,
 
         /// <summary>
-        /// Non-Kinematic Rigidbody Trigger
+        /// Non-Kinematic rigidbody trigger
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Exchanges trigger events with all collider and trigger types.
+        /// Behaviours
         /// </para>
         /// <para>
-        /// Exchanges no collision events with any collider or trigger type.
-        /// </para>
-        /// <para>
-        /// Detectable by raycasts.
-        /// </para>
-        /// <para>
-        /// Triggers of this type may need to have their Rigidbody.useGravity set to false.
-        /// Otherwise the trigger may simply fall downward forever.
-        /// </para>
+        /// <ul>
+        /// <li>Collider exchanges no collision events.</li>
+        /// <li>Collider exchanges trigger events with all collider and trigger types.</li>
+        /// <li>Collider is detectable by raycasts.</li>
+        /// </ul>
         /// </remarks>
         RigidbodyTrigger,
 
         /// <summary>
-        /// Kinematic Rigidbody Trigger
+        /// Non-Kinematic rigidbody trigger
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Exchanges trigger events with all collider and trigger types.
+        /// Behaviours
         /// </para>
         /// <para>
-        /// Exchanges no collision events with any collider or trigger type.
-        /// </para>
-        /// <para>
-        /// Detectable by raycasts.
-        /// </para>
+        /// <ul>
+        /// <li>Collider exchanges no collision events.</li>
+        /// <li>Collider exchanges trigger events with all collider and trigger types.</li>
+        /// <li>Collider is detectable by raycasts.</li>
+        /// </ul>
         /// </remarks>
         KinematicTrigger,
 
         /// <summary>
-        /// Static Collider
+        /// Static collider
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Exchanges collision events with Rigidbody colliders, and trigger events with
-        /// Kinematic and Rigidbody triggers.
+        /// Behaviours
         /// </para>
         /// <para>
-        /// Does not exchange any events with Kinematic colliders, other static colliders, or
-        /// static triggers.
-        /// </para>
-        /// <para>
-        /// Not detectable by raycast.
-        /// </para>
+        /// <ul>
+        /// <li>Exchanges collision events only with Rigidbody colliders.  (Not with static or kinematic colliders.)</li>
+        /// <li>Collider exchanges trigger events with rigidbody and dynamic triggers.  (Not with static triggers.)</li>
+        /// <li>Colliders are detectable by raycasts.</li>
+        /// </ul>
         /// </remarks>
         StaticCollider,
 
         /// <summary>
-        /// Static Trigger
+        /// Static collider.
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Exchanges trigger events with all types except static colliders and other static
-        /// triggers.
+        /// Behaviours
         /// </para>
         /// <para>
-        /// Does not exchange any collider events.
-        /// </para>
-        /// <para>
-        /// Not detectable by raycast.
+        /// <ul>
+        /// <li>Colliders do not exchange collision events.</li>
+        /// <li>Colliders exchange trigger events with all collider and trigger types.</li>
+        /// <li>Colliders are detectable by raycasts.</li>
+        /// </ul>
         /// </para>
         /// </remarks>
         StaticTrigger,

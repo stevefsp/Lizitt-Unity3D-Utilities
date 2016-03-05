@@ -44,7 +44,7 @@ namespace com.lizitt
         /// <ul>
         /// <li>Colliders exchange no collision events.</li>
         /// <li>Colliders exchange no trigger events.</li>
-        /// <li>Not detectable by raycasts.</li>
+        /// <li>Colliders are not detectable by raycasts.</li>
         /// <li>Not effected by gravity.</li>
         /// </ul>
         /// </para>
@@ -80,7 +80,7 @@ namespace com.lizitt
         RigidbodyCollider = (int)ColliderBehavior.RigidbodyCollider,
 
         /// <summary>
-        /// Kinematic Rigidbody Collider
+        /// Kinematic rigidbody collider
         /// </summary>
         /// <remarks>
         /// <para>
@@ -88,8 +88,9 @@ namespace com.lizitt
         /// </para>
         /// <para>
         /// <ul>
-        /// <li>Colliders exchange collision events with rigidbody colliders, and trigger events with all trigger types.</li>
-        /// <li>Colliders exchange no events of any type with static colliders or other kinematic rigidbody objects.</li>
+        /// <li>Colliders exchange collision events only with rigidbody colliders. (Not with static or other
+        /// kinematic colliders.)</li>
+        /// <li>Colliders exchange trigger events with all trigger types.</li>
         /// <li>Colliders are detectable by raycasts.</li>
         /// <li>Not effected by gravity.</li>
         /// </ul>
@@ -100,7 +101,7 @@ namespace com.lizitt
         KinematicCollider = (int)ColliderBehavior.KinematicCollider,
 
         /// <summary>
-        /// Non-Kinematic rigidbody trigger
+        /// Non-kinematic rigidbody trigger
         /// </summary>
         /// <remarks>
         /// <para>
@@ -108,20 +109,20 @@ namespace com.lizitt
         /// </para>
         /// <para>
         /// <ul>
-        /// <li>Colliders exchange no collision events.</li>
+        /// <li>Colliders do not exchange collision events.</li>
         /// <li>Colliders exchange trigger events with all collider and trigger types.</li>
         /// <li>Colliders are detectable by raycasts.</li>
         /// <li>May or may not be effected by gravity.</li>
         /// </ul>
         /// <para>
         /// A rigidbody of this type should usually have <c>Rigidbody.useGravity</c> set to false. Otherwise it will 
-        /// fall downward forever.
+        /// fall forever.
         /// </para>
         /// </remarks>
         RigidbodyTrigger = (int)ColliderBehavior.RigidbodyTrigger,
 
         /// <summary>
-        /// Kinematic Rigidbody Trigger
+        /// Kinematic rigidbody trigger
         /// </summary>
         /// <remarks>
         /// <para>
@@ -129,7 +130,7 @@ namespace com.lizitt
         /// </para>
         /// <para>
         /// <ul>
-        /// <li>Colliders exchange no collision events.</li>
+        /// <li>Colliders do not exchange collision events.</li>
         /// <li>Colliders exchange trigger events with all collider and trigger types.</li>
         /// <li>Colliders are detectable by raycasts.</li>
         /// <li>Not effected by gravity.</li>
@@ -150,8 +151,9 @@ namespace com.lizitt
         /// </para>
         /// <para>
         /// <ul>
-        /// <li>Colliders exchange no collision or trigger events with any other objects.</li>
-        /// <li>Not detectable by raycast.</li>
+        /// <li>Colliders do not exchange collision events.</li>
+        /// <li>Colliders do not exchange trigger events.</li>
+        /// <li>Colliders are not detectable by raycast.</li>
         /// <li>Effected by gravity.</li>
         /// </ul>
         /// </para>
@@ -168,6 +170,16 @@ namespace com.lizitt
         /// </remarks>
         GravityBody = int.MaxValue - 1,
 
+        /// <summary>
+        /// The ridibody's colliders have different behavior settings.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This happens when a rigidbody has more than one collider and one or more colliders have different
+        /// settings than the other(s).  E.g. One is a trigger and the other is not.  One is enabled while the other
+        /// is disabled.  Etc.
+        /// </para>
+        /// </remarks>
         Mixed = int.MaxValue,
     }
 }
