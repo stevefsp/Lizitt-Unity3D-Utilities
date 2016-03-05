@@ -21,9 +21,9 @@
  */
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using System.Reflection;
 
 namespace com.lizitt.editor
 {
@@ -54,14 +54,13 @@ namespace com.lizitt.editor
         /// <summary>
         /// The root Lizitt menu name.
         /// </summary>
-        public const string LizittToolsMenu = BaseToolsMenu + "Lizitt/";
+        public const string LizittToolsMenu = BaseToolsMenu + LizittUtil.LizittMenu;
 
-        /// <summary>
-        /// The Lizitt view menu name.
-        /// </summary>
-        public const string ViewMenu = LizittToolsMenu + "View/";
+        public const string LizittGameObjectMenu = "GameObject/" + LizittUtil.LizittMenu;
 
         #endregion
+
+        #region Global Assets
 
         /// <summary>
         /// The storage location for global assets.
@@ -120,213 +119,12 @@ namespace com.lizitt.editor
             return result;
         }
 
-        /// <summary>
-        /// Provides an editor GUI for adding/removing objects from a list based on object type.
-        /// </summary>
-        /// <typeparam name="T">The object type.</typeparam>
-        /// <param name="label">The GUI label. (Type description.)</param>
-        /// <param name="items">The list of items to manage.</param>
-        /// <param name="allowScene">Allow scene objects in the list.</param>
-        /// <returns>True if the GUI changed within the method.</returns>
-        public static bool OnGUIManageObjectList<T>(string label, List<T> items, bool allowScene) 
-            where T : UnityEngine.Object
-        {
-            if (items == null)
-                return false;
+        #endregion
 
-            bool origChanged = GUI.changed;
-            GUI.changed = false;
-
-            // Never allow nulls, so get rid of them first.
-            for (int i = items.Count - 1; i >= 0; i--)
-            {
-                if (items[i] == null)
-                {
-                    items.RemoveAt(i);
-                    GUI.changed = true;
-                }
-            }
-
-            GUILayout.Label(label);
-
-            if (items.Count > 0)
-            {
-                int delChoice = -1;
-
-                for (int i = 0; i < items.Count; i++)
-                {
-                    EditorGUILayout.BeginHorizontal();
-
-                    T item = (T)EditorGUILayout.ObjectField(items[i], typeof(T), allowScene);
-
-                    if (item == items[i] || !items.Contains(item))
-                        items[i] = item;
-
-                    if (GUILayout.Button("X", GUILayout.Width(30)))
-                        delChoice = i;
-
-                    EditorGUILayout.EndHorizontal();
-                }
-
-                if (delChoice >= 0)
-                {
-                    GUI.changed = true;
-                    items.RemoveAt(delChoice);
-                }
-            }
-
-            EditorGUILayout.Separator();
-
-            T nitem = (T)EditorGUILayout.ObjectField("Add", null, typeof(T), allowScene);
-
-            if (nitem != null)
-            {
-                if (!items.Contains(nitem))
-                {
-                    items.Add(nitem);
-                    GUI.changed = true;
-                }
-            }
-
-            bool result = GUI.changed;
-            GUI.changed = GUI.changed || origChanged;
-
-            return result;
-        }
+        # region Scene Camera and Raycasting
 
         /// <summary>
-        /// Provides an editor GUI for adding/removing strings from a list.
-        /// </summary>
-        /// <param name="items">The list of strings to manage.</param>
-        /// <param name="isTags">True if the strings represent tags.</param>
-        /// <returns>True if the GUI changed within the method.</returns>
-        public static bool OnGUIManageStringList(List<string> items, bool isTags)
-        {
-            if (items == null)
-                return false;
-
-            bool origChanged = GUI.changed;
-            GUI.changed = false;
-
-            if (items.Count > 0)
-            {
-                GUILayout.Label((isTags ? "Tags" : "Items"));
-
-                int delChoice = -1;
-
-                for (int i = 0; i < items.Count; i++)
-                {
-                    EditorGUILayout.BeginHorizontal();
-
-                    string item;
-
-                    if (isTags)
-                        item = EditorGUILayout.TagField(items[i]);
-                    else
-                        item = EditorGUILayout.TextField(items[i]);
-
-                    if (item == items[i] || !items.Contains(item))
-                        items[i] = item;
-
-                    if (GUILayout.Button("X", GUILayout.Width(30)))
-                        delChoice = i;
-
-                    EditorGUILayout.EndHorizontal();
-                }
-
-                if (delChoice >= 0)
-                {
-                    GUI.changed = true;
-                    items.RemoveAt(delChoice);
-                }
-            }
-
-            EditorGUILayout.Separator();
-
-            string ntag = EditorGUILayout.TagField("Add", "");
-
-            if (ntag.Length > 0)
-            {
-                if (!items.Contains(ntag))
-                {
-                    GUI.changed = true;
-                    items.Add(ntag);
-                }
-            }
-
-            bool result = GUI.changed;
-            GUI.changed = GUI.changed || origChanged;
-
-            return result;
-        }
-
-        /// <summary>
-        /// Creates a new asset in the same directory as the specified asset.
-        /// </summary>
-        /// <typeparam name="T">The type of asse to create.</typeparam>
-        /// <param name="atAsset">The asset where the new asset should be colocated.</param>
-        /// <param name="name">The name of the asset or object's type name if null.</param>
-        /// <param name="label">The asset label to attach. (If applicable.)</param>
-        /// <returns>The new asset.</returns>
-        public static T CreateAsset<T>(ScriptableObject atAsset, string name,  string label) 
-            where T : ScriptableObject
-        {
-            if (name == null || name.Length == 0)
-                name = typeof(T).ToString();
-
-            string path = GenerateStandardPath(name);
-
-            T result = ScriptableObject.CreateInstance<T>();
-            result.name = name;
-
-            AssetDatabase.CreateAsset(result, path);
-
-            if (label.Length > 0)
-                AssetDatabase.SetLabels(result, new string[1] { label });
-
-            AssetDatabase.SaveAssets();
-            AssetDatabase.ImportAsset(path);
-
-            return result;
-        }
-
-        /// <summary>
-        /// Creates a new asset at the standard path.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// This method tries to detect the directory of the currently selected asset.  If it 
-        /// can't, it will place the new asset in the root asset directory.
-        /// </para>
-        /// </remarks>
-        /// <typeparam name="T">The type of asse to create.</typeparam>
-        /// <param name="name">The name of the asset or object's type name if null.</param>
-        /// <param name="label">The asset label.</param>
-        /// <returns>The new asset.</returns>
-        public static T CreateAsset<T>(string name, string label) 
-            where T : ScriptableObject
-        {
-            if (name == null || name.Length == 0)
-                name = typeof(T).ToString();
-
-            string path = GenerateStandardPath(name);
-
-            T result = ScriptableObject.CreateInstance<T>();
-            result.name = name;
-
-            AssetDatabase.CreateAsset(result, path);
-
-            if (label.Length > 0)
-                AssetDatabase.SetLabels(result, new string[1] { label });
-
-            AssetDatabase.SaveAssets(); 
-            AssetDatabase.ImportAsset(path);
-
-            return result;
-        }
-
-        /// <summary>
-        /// Attempts to get a scene position based on the current SceneView camera.
+        /// Attempts to get a scene position based on the last scene view camera.
         /// </summary>
         /// <remarks>
         /// <para>
@@ -336,51 +134,84 @@ namespace com.lizitt.editor
         /// The returned position will be one of the following. (In order of priority.)
         /// </para>
         /// <ol>
-        /// <li>The hit position of a ray cast from the SceneView camera.</li>
-        /// <li>A position aproximately 15 units forward from the SceneView camera.</li>
-        /// <li>The zero vector.</li>
+        /// <li>The hit position of a ray cast from the scene view camera.</li>
+        /// <li>A position <paramref name="failDistance"/> forward of the scene view camera.</li>
+        /// <li>The zero vector. (If no scene view camera was found.)</li>
         /// </ol>
         /// </remarks>
+        /// <param name="maxDistance">The maximum raycast distance.</param>
+        /// <param name="failDistance">The position distance to return if the raycast failes.</param>
         /// <returns>The recommended position in the scene.</returns>
-        public static Vector3 GetCreatePosition()
+        public static Vector3 GetCreatePosition(float maxDistance = 500, float failDistance = 15)
+        {
+            RaycastHit hit;
+            if (RaycastFromCamera(maxDistance, out hit))
+                return hit.point;
+
+            return GetSceneCameraForwardPosition(failDistance);
+        }
+
+        /// <summary>
+        /// Positions and aligns the transform on the surface of the current scene camera's target.
+        /// </summary>
+        /// <param name="transform">The transform. (Required)</param>
+        /// <param name="maxDistance">The maximum racast distance.</param>
+        /// <param name="failDistance">The distance to use if the raycast fails to hit.</param>
+        public static void AlignAtSceneViewHit(Transform transform, float maxDistance = 500, float failDistance = 15)
+        {
+            RaycastHit hit;
+            if (RaycastFromCamera(maxDistance, out hit))
+            {
+                transform.position = hit.point;
+                transform.up = hit.normal;
+            }
+            else
+            {
+                transform.position = GetSceneCameraForwardPosition(failDistance);
+                transform.rotation = Quaternion.identity;
+            }
+        }
+
+        /// <summary>
+        /// Performs a default raycast from the last scene view camera.
+        /// </summary>
+        /// <param name="maxDistance">The maximum raycast distance.</param>
+        /// <param name="hit">The hit information.</param>
+        /// <returns>True if a hit was detected, otherwise false.</returns>
+        public static bool RaycastFromCamera(float maxDistance, out RaycastHit hit)
+        {
+            hit = new RaycastHit();
+
+            Camera cam = SceneView.lastActiveSceneView.camera;
+            if (!cam)
+                return false;
+
+            Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+
+            return Physics.Raycast(ray, out hit, maxDistance);
+        }
+
+        /// <summary>
+        /// Gets a position forward of the last active scene camera by the specified distance, or <c>Vector3.zero</c> 
+        /// on failure.
+        /// </summary>
+        /// <param name="distance">The distance forward.</param>
+        /// <returns>
+        /// A position forward of the last active scene camera by the specified distance, or <c>Vector3.zero</c>
+        /// on failure.
+        /// </returns>
+        public static Vector3 GetSceneCameraForwardPosition(float distance = 1)
         {
             Camera cam = SceneView.lastActiveSceneView.camera;
-
             if (!cam)
                 return Vector3.zero;
 
-            RaycastHit hit;
-            Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-
-            if (Physics.Raycast(ray, out hit, 500))
-                return hit.point;
-                  
-            return cam.transform.position + cam.transform.forward * 15;
+            return cam.transform.position + cam.transform.forward * distance;
         }
 
-        private static string GenerateStandardPath(string name)
-        {
-            string dir = "";
+        #endregion
 
-            foreach (var item in Selection.objects)
-            {
-                dir = AssetDatabase.GetAssetPath(item);
-
-                if (dir.Length > 0)
-                {
-                    if (!Directory.Exists(dir))
-                        // Selection must be a file asset.
-                        dir = Path.GetDirectoryName(dir);
-
-                    break;
-                }
-            }
-
-            if (dir.Length == 0)
-                dir = "Assets";
-
-            return AssetDatabase.GenerateUniqueAssetPath(dir + "/" + name + ".asset");
-        }
+        #region Serialized Object Members
 
         /// <summary>
         /// Get the serialized field information for a Monobehaviour script.
@@ -423,5 +254,7 @@ namespace com.lizitt.editor
 
             return list;
         }
+
+        #endregion
     }
 }
