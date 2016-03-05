@@ -334,13 +334,13 @@ namespace com.lizitt
         /// <summary>
         /// The category of status types to include.
         /// </summary>
-        public readonly ColliderStatusCategory FilterType;
+        public readonly ColliderBehaviorCategory FilterType;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="filerType">The category of status types to include.</param>
-        public FilteredColliderStatusAttribute(ColliderStatusCategory filerType)
+        public FilteredColliderStatusAttribute(ColliderBehaviorCategory filerType)
         {
             FilterType = filerType;
         }

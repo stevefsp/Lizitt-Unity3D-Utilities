@@ -34,14 +34,14 @@ namespace com.lizitt
         /// </summary>
         /// <param name="status">The status.</param>
         /// <returns>True if the status a rigidbody status.</returns>
-        public static bool IsRigidBody(this ColliderStatus status)
+        public static bool IsRigidBody(this ColliderBehavior status)
         {
             switch (status)
             {
-                case ColliderStatus.KinematicCollider:
-                case ColliderStatus.KinematicTrigger:
-                case ColliderStatus.RigidbodyCollider:
-                case ColliderStatus.RigidbodyTrigger:
+                case ColliderBehavior.KinematicCollider:
+                case ColliderBehavior.KinematicTrigger:
+                case ColliderBehavior.RigidbodyCollider:
+                case ColliderBehavior.RigidbodyTrigger:
 
                     return true;
             }
@@ -54,12 +54,12 @@ namespace com.lizitt
         /// </summary>
         /// <param name="status">The status.</param>
         /// <returns>True if the collider status represents a static status.</returns>
-        public static bool IsStatic(this ColliderStatus status)
+        public static bool IsStatic(this ColliderBehavior status)
         {
             switch (status)
             {
-                case ColliderStatus.StaticCollider:
-                case ColliderStatus.StaticTrigger:
+                case ColliderBehavior.StaticCollider:
+                case ColliderBehavior.StaticTrigger:
 
                     return true;
             }

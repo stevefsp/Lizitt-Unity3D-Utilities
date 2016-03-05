@@ -567,5 +567,39 @@ namespace com.lizitt.editor
         }
 
         #endregion
+
+        /// <summary>
+        /// Sets the rigidbody behavior with undo.
+        /// </summary>
+        /// <param name="rigidbody">The rigidbody. (Required)</param>
+        /// <param name="behavior">The desired behavior.</param>
+        /// <param name="singleUndo">
+        /// If true, the operation will be combined into a single undo transaction.  Otherwise it is the 
+        /// responsibility of the caller to make sure it is properly combined.
+        /// </param>
+        /// <param name="undoLabel">The undo label for the operation.</param>
+        public static void SetRigidbodyBehavior(Rigidbody rigidbody, RigidbodyBehavior behavior,
+            bool singleUndo = true, string undoLabel = "Set Rigidbody Behavior")
+        {
+            if (!rigidbody)
+            {
+                Debug.Log("Can't set status of a null rigidbody.");
+                return;
+            }
+
+            if (rigidbody.GetBehavior() == behavior)
+                return;
+
+            if (singleUndo)
+                Undo.IncrementCurrentGroup();
+
+            Undo.RecordObject(rigidbody, undoLabel);
+            Undo.RecordObjects(rigidbody.GetColliders(true), undoLabel);
+
+            rigidbody.SetBehavior(behavior, true);
+
+            if (singleUndo)
+                Undo.CollapseUndoOperations(Undo.GetCurrentGroup());
+        }
     }
 }

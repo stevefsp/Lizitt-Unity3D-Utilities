@@ -77,12 +77,13 @@ namespace com.lizitt
         /// </remarks>
         /// <param name="collider">The collider.</param>
         /// <returns>The behavior type of collider based on its current configuration.</returns>
-        public static ColliderStatus GetStatus(this Collider collider)
+        public static ColliderBehavior GetBehavior(this Collider collider, Rigidbody rigidbody = null)
         {
             if (!collider)
-                return ColliderStatus.Disabled;
+                return ColliderBehavior.Disabled;
 
-            var rigidbody = collider.GetAssociatedRigidBody();
+            if (!rigidbody)
+                rigidbody = collider.GetAssociatedRigidBody();
 
             if (rigidbody)
             {
@@ -91,210 +92,27 @@ namespace com.lizitt
                     if (collider.isTrigger)
                     {
                         return rigidbody.isKinematic
-                            ? ColliderStatus.KinematicTrigger
-                            : ColliderStatus.RigidbodyTrigger;
+                            ? ColliderBehavior.KinematicTrigger
+                            : ColliderBehavior.RigidbodyTrigger;
                     }
                     else
                     {
                         return rigidbody.isKinematic
-                            ? ColliderStatus.KinematicCollider
-                            : ColliderStatus.RigidbodyCollider;
+                            ? ColliderBehavior.KinematicCollider
+                            : ColliderBehavior.RigidbodyCollider;
                     }
                 }
-                else if (rigidbody.isKinematic || !rigidbody.useGravity)
-                    return ColliderStatus.Disabled;
                 else
-                    return ColliderStatus.GravityBody;
+                    return ColliderBehavior.Disabled;
             }
             else if (collider.enabled)  // No rigidbody.
             {
                 return collider.isTrigger
-                    ? ColliderStatus.StaticTrigger
-                    : ColliderStatus.StaticCollider;
+                    ? ColliderBehavior.StaticTrigger
+                    : ColliderBehavior.StaticCollider;
             }
             else
-                return ColliderStatus.Disabled;
-        }
-
-        private const string BadRigidBodyTransition =
-            "Invalid transition: Collider does not have a Rigidbody component: {0} -> {1}";
-
-        private const string BadStaticTransition =
-            "Invalid transition: Collider has a Rigidbody component: {0} -> {1}";
-
-        /// <summary>
-        /// Configures the collider for the specified behavior.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// See the 
-        /// <a href="http://docs.unity3d.com/Manual/CollidersOverview.html">Collider Overview</a>
-        /// page in the Unity Manual for details.
-        /// </para>
-        /// <para>
-        /// This method is not appropriate for use with compound rigidbody collider configurations
-        /// since it only updates the specified collider and its ridigbody.  It does not try to
-        /// locate other colliders that might be associated with the rigidbody.
-        /// </para>
-        /// <para>
-        /// Transitions between rigidbody and static behaviors is not supported since doing so
-        /// would required adding and destroying rigidbodys.
-        /// </para>
-        /// </remarks>
-        /// <param name="collider">The collider to update.</param>
-        /// <param name="status">The desired behavior type.</param>
-        public static void SetStatus(this Collider collider, ColliderStatus status)
-        {
-            if (status == ColliderStatus.Disabled && !collider)
-                return;
-
-            var rigidbody = collider.GetAssociatedRigidBody();
-
-            switch (status)
-            {
-                case ColliderStatus.KinematicCollider:
-
-                    if (rigidbody)
-                    {
-                        rigidbody.detectCollisions = true;
-                        rigidbody.isKinematic = true;
-                        collider.isTrigger = false;
-                        collider.enabled = true;
-                    }
-                    else
-                    {
-                        Debug.LogErrorFormat(
-                            collider, BadRigidBodyTransition, collider.GetStatus(), status);
-                    }
-
-                    break;
-
-                case ColliderStatus.KinematicTrigger:
-
-                    if (rigidbody)
-                    {
-                        rigidbody.detectCollisions = true;
-                        rigidbody.isKinematic = true;
-                        collider.isTrigger = true;
-                        collider.enabled = true;
-                    }
-                    else
-                    {
-                        Debug.LogErrorFormat(
-                            collider, BadRigidBodyTransition, collider.GetStatus(), status);
-                    }
-
-                    break;
-
-                case ColliderStatus.Disabled:
-
-                    if (collider)
-                        collider.enabled = false;
-                    if (rigidbody)
-                        rigidbody.isKinematic = true;   // Yes, this is needed.
-
-                    break;
-
-                case ColliderStatus.RigidbodyCollider:
-
-                    if (rigidbody)
-                    {
-                        rigidbody.detectCollisions = true;
-                        rigidbody.isKinematic = false;
-                        collider.isTrigger = false;
-                        collider.enabled = true;
-                    }
-                    else
-                    {
-                        Debug.LogErrorFormat(
-                            collider, BadRigidBodyTransition, collider.GetStatus(), status);
-                    }
-
-                    break;
-
-                case ColliderStatus.RigidbodyTrigger:
-
-                    if (rigidbody)
-                    {
-                        rigidbody.detectCollisions = true;
-                        rigidbody.isKinematic = false;
-                        collider.isTrigger = true;
-                        collider.enabled = true;
-                    }
-                    else
-                    {
-                        Debug.LogErrorFormat(
-                            collider, BadRigidBodyTransition, collider.GetStatus(), status);
-                    }
-
-                    break;
-
-                case ColliderStatus.StaticCollider:
-
-                    if (rigidbody)
-                    {
-                        Debug.LogErrorFormat(
-                            collider, BadStaticTransition, collider.GetStatus(), status);
-                    }
-                    else
-                    {
-                        collider.isTrigger = false;
-                        collider.enabled = true;
-                    }
-
-                    break;
-
-                case ColliderStatus.StaticTrigger:
-
-                    if (rigidbody)
-                    {
-                        Debug.LogErrorFormat(
-                            collider, BadStaticTransition, collider.GetStatus(), status);
-                    }
-                    else
-                    {
-                        collider.isTrigger = true;
-                        collider.enabled = true;
-                    }
-
-                    break;
-
-                case ColliderStatus.GravityBody:
-
-                    if (rigidbody)
-                    {
-                        rigidbody.isKinematic = false;
-                        rigidbody.useGravity = true;
-                        collider.enabled = false;
-                    }
-                    else
-                    {
-                        Debug.LogErrorFormat(collider, BadRigidBodyTransition, collider.GetStatus(), status);
-                    }
-
-                    break;
-            }
-        }
-
-        public static void SetStatus(this Collider collider, ColliderStatus status, bool useGravity)
-        {
-            var rigidbody = collider.GetAssociatedRigidBody();
-
-            if (useGravity && !rigidbody)
-            {
-                Debug.LogError("Can't set a collider without a rigidbody to use gravity.", collider);
-                return;
-            }
-
-            if (status == ColliderStatus.GravityBody && !useGravity)
-            {
-                Debug.LogErrorFormat(collider, "Invalid opetation: A status of {0} is not compatible with"
-                    + " a 'useGravity' value of false.", status);
-                return;
-            }
-
-            rigidbody.useGravity = useGravity;
-            SetStatus(collider, status); 
+                return ColliderBehavior.Disabled;
         }
     }
 }

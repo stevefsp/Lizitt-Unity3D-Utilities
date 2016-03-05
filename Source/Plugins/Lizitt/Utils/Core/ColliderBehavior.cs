@@ -24,12 +24,12 @@ namespace com.lizitt
     /// <summary>
     /// Collider statuc categories.
     /// </summary>
-    public enum ColliderStatusCategory
+    public enum ColliderBehaviorCategory
     {
         /*
          * Design notes:
          * 
-         * Various custom editors must be updated to handle any changes made to this enumeration.
+         * Various custom editors must be updated to handle changes made to this enumeration.
          * 
          */
 
@@ -53,8 +53,11 @@ namespace com.lizitt
     /// <a href="http://docs.unity3d.com/Manual/CollidersOverview.html">Collider Overview</a>
     /// page in the Unity Manual for details on collider behaviour under various configuations.
     /// </para>
+    /// <para>
+    /// Use the <c>Rigidbody.SetBehavior()</c> extension change the behavior of a collider.
+    /// </para>
     /// </remarks>
-    public enum ColliderStatus
+    public enum ColliderBehavior
     {
         /*
          * Custom editor note:  There is a custom editor for this enumeration.  The editor will need to be updated
@@ -142,16 +145,6 @@ namespace com.lizitt
         /// </para>
         /// </remarks>
         KinematicTrigger,
-
-        /// <summary>
-        /// A Rigidbody effected by gravity, but with either no collider or a disabled collider.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// Is not involved in any collision or trigger events.
-        /// </para>
-        /// </remarks>
-        GravityBody,
 
         /// <summary>
         /// Static Collider

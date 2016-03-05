@@ -65,12 +65,11 @@ namespace com.lizitt.editor
         /// </remarks>
         private static readonly GUIContent[] RigidBodyColliderStatusLabels = new GUIContent[]
         {
-            new GUIContent(ColliderStatus.Disabled.ToString()),
-            new GUIContent(ColliderStatus.KinematicCollider.ToString()),
-            new GUIContent(ColliderStatus.KinematicTrigger.ToString()),
-            new GUIContent(ColliderStatus.RigidbodyCollider.ToString()),
-            new GUIContent(ColliderStatus.RigidbodyTrigger.ToString()),
-            new GUIContent(ColliderStatus.GravityBody.ToString()),
+            new GUIContent(ColliderBehavior.Disabled.ToString()),
+            new GUIContent(ColliderBehavior.KinematicCollider.ToString()),
+            new GUIContent(ColliderBehavior.KinematicTrigger.ToString()),
+            new GUIContent(ColliderBehavior.RigidbodyCollider.ToString()),
+            new GUIContent(ColliderBehavior.RigidbodyTrigger.ToString()),
         };
 
         /// <summary>
@@ -85,12 +84,11 @@ namespace com.lizitt.editor
         /// </remarks>
         private static readonly int[] RigidBodyColliderStatusValues = new int[]
         {
-            (int)ColliderStatus.Disabled,
-            (int)ColliderStatus.KinematicCollider,
-            (int)ColliderStatus.KinematicTrigger,
-            (int)ColliderStatus.RigidbodyCollider,
-            (int)ColliderStatus.RigidbodyTrigger,
-            (int)ColliderStatus.GravityBody,
+            (int)ColliderBehavior.Disabled,
+            (int)ColliderBehavior.KinematicCollider,
+            (int)ColliderBehavior.KinematicTrigger,
+            (int)ColliderBehavior.RigidbodyCollider,
+            (int)ColliderBehavior.RigidbodyTrigger,
         };
 
         /// <summary>
@@ -105,9 +103,9 @@ namespace com.lizitt.editor
         /// </remarks>
         public static readonly GUIContent[] StaticColliderStatusLabels = new GUIContent[]
         {
-            new GUIContent(ColliderStatus.Disabled.ToString()),
-            new GUIContent(ColliderStatus.StaticCollider.ToString()),
-            new GUIContent(ColliderStatus.StaticTrigger.ToString()),
+            new GUIContent(ColliderBehavior.Disabled.ToString()),
+            new GUIContent(ColliderBehavior.StaticCollider.ToString()),
+            new GUIContent(ColliderBehavior.StaticTrigger.ToString()),
         };
 
         /// <summary>
@@ -122,9 +120,9 @@ namespace com.lizitt.editor
         /// </remarks>
         public static readonly int[] StaticColliderStatusValues = new int[]
         {
-            (int)ColliderStatus.Disabled,
-            (int)ColliderStatus.StaticCollider,
-            (int)ColliderStatus.StaticTrigger,
+            (int)ColliderBehavior.Disabled,
+            (int)ColliderBehavior.StaticCollider,
+            (int)ColliderBehavior.StaticTrigger,
         };
 
         #endregion
@@ -133,7 +131,7 @@ namespace com.lizitt.editor
         /// Draw a popup that only contains collider status options that are relavent to a reference collider.
         /// </summary>
         /// <param name="position">The draw position.</param>
-        /// <param name="property">A property representing a <see cref="ColliderStatus"/> field.</param>
+        /// <param name="property">A property representing a <see cref="ColliderBehavior"/> field.</param>
         /// <param name="label">The label.</param>
         /// <param name="referencePath">
         /// The serialized object path to the object that is, or contains, the reference collider. Or null to use
@@ -180,7 +178,7 @@ namespace com.lizitt.editor
         /// </summary>
         /// <param name="position">The draw position.</param>
         /// <param name="label">The label.</param>
-        /// <param name="property">The property representing a <see cref="ColliderStatus"/> field.</param>
+        /// <param name="property">The property representing a <see cref="ColliderBehavior"/> field.</param>
         /// <param name="collider">The collider, or null to display all options.</param>
         public static void FilteredColliderStatusPopup(
             Rect position, GUIContent label, SerializedProperty property, Collider collider)
@@ -194,7 +192,7 @@ namespace com.lizitt.editor
             }
 
             var choice = 
-                (int)FilteredColliderStatusPopup(position, label, (ColliderStatus)property.intValue, collider);
+                (int)FilteredColliderStatusPopup(position, label, (ColliderBehavior)property.intValue, collider);
 
             if (choice != property.intValue)
                 property.intValue = choice;
@@ -204,10 +202,10 @@ namespace com.lizitt.editor
         /// Draw a popup that only contains status values relavant to category.
         /// <param name="position">The draw position.</param>
         /// <param name="label">The label.</param>
-        /// <param name="property">The property representing a <see cref="ColliderStatus"/> field.</param>
+        /// <param name="property">The property representing a <see cref="ColliderBehavior"/> field.</param>
         /// <param name="category">The category of status values to include.</param>
         public static void FilteredColliderStatusPopup(
-            Rect position, GUIContent label, SerializedProperty property, ColliderStatusCategory category)
+            Rect position, GUIContent label, SerializedProperty property, ColliderBehaviorCategory category)
         {
             if (property.propertyType != SerializedPropertyType.Enum)
             {
@@ -218,7 +216,7 @@ namespace com.lizitt.editor
             }
 
             var choice =
-                (int)FilteredColliderStatusPopup(position, label, (ColliderStatus)property.intValue, category);
+                (int)FilteredColliderStatusPopup(position, label, (ColliderBehavior)property.intValue, category);
 
             if (choice != property.intValue)
                 property.intValue = choice;
@@ -232,15 +230,15 @@ namespace com.lizitt.editor
         /// <param name="currentValue">The current value.</param>
         /// <param name="collider">The collider, or null to display all options.</param>
         /// <returns>The selected value.</returns>
-        public static ColliderStatus FilteredColliderStatusPopup(
-            Rect position, GUIContent label, ColliderStatus currentValue, Collider collider)
+        public static ColliderBehavior FilteredColliderStatusPopup(
+            Rect position, GUIContent label, ColliderBehavior currentValue, Collider collider)
         {
             if (!collider)
-                return (ColliderStatus)EditorGUI.EnumPopup(position, label, currentValue);
+                return (ColliderBehavior)EditorGUI.EnumPopup(position, label, currentValue);
 
             var category = collider.GetAssociatedRigidBody()
-                ? ColliderStatusCategory.RigidBody
-                : ColliderStatusCategory.Static;
+                ? ColliderBehaviorCategory.RigidBody
+                : ColliderBehaviorCategory.Static;
 
             return FilteredColliderStatusPopup(position, label, currentValue, category);
         }
@@ -253,21 +251,21 @@ namespace com.lizitt.editor
         /// <param name="currentValue">The current value.</param>
         /// <param name="category">The category of status values to include.</param>
         /// <returns>The selected value.</returns>
-        public static ColliderStatus FilteredColliderStatusPopup(
-            Rect position, GUIContent label, ColliderStatus currentValue, ColliderStatusCategory category)
+        public static ColliderBehavior FilteredColliderStatusPopup(
+            Rect position, GUIContent label, ColliderBehavior currentValue, ColliderBehaviorCategory category)
         {
             GUIContent[] displayOptions = null;
             int[] optionValues = null;
 
             switch (category)
             {
-                case ColliderStatusCategory.RigidBody:
+                case ColliderBehaviorCategory.RigidBody:
 
                     displayOptions = RigidBodyColliderStatusLabels;
                     optionValues = RigidBodyColliderStatusValues;
                     break;
 
-                case ColliderStatusCategory.Static:
+                case ColliderBehaviorCategory.Static:
 
                     displayOptions = StaticColliderStatusLabels;
                     optionValues = StaticColliderStatusValues;
@@ -279,10 +277,10 @@ namespace com.lizitt.editor
                     Debug.LogWarning(
                         "Internal error: Unhandled collider category. Defaulted to EnumPopup: " + category);
 
-                    return (ColliderStatus)EditorGUI.EnumPopup(position, label, currentValue);
+                    return (ColliderBehavior)EditorGUI.EnumPopup(position, label, currentValue);
             }
 
-            return (ColliderStatus)EditorGUI.IntPopup(position, label, (int)currentValue, displayOptions, optionValues);
+            return (ColliderBehavior)EditorGUI.IntPopup(position, label, (int)currentValue, displayOptions, optionValues);
         }
 
         #endregion
