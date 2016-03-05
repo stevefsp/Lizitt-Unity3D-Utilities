@@ -237,7 +237,7 @@ namespace com.lizitt.editor
                 return (ColliderBehavior)EditorGUI.EnumPopup(position, label, currentValue);
 
             var category = collider.GetAssociatedRigidBody()
-                ? ColliderBehaviorCategory.Rigidbody
+                ? ColliderBehaviorCategory.RigidBody
                 : ColliderBehaviorCategory.Static;
 
             return FilteredColliderStatusPopup(position, label, currentValue, category);
@@ -259,7 +259,7 @@ namespace com.lizitt.editor
 
             switch (category)
             {
-                case ColliderBehaviorCategory.Rigidbody:
+                case ColliderBehaviorCategory.RigidBody:
 
                     displayOptions = RigidBodyColliderStatusLabels;
                     optionValues = RigidBodyColliderStatusValues;
