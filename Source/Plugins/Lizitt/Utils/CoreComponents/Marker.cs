@@ -26,13 +26,14 @@ namespace com.lizitt
     /// <summary>
     /// An marker representing a position with a radius.
     /// </summary>
+    [AddComponentMenu(LizittUtil.LizittMenu + "Marker", LizittUtil.MarkerMenuOrder + 0)]
     public class Marker
         : MonoBehaviour
     {
         [SerializeField]
         [Tooltip("The radius of the marker.")]
         [ClampMinimum(0)]
-        private float m_Radius = 0.1f;
+        private float m_Radius = 1f;
 
         /// <summary>
         /// The radius of the marker.

@@ -37,6 +37,7 @@ namespace com.lizitt
     /// </code>
     /// </remarks>
     [SelectionBase]
+    [AddComponentMenu(LizittUtil.LizittMenu + "Make Selection Base", LizittUtil.UtilityMenuOrder + 9)]
     public class MakeSelectionBase
         : MonoBehaviour
     {

@@ -19,6 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+#if UNITY_EDITOR
+
 using UnityEngine;
 
 namespace com.lizitt
@@ -32,6 +34,7 @@ namespace com.lizitt
     /// is a gizmo.
     /// </para>
     /// </remarks>
+    [AddComponentMenu(LizittUtil.LizittMenu + "Plane Annotation (Editor Only)", LizittUtil.UtilityMenuOrder + 10)]
     public class SimplePlaneAnnotation
         : MonoBehaviour
     {
@@ -73,3 +76,4 @@ namespace com.lizitt
         #endregion
     }
 }
+#endif
