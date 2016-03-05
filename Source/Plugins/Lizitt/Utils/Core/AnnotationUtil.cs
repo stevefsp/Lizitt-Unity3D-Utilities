@@ -36,13 +36,6 @@ namespace com.lizitt
     {
         private const float Epsilon = 0.001f;
 
-        /// <summary>
-        /// If true, annotations should always be drawn, otherwise annotations should follow
-        /// their standard beahvior.
-        /// </summary>
-        [System.Obsolete("Not needed after conversion of all classes to standard gizmos.")]
-        public static bool drawAlways = false;
-
         #region Circle Gizmo
 
         private const int CircleSegments = 20;

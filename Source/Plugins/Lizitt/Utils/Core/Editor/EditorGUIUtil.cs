@@ -138,53 +138,9 @@ namespace com.lizitt.editor
             }
         }
 
-        private static GUIStyle m_BoldLabel;
-
-        /// <summary>
-        /// A bold label style.
-        /// </summary>
-        [System.Obsolete("Use EditorStyles.boldLabel instead.")]
-        public static GUIStyle BoldLabel
-        {
-            get
-            {
-                if (m_BoldLabel == null)
-                {
-                    m_BoldLabel = new GUIStyle(EditorStyles.label);
-                    m_BoldLabel.fontStyle = FontStyle.Bold;
-                }
-
-                return m_BoldLabel;
-            }
-        }
-
         #endregion
 
         #region Formatting
-
-        #region Indent Sections (Obsolete)
-
-        private static int IndentAmount = 2;
-
-        [System.Obsolete("Mostly replaced by HeaderAttribute.  Also, EditorGUI.indentLevel doesn't play well with"
-            + " EditorGUILayout horizontal layout methods.")]
-        public static void BeginSection(string headingLabel)
-        {
-            EditorGUILayout.Separator();
-            EditorGUILayout.LabelField(headingLabel, EditorStyles.boldLabel);
-            EditorGUILayout.Separator();
-
-            EditorGUI.indentLevel += IndentAmount;
-        }
-
-        [System.Obsolete("Mostly replaced by HeaderAttribute.  Also, EditorGUI.indentLevel doesn't play well with"
-            + " EditorGUILayout horizontal layout methods.")]
-        public static void EndSection()
-        {
-            EditorGUI.indentLevel -= IndentAmount;
-        }
-
-        #endregion
 
         private static Stack<float> m_WidthStack = null;
 
@@ -215,25 +171,6 @@ namespace com.lizitt.editor
         #endregion
 
         #region SerializedObject
-
-        /// <summary>
-        /// Displays a property field GUI element with a delete button to clear value.
-        /// </summary>
-        /// <param name="property">The property the edit.</param>
-        /// <returns>True if the delete button was pressed.</returns>
-        [System.Obsolete("The Unity ReorderableList makes this feature no longer needed.")]
-        public static bool DeletablePropertyField(SerializedProperty property, GUIContent label)
-        {
-            if (property == null)
-                throw new System.ArgumentNullException();
-
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PropertyField(property, label);
-            bool result = GUILayout.Button("X", GUILayout.Width(20));
-            EditorGUILayout.EndHorizontal();
-
-            return result;
-        }
 
         /// <summary>
         /// Derives a desired reference object using a standard algorithm.
@@ -405,112 +342,6 @@ namespace com.lizitt.editor
 
             return new Rect(
                 linePosition.x + w, linePosition.y, linePosition.width - w, linePosition.height);
-        }
-
-        #endregion
-
-        #region Generalized Enumeration Draw Members
-
-        /// <summary>
-        /// Draws a mask field for the specified enum type.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// Only call this method when it is valid to call EditorGUI methods.
-        /// </para>
-        /// </remarks>
-        /// <param name="position">The draw position.</param>
-        /// <param name="value">The current value of the mask field.</param>
-        /// <param name="enumTyp">The type of enum to display.</param>
-        /// <param name="label">The field label.</param>
-        /// <param name="sort">
-        /// True if the enum names should be sorted, otherwise use the default order provided
-        /// by the system.
-        /// </param>
-        /// <returns>The result of the mask field.</returns>
-        [System.Obsolete("Use the equivalent method in UnityGUIDraw.")]
-        public static int DrawEnumFlagsField(
-            Rect position, int value, System.Type enumTyp, GUIContent label, bool sort)
-        {
-            var itemNames = System.Enum.GetNames(enumTyp);
-            var itemValues = System.Enum.GetValues(enumTyp) as int[];
-
-            if (sort)
-            {
-                System.Array.Sort(itemNames, itemValues);
-                System.Array.Sort(itemNames);
-            }
-
-            int val = value;
-            int maskVal = 0;
-            for (int i = 0; i < itemValues.Length; i++)
-            {
-                if (itemValues[i] != 0)
-                {
-                    if ((val & itemValues[i]) == itemValues[i])
-                        maskVal |= 1 << i;
-                }
-                else if (val == 0)
-                    maskVal |= 1 << i;
-            }
-
-            int newMaskVal = EditorGUI.MaskField(position, label, maskVal, itemNames);
-            int changes = maskVal ^ newMaskVal;
-
-            for (int i = 0; i < itemValues.Length; i++)
-            {
-                if ((changes & (1 << i)) != 0)            // Has this list item changed?
-                {
-                    if ((newMaskVal & (1 << i)) != 0)     // Has it been set?
-                    {
-                        if (itemValues[i] == 0)           // Special case: if "0" is set, just set the val to 0
-                        {
-                            val = 0;
-                            break;
-                        }
-                        else
-                            val |= itemValues[i];
-                    }
-                    else                                  // It has been reset
-                        val &= ~itemValues[i];
-                }
-            }
-            return val;
-        }
-
-        /// <summary>
-        /// Draws a popup wit the enumeration names sorted.
-        /// </summary>
-        /// <param name="position">The draw position.</param>
-        /// <param name="selectedValue">The current value of the mask field.</param>
-        /// <param name="label">The field label.</param>
-        /// <param name="enumTyp">The type of enum to display.</param>
-        /// <returns>The selected enumeration value.</returns>
-        [System.Obsolete("Use the equivalent method in UnityGUIDraw.")]
-        public static int DrawSortedEnumPopup(Rect position, GUIContent label, int selectedValue, System.Type enumTyp)
-        {
-            EditorGUI.LabelField(EditorGUIUtil.LabelPosition(position, EditorGUIUtility.labelWidth), label);
-
-            return DrawEnumSortedPopup(EditorGUIUtil.LabelAfter(
-                position, EditorGUIUtility.labelWidth, 0), selectedValue, enumTyp);
-        }
-
-        /// <summary>
-        /// Draws a popup wit the enumeration names sorted.  (Without a label.)
-        /// </summary>
-        /// <param name="position">The draw position.</param>
-        /// <param name="selectedValue">The current value of the mask field.</param>
-        /// <param name="enumTyp">The type of enum to display.</param>
-        /// <returns>The selected enumeration value.</returns>
-        [System.Obsolete("Use the equivalent method in UnityGUIDraw.")]
-        public static int DrawEnumSortedPopup(Rect position, int selectedValue, System.Type enumTyp)
-        {
-            var itemNames = System.Enum.GetNames(enumTyp);
-            var itemValues = System.Enum.GetValues(enumTyp) as int[];
-            System.Array.Sort(itemNames, itemValues);
-            System.Array.Sort(itemNames);
-
-            return EditorGUI.IntPopup(position, selectedValue, itemNames, itemValues);
         }
 
         #endregion

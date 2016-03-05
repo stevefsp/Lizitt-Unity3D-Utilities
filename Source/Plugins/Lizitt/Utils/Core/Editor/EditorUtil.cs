@@ -61,51 +61,6 @@ namespace com.lizitt.editor
         /// </summary>
         public const string ViewMenu = LizittToolsMenu + "View/";
 
-        #region Obsolete
-
-        /// <summary>
-        /// The base priority for the Lizitt asset creation menu.
-        /// </summary>
-        [System.Obsolete("No longer in use")]
-        public const int AssetGroup = 1000;
-
-        /// <summary>
-        /// The base priority for the Lizitt game object creation menu.
-        /// </summary>
-        [System.Obsolete("No longer in use")]
-        public const int GameObjectGroup = 2000;
-
-        /// <summary>
-        /// The base priority for the Lizitt view menu.
-        /// </summary>
-        public const int ViewGroup = 3000;
-
-        [System.Obsolete("No longer in use.")]
-        public const int UtilityGroup = 4000;
-
-        /// <summary>
-        /// The base priority for the Lizitt manager menu group.
-        /// </summary>
-        [System.Obsolete("No longer in use")]
-        public const int ManagerGroup = 9000;
-
-        /// <summary>
-        /// The base priority for the global menu group.
-        /// </summary>
-        [System.Obsolete("No longer in use")]
-        public const int GlobalGroup = 10000;
-
-        [System.Obsolete("No longer in use")]
-        public const string AssetCreateMenu = LizittToolsMenu + "Create Asset/";
-
-        [System.Obsolete("No longer in use.  Superceeded by LizittUtil members.")]
-        public const string UnityAssetCreateMenu = "Assets/Create/Lizitt/";
-
-        [System.Obsolete("No longer in use")]
-        public const string UtilityMenu = LizittToolsMenu + "Utilities/";
-
-        #endregion
-
         #endregion
 
         /// <summary>

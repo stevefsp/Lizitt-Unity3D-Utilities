@@ -73,18 +73,6 @@ namespace com.lizitt.editor
         private readonly UpdateListElement m_OnAddElement;
         private readonly DrawElement m_OnDrawElement;
 
-        [System.Obsolete("Use the other constructor.  Parameter order is better.  Will be removed at v0.2")]
-        public ReorderableListControl(SerializedProperty listProperty, 
-            string headerTitle, bool singleClickDelete, float elementHeight,
-            DrawElement onDrawElement = null, UpdateListElement onAddElement = null)
-        {
-            m_ElementHeight = elementHeight;
-            m_OnAddElement = onAddElement;
-            m_OnDrawElement = onDrawElement == null ? DefaultDrawElement : onDrawElement;
-
-            m_List = CreateList(listProperty, headerTitle, singleClickDelete);
-        }
-
         /// <summary>
         /// Constructor.
         /// </summary>
