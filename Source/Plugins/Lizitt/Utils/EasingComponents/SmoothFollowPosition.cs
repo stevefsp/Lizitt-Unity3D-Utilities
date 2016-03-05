@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace com.lizitt
+namespace com.lizitt.easing
 {
     /// <summary>
     /// An interpolator that continuously and smoothly moves a transform  toward the match position.
@@ -29,6 +29,7 @@ namespace com.lizitt
     /// This interpolator never completes and is optimized for a dynamic match position.
     /// </para>
     /// </remarks>
+    [UnityEngine.AddComponentMenu(LizittUtil.EasingMenu + "Smooth Follow Position", LizittUtil.EasingMenuOrder + 2)]
     public class SmoothFollowPosition
         : TrsSmoothFollow
     {

@@ -21,7 +21,7 @@
  */
 using UnityEngine;
 
-namespace com.lizitt
+namespace com.lizitt.easing
 {
     /// <summary>
     /// Interpolates a float over time using an easing function.

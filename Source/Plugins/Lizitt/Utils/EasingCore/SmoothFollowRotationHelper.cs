@@ -21,7 +21,7 @@
  */
 using UnityEngine;
 
-namespace com.lizitt
+namespace com.lizitt.easing
 {
     /// <summary>
     /// An interpolator that continuously and smoothly rotates a transform toward a match 

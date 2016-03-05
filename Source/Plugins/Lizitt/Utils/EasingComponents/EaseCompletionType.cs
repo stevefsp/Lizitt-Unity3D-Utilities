@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace com.lizitt
+namespace com.lizitt.easing
 {
     /// <summary>
     /// The type of action to take when easing is complete.

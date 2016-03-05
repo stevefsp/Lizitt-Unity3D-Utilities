@@ -129,6 +129,12 @@ namespace com.lizitt
         /// </remarks>
         public const int LizittMenuOrder = 1000;
 
+        public const int MarkerMenuOrder = LizittMenuOrder;
+
+        public const int UtilityMenuOrder = LizittMenuOrder + 40;
+
+        public const int EasingMenuOrder = LizittMenuOrder;  // Has its own menu.
+
         /// <summary>
         /// The Lizitt menu name in path form.
         /// </summary>
@@ -138,6 +144,8 @@ namespace com.lizitt
         /// E.g <c>menuName = LizittUtil.LizittMenu + "My Component Name"</c></para>
         /// </remarks>
         public const string LizittMenu = "Lizitt/";
+
+        public const string EasingMenu = LizittMenu + "Easing/";
 
         #endregion
     }

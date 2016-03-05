@@ -21,7 +21,7 @@
  */
 using UnityEngine;
 
-namespace com.lizitt
+namespace com.lizitt.easing
 {
     /// <summary>
     /// Provides an interface for Transform-based translate/rotate/scale interpolators.

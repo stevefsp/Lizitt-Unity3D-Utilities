@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace com.lizitt
+namespace com.lizitt.easing
 {
     /// <summary>
     /// Interpolates a transform's euler angles using a standard easing function.
@@ -41,6 +41,7 @@ namespace com.lizitt
     /// Any changes during the the interpolation will warp the easing behavior.
     /// </para>
     /// </remarks>
+    [UnityEngine.AddComponentMenu(LizittUtil.EasingMenu + "Ease RotateTo", LizittUtil.EasingMenuOrder + 40)]
     public class EaseRotateTo
         : TrsEase
     {

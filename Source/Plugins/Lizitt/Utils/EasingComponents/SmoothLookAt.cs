@@ -21,7 +21,7 @@
  */
 using UnityEngine;
 
-namespace com.lizitt
+namespace com.lizitt.easing
 {
     /// <summary>
     /// An interpolator that continuously and smoothly rotates a transform to look at another 
@@ -32,6 +32,7 @@ namespace com.lizitt
     /// This interpolator never completes and is optimized for a dynamic look target.
     /// </para>
     /// </remarks>
+    [AddComponentMenu(LizittUtil.EasingMenu + "Smooth LootAt", LizittUtil.EasingMenuOrder + 0)]
     public class SmoothLookAt
         : TrsInterpolator
     {

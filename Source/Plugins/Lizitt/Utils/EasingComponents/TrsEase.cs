@@ -21,7 +21,7 @@
  */
 using UnityEngine;
 
-namespace com.lizitt
+namespace com.lizitt.easing
 {
     /// <summary>
     /// A Monobehaviour that implements <see cref="ITrsInterpolationHelper"/> features that use the 

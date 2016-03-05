@@ -22,7 +22,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace com.lizitt.editor
+namespace com.lizitt.easing.editor
 {
     public abstract class TrsInterpolatorEditor
         : Editor

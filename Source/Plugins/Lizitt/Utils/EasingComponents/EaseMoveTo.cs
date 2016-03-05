@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace com.lizitt
+namespace com.lizitt.easing
 {
     /// <summary>
     /// Interpolates a transform's position using a standard easing function.
@@ -41,6 +41,7 @@ namespace com.lizitt
     /// Any changes during the the interpolation will warp the easing behavior.
     /// </para>
     /// </remarks>
+    [UnityEngine.AddComponentMenu(LizittUtil.EasingMenu + "Ease MoveTo", LizittUtil.EasingMenuOrder + 41)]
     public class EaseMoveTo
         : TrsEase
     {

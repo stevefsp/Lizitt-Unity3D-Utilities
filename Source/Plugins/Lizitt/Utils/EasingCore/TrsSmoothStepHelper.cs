@@ -21,7 +21,7 @@
  */
 using UnityEngine;
 
-namespace com.lizitt
+namespace com.lizitt.easing
 {
     /// <summary>
     /// Provides <see cref="ITrsInterpolationHelper"/> features that uses Mathf.SmootStep for 
