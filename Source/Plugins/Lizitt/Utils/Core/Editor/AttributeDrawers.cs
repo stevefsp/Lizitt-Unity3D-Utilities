@@ -437,7 +437,7 @@ namespace com.lizitt.editor
         {
             var attr = attribute as FilteredColliderStatusAttribute;
 
-            EditorGUIDraw.FilteredColliderStatusPopup(position, label, property, attr.FilterType);
+            EditorGUIDraw.ColliderBehaviorPopup(position, label, property, attr.FilterType);
         }
     }
 
@@ -457,7 +457,7 @@ namespace com.lizitt.editor
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             var attr = attribute as DynamicColliderStatusAttribute;
-            EditorGUIDraw.FilteredColliderStatusPopup(position, property, label, attr.ReferencePath, attr.PathIsRelative);
+            EditorGUIDraw.ColliderBehaviorPopup(position, property, label, attr.ReferencePath, attr.PathIsRelative);
         }
     }
 }

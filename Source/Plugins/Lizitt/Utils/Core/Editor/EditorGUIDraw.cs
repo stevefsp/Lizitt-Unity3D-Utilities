@@ -54,8 +54,8 @@ namespace com.lizitt.editor
         // woth it.
 
         /// <summary>
-        /// The labels for all valid rigidbody collider options.  (Including disabled. Shares index values with 
-        /// <see cref="RigidBodyColliderStatusValues"/>)
+        /// The labels for all valid rigidbody collider behaviors.  (Including disabled. Shares index values with 
+        /// <see cref="RigidBodyColliderBehaviorValues"/>)
         /// </summary>
         /// <remarks>
         /// <para>
@@ -63,7 +63,7 @@ namespace com.lizitt.editor
         /// elements.
         /// </para>
         /// </remarks>
-        private static readonly GUIContent[] RigidBodyColliderStatusLabels = new GUIContent[]
+        private static readonly GUIContent[] RigidBodyColliderBehaviorLabels = new GUIContent[]
         {
             new GUIContent(ColliderBehavior.Disabled.ToString()),
             new GUIContent(ColliderBehavior.KinematicCollider.ToString()),
@@ -73,8 +73,8 @@ namespace com.lizitt.editor
         };
 
         /// <summary>
-        /// The values for all valid rigidbody collider options.  (Including disabled. Shares index values with 
-        /// <see cref="RigidBodyColliderStatusLabels"/>)
+        /// The values for all valid rigidbody collider behaviors.  (Including disabled. Shares index values with 
+        /// <see cref="RigidBodyColliderBehaviorLabels"/>)
         /// </summary>
         /// <remarks>
         /// <para>
@@ -82,7 +82,7 @@ namespace com.lizitt.editor
         /// elements.
         /// </para>
         /// </remarks>
-        private static readonly int[] RigidBodyColliderStatusValues = new int[]
+        private static readonly int[] RigidBodyColliderBehaviorValues = new int[]
         {
             (int)ColliderBehavior.Disabled,
             (int)ColliderBehavior.KinematicCollider,
@@ -92,8 +92,8 @@ namespace com.lizitt.editor
         };
 
         /// <summary>
-        /// The labels for all valid static collider options.  (Including disabled. Shares index values with 
-        /// <see cref="StaticColliderStatusValues"/>)
+        /// The labels for all valid static collider behaviors.  (Including disabled. Shares index values with 
+        /// <see cref="StaticColliderBehaviorValues"/>)
         /// </summary>
         /// <remarks>
         /// <para>
@@ -101,7 +101,7 @@ namespace com.lizitt.editor
         /// elements.
         /// </para>
         /// </remarks>
-        public static readonly GUIContent[] StaticColliderStatusLabels = new GUIContent[]
+        public static readonly GUIContent[] StaticColliderBehaviorLabels = new GUIContent[]
         {
             new GUIContent(ColliderBehavior.Disabled.ToString()),
             new GUIContent(ColliderBehavior.StaticCollider.ToString()),
@@ -109,8 +109,8 @@ namespace com.lizitt.editor
         };
 
         /// <summary>
-        /// The values for all valid static collider options.  (Including disabled. Shares index values with 
-        /// <see cref="StaticColliderStatusLabels"/>)
+        /// The values for all valid static collider behaviors.  (Including disabled. Shares index values with 
+        /// <see cref="StaticColliderBehaviorLabels"/>)
         /// </summary>
         /// <remarks>
         /// <para>
@@ -118,7 +118,7 @@ namespace com.lizitt.editor
         /// elements.
         /// </para>
         /// </remarks>
-        public static readonly int[] StaticColliderStatusValues = new int[]
+        public static readonly int[] StaticColliderBehaviorValues = new int[]
         {
             (int)ColliderBehavior.Disabled,
             (int)ColliderBehavior.StaticCollider,
@@ -128,7 +128,7 @@ namespace com.lizitt.editor
         #endregion
 
         /// <summary>
-        /// Draw a popup that only contains collider status options that are relavent to a reference collider.
+        /// Draw a popup that only contains collider behaviors relavent to a reference collider.
         /// </summary>
         /// <param name="position">The draw position.</param>
         /// <param name="property">A property representing a <see cref="ColliderBehavior"/> field.</param>
@@ -139,7 +139,7 @@ namespace com.lizitt.editor
         /// <param name="pathIsRelative">
         /// If true, <see cref="ReferencePath"/> is relative to the current property, otherwise is relative to
         /// <c>SerializedProperty.serializedObject</c>.</param>
-        public static void FilteredColliderStatusPopup(Rect position, SerializedProperty property, GUIContent label,
+        public static void ColliderBehaviorPopup(Rect position, SerializedProperty property, GUIContent label,
             string referencePath = null, bool pathIsRelative = true)
         {
             label = EditorGUI.BeginProperty(position, label, property);
@@ -168,19 +168,19 @@ namespace com.lizitt.editor
                 }
             }
 
-            EditorGUIDraw.FilteredColliderStatusPopup(position, label, property, collider);
+            EditorGUIDraw.ColliderBehaviorPopup(position, label, property, collider);
 
             EditorGUI.EndProperty();
         }
 
         /// <summary>
-        /// Draw a popup that only contains status values relavant to the collider.
+        /// Draw a popup that only contains behaviors relavant to the collider.
         /// </summary>
         /// <param name="position">The draw position.</param>
         /// <param name="label">The label.</param>
         /// <param name="property">The property representing a <see cref="ColliderBehavior"/> field.</param>
         /// <param name="collider">The collider, or null to display all options.</param>
-        public static void FilteredColliderStatusPopup(
+        public static void ColliderBehaviorPopup(
             Rect position, GUIContent label, SerializedProperty property, Collider collider)
         {
             if (property.propertyType != SerializedPropertyType.Enum)
@@ -192,19 +192,19 @@ namespace com.lizitt.editor
             }
 
             var choice = 
-                (int)FilteredColliderStatusPopup(position, label, (ColliderBehavior)property.intValue, collider);
+                (int)ColliderBehaviorPopup(position, label, (ColliderBehavior)property.intValue, collider);
 
             if (choice != property.intValue)
                 property.intValue = choice;
         }
 
         /// <summary>
-        /// Draw a popup that only contains status values relavant to category.
+        /// Draw a popup that only contains behaviors relavant to category.
         /// <param name="position">The draw position.</param>
         /// <param name="label">The label.</param>
         /// <param name="property">The property representing a <see cref="ColliderBehavior"/> field.</param>
-        /// <param name="category">The category of status values to include.</param>
-        public static void FilteredColliderStatusPopup(
+        /// <param name="category">The behaviors to include.</param>
+        public static void ColliderBehaviorPopup(
             Rect position, GUIContent label, SerializedProperty property, ColliderBehaviorCategory category)
         {
             if (property.propertyType != SerializedPropertyType.Enum)
@@ -216,21 +216,21 @@ namespace com.lizitt.editor
             }
 
             var choice =
-                (int)FilteredColliderStatusPopup(position, label, (ColliderBehavior)property.intValue, category);
+                (int)ColliderBehaviorPopup(position, label, (ColliderBehavior)property.intValue, category);
 
             if (choice != property.intValue)
                 property.intValue = choice;
         }
 
         /// <summary>
-        /// Draw a popup that only contains status values relavant to the collider.
+        /// Draw a popup that only contains behaviors relavant to the collider.
         /// </summary>
         /// <param name="position">The draw position.</param>
         /// <param name="label">The label.</param>
         /// <param name="currentValue">The current value.</param>
         /// <param name="collider">The collider, or null to display all options.</param>
         /// <returns>The selected value.</returns>
-        public static ColliderBehavior FilteredColliderStatusPopup(
+        public static ColliderBehavior ColliderBehaviorPopup(
             Rect position, GUIContent label, ColliderBehavior currentValue, Collider collider)
         {
             if (!collider)
@@ -240,18 +240,18 @@ namespace com.lizitt.editor
                 ? ColliderBehaviorCategory.RigidBody
                 : ColliderBehaviorCategory.Static;
 
-            return FilteredColliderStatusPopup(position, label, currentValue, category);
+            return ColliderBehaviorPopup(position, label, currentValue, category);
         }
 
         /// <summary>
-        /// Draw a popup that only contains status values relavant to category
+        /// Draw a popup that only contains beahviors relavant to category.
         /// </summary>
         /// <param name="position">The draw position.</param>
         /// <param name="label">The label.</param>
         /// <param name="currentValue">The current value.</param>
-        /// <param name="category">The category of status values to include.</param>
+        /// <param name="category">The behaviors to include.</param>
         /// <returns>The selected value.</returns>
-        public static ColliderBehavior FilteredColliderStatusPopup(
+        public static ColliderBehavior ColliderBehaviorPopup(
             Rect position, GUIContent label, ColliderBehavior currentValue, ColliderBehaviorCategory category)
         {
             GUIContent[] displayOptions = null;
@@ -261,14 +261,14 @@ namespace com.lizitt.editor
             {
                 case ColliderBehaviorCategory.RigidBody:
 
-                    displayOptions = RigidBodyColliderStatusLabels;
-                    optionValues = RigidBodyColliderStatusValues;
+                    displayOptions = RigidBodyColliderBehaviorLabels;
+                    optionValues = RigidBodyColliderBehaviorValues;
                     break;
 
                 case ColliderBehaviorCategory.Static:
 
-                    displayOptions = StaticColliderStatusLabels;
-                    optionValues = StaticColliderStatusValues;
+                    displayOptions = StaticColliderBehaviorLabels;
+                    optionValues = StaticColliderBehaviorValues;
 
                     break;
 
