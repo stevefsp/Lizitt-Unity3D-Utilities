@@ -33,16 +33,16 @@ namespace com.lizitt
         /// <summary>
         /// Applies the position apropriately, taking into account whether or not the rigidbody is kinematic.
         /// </summary>
-        /// <param name="rigidBody">The rigidbody to move.</param>
+        /// <param name="rigidbody">The rigidbody to move.</param>
         /// <param name="position">The position to move to.</param>
         /// <param name="space">The space to move in.</param>
-        public static void MoveTo(this Rigidbody rigidBody, Vector3 position, Space space = Space.World)
+        public static void MoveTo(this Rigidbody rigidbody, Vector3 position, Space space = Space.World)
         {
             // TODO: Add unit test.
 
-            var trans = rigidBody.transform;
+            var trans = rigidbody.transform;
 
-            if (!rigidBody.isKinematic)
+            if (!rigidbody.isKinematic)
             {
                 if (space == Space.Self)
                 {
@@ -55,7 +55,7 @@ namespace com.lizitt
                     trans.position = original;
                 }
 
-                rigidBody.MovePosition(position);
+                rigidbody.MovePosition(position);
             }
             else
                 trans.MoveTo(position, space);

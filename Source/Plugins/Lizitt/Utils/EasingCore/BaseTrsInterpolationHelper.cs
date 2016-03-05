@@ -81,7 +81,7 @@ namespace com.lizitt
         /// This is only guarenteed to be up-to-date after <see cref="Refresh"/> is called.
         /// </para>
         /// </remarks>
-        public Rigidbody RigidBody { get; private set; }
+        public Rigidbody Rigidbody { get; private set; }
 
         /// <summary>
         /// Default constructor.
@@ -95,7 +95,7 @@ namespace com.lizitt
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Setting this property to a new value will reset <see cref="RigidBody"/> to null.
+        /// Setting this property to a new value will reset <see cref="Rigidbody"/> to null.
         /// </para>
         /// </remarks>
         public Transform ItemToTransform
@@ -107,7 +107,7 @@ namespace com.lizitt
                     return;
 
                 m_Item = value;
-                this.RigidBody = null;
+                this.Rigidbody = null;
             }
         }
 
@@ -157,11 +157,11 @@ namespace com.lizitt
 
         /// <summary>
         /// Refreshes internal cached values related to the item to transform. (Such as 
-        /// <see cref="RigidBody"/>.
+        /// <see cref="Rigidbody"/>.
         /// </summary>
         public virtual void Refresh()
         {
-            this.RigidBody = m_Item ? m_Item.GetComponent<Rigidbody>() : null;
+            this.Rigidbody = m_Item ? m_Item.GetComponent<Rigidbody>() : null;
         }
     }
 
@@ -221,9 +221,9 @@ namespace com.lizitt
         /// The Rigidbody object attached to <see cref="ItemToTransform"/>, or null if there is
         /// none.
         /// </summary>
-        public Rigidbody RigidBody 
+        public Rigidbody Rigidbody 
         {
-            get { return Settings.RigidBody; }
+            get { return Settings.Rigidbody; }
         }
 
         /// <summary>
@@ -383,7 +383,7 @@ namespace com.lizitt
         /// <remarks>
         /// <para>
         /// Takes into account the value of <see cref="AutoUpdate"/>, the existance of a 
-        /// RigidBody, the <see cref="Space"/>, etc.
+        /// Rigidbody, the <see cref="Space"/>, etc.
         /// </para>
         /// <para>
         /// Behavior is undefined if this method is used before the settings have been
@@ -397,8 +397,8 @@ namespace com.lizitt
 
             if (AutoUpdate)
             {
-                if (this.RigidBody)
-                    this.RigidBody.MoveTo(InterpolatedValue, this.Space);
+                if (this.Rigidbody)
+                    this.Rigidbody.MoveTo(InterpolatedValue, this.Space);
                 else
                     ItemToTransform.MoveTo(InterpolatedValue, this.Space);
             }
@@ -462,7 +462,7 @@ namespace com.lizitt
         /// <remarks>
         /// <para>
         /// Takes into account the value of <see cref="AutoUpdate"/>, the existance of a 
-        /// RigidBody, the <see cref="Space"/>, etc.
+        /// Rigidbody, the <see cref="Space"/>, etc.
         /// </para>
         /// <para>
         /// Behavior is undefined if this method is used before the settings have been
@@ -476,7 +476,7 @@ namespace com.lizitt
 
             var rotation = Quaternion.Euler(eulerAngles);
 
-            if (RigidBody && !RigidBody.isKinematic)
+            if (Rigidbody && !Rigidbody.isKinematic)
             {
                 if (Space == UnityEngine.Space.Self)
                 {
@@ -492,7 +492,7 @@ namespace com.lizitt
                 }
 
                 if (AutoUpdate)
-                    RigidBody.MoveRotation(rotation);
+                    Rigidbody.MoveRotation(rotation);
             }
             else if (AutoUpdate)
             { 

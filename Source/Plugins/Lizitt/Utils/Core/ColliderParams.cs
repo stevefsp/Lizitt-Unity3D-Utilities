@@ -503,45 +503,5 @@ namespace com.lizitt
             base.ApplyTo(collider);
         }
     }
-
-    // Implement only when needed.  Not tested.
-    //[System.Serializable]
-    //public class RigidBodyParams
-    //{
-    //    [SerializeField]
-    //    [ClampMinimum(0)]
-    //    private float m_Mass = 1;
-
-    //    [SerializeField]
-    //    [ClampMinimum(0)]
-    //    private float m_AngularDrag = 0.05f;
-
-    //    [SerializeField]
-    //    private bool m_UseGravity = true;
-
-    //    [SerializeField]
-    //    private bool m_IsKinematic = false;
-
-    //    [SerializeField]
-    //    private RigidbodyInterpolation m_Interpolation = RigidbodyInterpolation.None;
-
-    //    [SerializeField]
-    //    private CollisionDetectionMode m_CollisionDetection = CollisionDetectionMode.Discrete;
-
-    //    // Needs to be a flag.
-    //    [SerializeField]
-    //    private RigidbodyConstraints m_Constraints = RigidbodyConstraints.None;
-
-    //    public void Apply(Rigidbody rigidBody)
-    //    {
-    //        rigidBody.mass = m_Mass;
-    //        rigidBody.angularDrag = m_AngularDrag;
-    //        rigidBody.useGravity = m_UseGravity;
-    //        rigidBody.isKinematic = m_IsKinematic;
-    //        rigidBody.interpolation = m_Interpolation;
-    //        rigidBody.collisionDetectionMode = m_CollisionDetection;
-    //        rigidBody.constraints = m_Constraints;
-    //    }
-    //}
 }
 

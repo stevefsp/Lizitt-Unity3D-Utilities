@@ -206,8 +206,8 @@ namespace com.lizitt
 
             if (AutoUpdate)
             {
-                if (RigidBody && !RigidBody.isKinematic)
-                    RigidBody.MoveRotation(m_LastRotation);
+                if (Rigidbody && !Rigidbody.isKinematic)
+                    Rigidbody.MoveRotation(m_LastRotation);
                 else
                     ItemToTransform.rotation = m_LastRotation;
             }

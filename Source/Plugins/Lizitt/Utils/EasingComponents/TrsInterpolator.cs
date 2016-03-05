@@ -134,7 +134,7 @@ namespace com.lizitt
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Setting this property to a new value will reset RigidBody to null.
+        /// Setting this property to a new value will reset Rigidbody to null.
         /// </para>
         /// </remarks>
         public Transform ItemToTransform

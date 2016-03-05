@@ -41,7 +41,7 @@ namespace com.lizitt
         /// <summary>
         /// Only behaviors for colliders that have a rigidbody.
         /// </summary>
-        RigidBody,
+        Rigidbody,
     }
 
     /// <summary>

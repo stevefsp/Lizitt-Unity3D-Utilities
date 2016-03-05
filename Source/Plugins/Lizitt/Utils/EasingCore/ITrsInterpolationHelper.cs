@@ -80,7 +80,7 @@ namespace com.lizitt
         /// duration of the interpolation.
         /// </para>
         /// </remarks>
-        Rigidbody RigidBody { get; }
+        Rigidbody Rigidbody { get; }
 
         /// <summary>
         /// The space the interpolation is performed in.
