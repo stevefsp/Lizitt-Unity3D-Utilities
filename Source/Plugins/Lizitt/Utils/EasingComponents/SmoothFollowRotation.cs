@@ -30,7 +30,8 @@ namespace com.lizitt.easing
     /// This interpolator never completes and is optimized for a dynamic match position.
     /// </para>
     /// </remarks>
-    [UnityEngine.AddComponentMenu(LizittUtil.EasingMenu + "Smooth Follow Rotation", LizittUtil.EasingMenuOrder + 1)]
+    [UnityEngine.AddComponentMenu(
+        LizittUtil.EasingMenu + "Smooth Follow Rotation", LizittUtil.EasingComponentMenuOrder + 4)]
     public class SmoothFollowRotation
         : TrsSmoothFollow
     {

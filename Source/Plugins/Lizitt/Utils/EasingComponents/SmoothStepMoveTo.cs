@@ -42,7 +42,8 @@ namespace com.lizitt.easing
     /// Any changes during the the interpolation will warp the easing behavior.
     /// </para>
     /// </remarks>
-    [UnityEngine.AddComponentMenu(LizittUtil.EasingMenu + "SmoothStep MoveTo", LizittUtil.EasingMenuOrder + 42)]
+    [UnityEngine.AddComponentMenu(
+        LizittUtil.EasingMenu + "SmoothStep MoveTo", LizittUtil.EasingComponentMenuOrder + 5)]
     public class SmoothStepMoveTo
         : TrsSmoothStep
     {

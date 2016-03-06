@@ -26,7 +26,7 @@ namespace com.lizitt
     /// <summary>
     /// An marker representing a position with a radius.
     /// </summary>
-    [AddComponentMenu(LizittUtil.LizittMenu + "Marker", LizittUtil.MarkerMenuOrder + 0)]
+    [AddComponentMenu(LizittUtil.LizittMenu + "Marker", LizittUtil.MarkerComponentMenuOrder + 0)]
     public class Marker
         : MonoBehaviour
     {
