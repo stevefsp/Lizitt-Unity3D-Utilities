@@ -38,7 +38,7 @@ namespace com.lizitt
         /// <param name="space">The space to move in.</param>
         public static void MoveTo(this Rigidbody rigidbody, Vector3 position, Space space = Space.World)
         {
-            // TODO: Add unit test.
+            // TODO: v0.3: Add unit test.
 
             var trans = rigidbody.transform;
 

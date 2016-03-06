@@ -84,7 +84,7 @@ namespace com.lizitt.editor
                 }
             }
 
-            // TODO: Add a simpler 5.3+ version.  (GetComponentsInChildren now works on prefabs.)
+            // TODO: Unscheduled: Add a simpler 5.3+ version.  (GetComponentsInChildren now works on prefabs.)
             private void LoadComponents(GameObject gameObject, System.Type typ)
             {
                 // Game object can be null when the 'search object' is unassigned,

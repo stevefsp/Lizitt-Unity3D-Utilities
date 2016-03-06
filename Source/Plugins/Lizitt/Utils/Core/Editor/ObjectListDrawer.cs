@@ -126,7 +126,7 @@ namespace com.lizitt.editor
                 if (!ValidateComponent(comp))
                     elementProperty.objectReferenceValue = null;
 
-                // TODO: BUG: Fix the duplicate check.  It isn't working.
+                // TODO: v0.2: BUG: Fix the duplicate check.  It isn't working.
                 if (orig && orig != comp)
                 {
                     int count = 0;

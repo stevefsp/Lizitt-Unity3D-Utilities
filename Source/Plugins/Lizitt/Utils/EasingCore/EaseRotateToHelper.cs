@@ -47,7 +47,7 @@ namespace com.lizitt.easing
         : TrsEaseHelper
     {
         /*
-         * TODO: EVAL: Would an axis/angle based interpolation be better?
+         * TODO: Unscheduled: EVAL: Would an axis/angle based interpolation be better?
          * The current method of interpolating all axes separately can result in gimple lock
          * and less than optimal behavior for certain functions for certain rotations.  Maybe 
          * the algorithm should be switched to one that determines an angle of rotation then

@@ -43,7 +43,7 @@ namespace com.lizitt.editor
     /// <seealso cref="ObjectListDrawer"/>
     public class ReferenceListControl
     {
-        // TODO: Synchroized the behavior of this class and the ObjectListDrawer.
+        // TODO: Unscheduled: Synchroized the behavior of this class and the ObjectListDrawer.
 
         private static readonly float HeaderHeight =
             EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;

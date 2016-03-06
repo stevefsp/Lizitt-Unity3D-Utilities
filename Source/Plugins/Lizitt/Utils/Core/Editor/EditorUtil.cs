@@ -67,8 +67,6 @@ namespace com.lizitt.editor
         /// </summary>
         public const string GlobalAssetPath = "Assets/GlobalAssets/";
 
-        // TODO: Create a generic global asset method in the main EditorUtil class, then have
-        // this method call that one with a standard path.
         /// <summary>
         /// Gets the specified global asset.
         /// </summary>

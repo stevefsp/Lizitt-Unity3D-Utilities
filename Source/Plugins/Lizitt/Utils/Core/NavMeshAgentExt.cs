@@ -21,7 +21,7 @@
  */
 using UnityEngine;
 
-// TODO: This class needs more thorough testing.
+// TODO: Unscheduled: This class needs more thorough testing.
 
 namespace com.lizitt
 {
