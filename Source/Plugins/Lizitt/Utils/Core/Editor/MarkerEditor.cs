@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2012-2015 Stephen A. Pratt
+ * Copyright (c) 2016 Stephen A. Pratt
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,55 +25,55 @@ using UnityEngine;
 namespace com.lizitt.editor
 {
     /// <summary>
-    /// Marker utilities.
+    /// Marker editor menus and utilities
     /// </summary>
-    public static class MarkerEditorUtil
+    public static class MarkerEditor
     {
         #region GameObject Menus
 
-        [MenuItem("GameObject/" + LizittUtil.LizittMenu + "Marker", false, 7)]
+        [MenuItem("GameObject/" + LizittUtil.Menu + "Marker", false, 7)]
         private static void CreateMarker(MenuCommand command)
         {
             CreateMarker<Marker>(command, false);
         }
 
-        [MenuItem("GameObject/" + LizittUtil.LizittMenu + "NavMarker", false, 8)]
+        [MenuItem("GameObject/" + LizittUtil.Menu + "NavMarker", false, 8)]
         private static void CreateNavigationMarker(MenuCommand command)
         {
             CreateMarker<NavigationMarker>(command, false);
         }
 
-        [MenuItem("GameObject/" + LizittUtil.LizittMenu + "NavNode", false, 9)]
+        [MenuItem("GameObject/" + LizittUtil.Menu + "NavNode", false, 9)]
         private static void CreateNavigationNode(MenuCommand command)
         {
             CreateMarker<NavigationNode>(command, false);
         }
 
-        [MenuItem("GameObject/" + LizittUtil.LizittMenu + "NavWaypoint", false, 10)]
+        [MenuItem("GameObject/" + LizittUtil.Menu + "NavWaypoint", false, 10)]
         private static void CreateNavigationWaypoint(MenuCommand command)
         {
             CreateMarker<NavigationWaypoint>(command, false);
         }
 
-        [MenuItem("GameObject/" + LizittUtil.LizittMenu + "Aligned Marker", false, 11)]
+        [MenuItem("GameObject/" + LizittUtil.Menu + "Aligned Marker", false, 11)]
         private static void CreateAlignedMarker(MenuCommand command)
         {
             CreateMarker<Marker>(command, true);
         }
 
-        [MenuItem("GameObject/" + LizittUtil.LizittMenu + "Aligned NavMarker", false, 12)]
+        [MenuItem("GameObject/" + LizittUtil.Menu + "Aligned NavMarker", false, 12)]
         private static void CreateAlignedNavigationMarker(MenuCommand command)
         {
             CreateMarker<NavigationMarker>(command, true);
         }
 
-        [MenuItem("GameObject/" + LizittUtil.LizittMenu + "Aligned NavNode", false, 13)]
+        [MenuItem("GameObject/" + LizittUtil.Menu + "Aligned NavNode", false, 13)]
         private static void CreateAlignedNavigationNode(MenuCommand command)
         {
             CreateMarker<NavigationNode>(command, true);
         }
 
-        [MenuItem("GameObject/" + LizittUtil.LizittMenu + "Aligned NavWaypoint", false, 14)]
+        [MenuItem("GameObject/" + LizittUtil.Menu + "Aligned NavWaypoint", false, 14)]
         private static void CreateAlignedNavigationWaypointMarker(MenuCommand command)
         {
             CreateMarker<NavigationWaypoint>(command, true);
@@ -111,7 +111,7 @@ namespace com.lizitt.editor
         public static T CreatePositionedMarker<T>(string name = null, float maxDistance = 500, float failDistance = 15)
             where T : Marker
         {
-            return CreateMarker<T>(EditorUtil.GetCreatePosition());
+            return CreateMarker<T>(LizittEditorUtil.GetCreatePosition());
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace com.lizitt.editor
             where T : Marker
         {
             var go = CreateMarker<T>(name);
-            EditorUtil.AlignAtSceneViewHit(go.transform, maxDistance, failDistance);
+            LizittEditorUtil.AlignAtSceneViewHit(go.transform, maxDistance, failDistance);
 
             Undo.RegisterCreatedObjectUndo(go, "Create " + go.name);
 

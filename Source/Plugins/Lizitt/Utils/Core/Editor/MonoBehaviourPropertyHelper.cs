@@ -54,7 +54,7 @@ namespace com.lizitt.editor
         /// </summary>
         public BehaviourPropertyHelper()
         {
-            EditorUtil.AddSerializedFields<T>(m_FieldInfo);
+            LizittEditorUtil.AddSerializedFields<T>(m_FieldInfo);
         }
 
         /// <summary>

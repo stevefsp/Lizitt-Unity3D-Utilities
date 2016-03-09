@@ -29,7 +29,7 @@ namespace com.lizitt.editor
     /// <summary>
     /// Provides GUI utility functions for the Unity Editor.
     /// </summary>
-    public static class EditorGUIUtil
+    public static class LizittEditorGUIUtil
     {
         #region GUI Styles
 
@@ -417,7 +417,7 @@ namespace com.lizitt.editor
                 Debug.Log("Can't set status of a null rigidbody.");
                 return;
             }
-
+            
             if (rigidbody.GetBehavior() == behavior)
                 return;
 

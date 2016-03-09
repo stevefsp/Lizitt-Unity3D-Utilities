@@ -151,7 +151,7 @@ namespace com.lizitt.editor
                 label = EditorGUI.BeginProperty(position, label, property);
 
             if (!gameObject)
-                gameObject = EditorGUIUtil.GetReferenceObject(property);
+                gameObject = LizittEditorGUIUtil.GetReferenceObject(property);
 
             if (m_ListInfo == null || m_ListInfo.GameObject != gameObject)
             {
@@ -168,7 +168,7 @@ namespace com.lizitt.editor
                 iOrig = iOrig == -1 ? 0 : iOrig;
             }
             else if (Required)
-                style = EditorGUIUtil.RedPopup;
+                style = LizittEditorGUIUtil.RedPopup;
 
             int iSel = (label == null)
                 ? EditorGUI.Popup(position, iOrig, m_ListInfo.ItemLabels, style)
@@ -198,7 +198,7 @@ namespace com.lizitt.editor
                 iOrig = iOrig == -1 ? 0 : iOrig;
             }
             else if (Required)
-                style = EditorGUIUtil.RedPopup;
+                style = LizittEditorGUIUtil.RedPopup;
 
             int iSel = (label == null)
                 ? EditorGUI.Popup(position, iOrig, m_ListInfo.ItemLabels, style)

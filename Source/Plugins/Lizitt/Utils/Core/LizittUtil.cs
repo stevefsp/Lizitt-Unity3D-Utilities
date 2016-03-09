@@ -90,7 +90,7 @@ namespace com.lizitt
         /// Can be called lazily.  A null object will return a null collider.
         /// </para>
         /// </remarks>
-        /// <param name="obj">The object to attept to get a collider from. (Can be null)</param>
+        /// <param name="obj">The object to attepmts to get a collider from. (Can be null)</param>
         /// <param name="searchChildren">
         /// If true and a component search is required, then include children in the search, otherwise only search 
         /// the Component or GameObject.</param>
@@ -188,12 +188,12 @@ namespace com.lizitt
         /// Used with <c>AddComponentMenu</c> and <c>MenuItem</c>
         /// </para>
         /// </remarks>
-        public const string LizittMenu = "Lizitt/";
+        public const string Menu = "Lizitt/";
 
         /// <summary>
         /// The menu path for the easing menu.
         /// </summary>
-        public const string EasingMenu = LizittMenu + "Easing/";
+        public const string EasingMenu = Menu + "Easing/";
 
         #endregion
     }

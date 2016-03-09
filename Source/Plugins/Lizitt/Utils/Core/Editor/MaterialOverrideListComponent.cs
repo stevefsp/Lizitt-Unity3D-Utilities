@@ -238,7 +238,7 @@ namespace com.lizitt.editor
         {
             if (m_LocalOnly)
             {
-                var gameObject = EditorGUIUtil.GetReferenceObject(property, m_SearchPropertyPath, false);
+                var gameObject = LizittEditorGUIUtil.GetReferenceObject(property, m_SearchPropertyPath, false);
 
                 if (m_LocalInfo == null || m_LocalInfo.GameObject != gameObject)
                 {
@@ -309,7 +309,7 @@ namespace com.lizitt.editor
 
         private void LocalGUI(Rect position, SerializedProperty property)
         {
-            EditorGUIUtil.BeginLabelWidth(80);
+            LizittEditorGUIUtil.BeginLabelWidth(80);
 
             var props = new Props(property);
             var info = m_LocalInfo;
@@ -326,7 +326,7 @@ namespace com.lizitt.editor
                 style = EditorStyles.popup;
             }
             else
-                style = EditorGUIUtil.RedPopup;
+                style = LizittEditorGUIUtil.RedPopup;
 
             var rect = new Rect(position.x, position.y + EditorGUIUtility.standardVerticalSpacing + 2
                 , position.width, EditorGUIUtility.singleLineHeight * 1.15f);
@@ -335,7 +335,7 @@ namespace com.lizitt.editor
             if (iSel != iOrig)
                 props.renderer.objectReferenceValue = info.Items[iSel];
 
-            rect = EditorGUIUtil.NextGuiElementPosition(rect);
+            rect = LizittEditorGUIUtil.NextGuiElementPosition(rect);
 
             if (iSel == 0)
                 EditorGUI.LabelField(rect, TargetLabel, new GUIContent("None"));
@@ -352,10 +352,10 @@ namespace com.lizitt.editor
 
             // Override material.
 
-            rect = EditorGUIUtil.NextGuiElementPosition(rect, 0, false);
+            rect = LizittEditorGUIUtil.NextGuiElementPosition(rect, 0, false);
             EditorGUI.PropertyField(rect, props.material, MaterialLabel);
 
-            EditorGUIUtil.EndLabelWidth();
+            LizittEditorGUIUtil.EndLabelWidth();
         }
 
         private void StandardGUI(Rect position, SerializedProperty property)
@@ -367,10 +367,10 @@ namespace com.lizitt.editor
                 , position.width, EditorGUIUtility.singleLineHeight);
             EditorGUI.PropertyField(rect, props.renderer);
 
-            rect = EditorGUIUtil.NextGuiElementPosition(rect);
+            rect = LizittEditorGUIUtil.NextGuiElementPosition(rect);
             EditorGUI.PropertyField(rect, props.index);
 
-            rect = EditorGUIUtil.NextGuiElementPosition(rect);
+            rect = LizittEditorGUIUtil.NextGuiElementPosition(rect);
             EditorGUI.PropertyField(rect, props.material);
         }
     }

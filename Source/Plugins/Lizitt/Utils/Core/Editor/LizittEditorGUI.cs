@@ -33,7 +33,7 @@ namespace com.lizitt.editor
     /// custom controls in a single location for easier discovery.
     /// </para>
     /// </remarks>
-    public static class EditorGUIDraw
+    public static class LizittEditorGUI
     {
         /*
          * Design notes:
@@ -168,7 +168,7 @@ namespace com.lizitt.editor
                 }
             }
 
-            EditorGUIDraw.ColliderBehaviorPopup(position, label, property, collider);
+            LizittEditorGUI.ColliderBehaviorPopup(position, label, property, collider);
 
             EditorGUI.EndProperty();
         }
@@ -362,9 +362,9 @@ namespace com.lizitt.editor
         /// <returns>The selected enumeration value.</returns>
         public static int SortedEnumPopup(Rect position, GUIContent label, int selectedValue, System.Type enumTyp)
         {
-            EditorGUI.LabelField(EditorGUIUtil.LabelPosition(position, EditorGUIUtility.labelWidth), label);
+            EditorGUI.LabelField(LizittEditorGUIUtil.LabelPosition(position, EditorGUIUtility.labelWidth), label);
 
-            return SortedEnumPopup(EditorGUIUtil.LabelAfter(
+            return SortedEnumPopup(LizittEditorGUIUtil.LabelAfter(
                 position, EditorGUIUtility.labelWidth, 0), selectedValue, enumTyp);
         }
 

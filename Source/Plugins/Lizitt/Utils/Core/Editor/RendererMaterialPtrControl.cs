@@ -242,7 +242,7 @@ namespace com.lizitt.editor
         {
             if (m_RequireLocal)
             {
-                var go = EditorGUIUtil.GetReferenceObject(property, m_SearchPropertyPath, false);
+                var go = LizittEditorGUIUtil.GetReferenceObject(property, m_SearchPropertyPath, false);
 
                 if (m_SearchInfo == null)
                     m_SearchInfo = new SearchInfo();
@@ -256,19 +256,19 @@ namespace com.lizitt.editor
 
             label = EditorGUI.BeginProperty(position, label, property);
 
-            Rect rect = EditorGUIUtil.SingleLinePosition(position);
+            Rect rect = LizittEditorGUIUtil.SingleLinePosition(position);
 
             if (hasLabel)
                 EditorGUI.LabelField(rect, label);
 
-            EditorGUIUtil.BeginLabelWidth(80);
+            LizittEditorGUIUtil.BeginLabelWidth(80);
 
             if (m_SearchInfo != null)
                 DrawLocal(rect, property, hasLabel);
             else
                 DrawBasic(rect, property, hasLabel);
 
-            EditorGUIUtil.EndLabelWidth();
+            LizittEditorGUIUtil.EndLabelWidth();
 
             EditorGUI.EndProperty();
         }
@@ -284,7 +284,7 @@ namespace com.lizitt.editor
         {
             var props = new Props(property);
 
-            var rect = hasLabel ? EditorGUIUtil.NextGuiElementPosition(position) : position;
+            var rect = hasLabel ? LizittEditorGUIUtil.NextGuiElementPosition(position) : position;
 
             int iOrig = 0;
 
@@ -301,7 +301,7 @@ namespace com.lizitt.editor
 
             int iRen = iSel;
 
-            rect = EditorGUIUtil.NextGuiElementPosition(rect);
+            rect = LizittEditorGUIUtil.NextGuiElementPosition(rect);
 
             // iRen == 0 means 'No renderer selected.'
             DrawMaterials(rect, props.index, iRen == 0 ? null : m_SearchInfo.materialLabels[iRen]);
@@ -314,7 +314,7 @@ namespace com.lizitt.editor
         {
             var props = new Props(property);
 
-            var rect = EditorGUIUtil.NextGuiElementPosition(position, 0, false);
+            var rect = LizittEditorGUIUtil.NextGuiElementPosition(position, 0, false);
             EditorGUI.PropertyField(rect, props.renderer);
 
             GUIContent[] labels;
@@ -334,7 +334,7 @@ namespace com.lizitt.editor
             else
                 labels = null;
 
-            rect = EditorGUIUtil.NextGuiElementPosition(rect);
+            rect = LizittEditorGUIUtil.NextGuiElementPosition(rect);
 
             DrawMaterials(rect, props.index, labels);
         }
