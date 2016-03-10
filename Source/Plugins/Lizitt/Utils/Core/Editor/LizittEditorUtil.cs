@@ -54,9 +54,9 @@ namespace com.lizitt.editor
         /// <summary>
         /// The root Lizitt menu name.
         /// </summary>
-        public const string LizittToolsMenu = BaseToolsMenu + LizittUtil.Menu;
+        public const string ToolsMenu = BaseToolsMenu + LizittMenu.Menu;
 
-        public const string LizittGameObjectMenu = "GameObject/" + LizittUtil.Menu;
+        public const string GameObjectMenu = "GameObject/" + LizittMenu.Menu;
 
         #endregion
 

@@ -31,7 +31,7 @@ namespace com.lizitt
     /// face direction. The range is generally used to communicate how close to the mark
     /// the actor must get.</para>
     /// </remarks>
-    [AddComponentMenu(LizittUtil.Menu + "Navigation Marker", LizittUtil.MarkerComponentMenuOrder + 1)]
+    [AddComponentMenu(LizittMenu.Menu + "Navigation Marker", LizittMenu.MarkerComponentMenuOrder + 1)]
     public class NavigationMarker
         : BaseNavigationMarker
     {

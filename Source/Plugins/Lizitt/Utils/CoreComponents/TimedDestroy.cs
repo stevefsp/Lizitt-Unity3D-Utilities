@@ -27,7 +27,7 @@ namespace com.lizitt
     /// <summary>
     /// Automatically destroys the target after the specified number of seconds.
     /// </summary>
-    [AddComponentMenu(LizittUtil.Menu + "Timed Destroy", LizittUtil.UtilityComponentMenuOrder + 3)]
+    [AddComponentMenu(LizittMenu.Menu + "Timed Destroy", LizittMenu.UtilityComponentMenuOrder + 3)]
     public class TimedDestroy
         : MonoBehaviour
     {

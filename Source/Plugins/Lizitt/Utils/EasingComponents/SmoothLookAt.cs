@@ -32,7 +32,7 @@ namespace com.lizitt.easing
     /// This interpolator never completes and is optimized for a dynamic look target.
     /// </para>
     /// </remarks>
-    [AddComponentMenu(LizittUtil.EasingMenu + "Smooth LootAt", LizittUtil.EasingComponentMenuOrder + 2)]
+    [AddComponentMenu(LizittMenu.EasingMenu + "Smooth LootAt", LizittMenu.EasingComponentMenuOrder + 2)]
     public class SmoothLookAt
         : TrsInterpolator
     {

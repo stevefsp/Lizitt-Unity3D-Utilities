@@ -43,7 +43,7 @@ namespace com.lizitt.easing
     /// </para>
     /// </remarks>
     [UnityEngine.AddComponentMenu(
-        LizittUtil.EasingMenu + "SmoothStep MoveTo", LizittUtil.EasingComponentMenuOrder + 5)]
+        LizittMenu.EasingMenu + "SmoothStep MoveTo", LizittMenu.EasingComponentMenuOrder + 5)]
     public class SmoothStepMoveTo
         : TrsSmoothStep
     {

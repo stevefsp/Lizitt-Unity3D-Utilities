@@ -34,7 +34,7 @@ namespace com.lizitt
     /// is a gizmo.
     /// </para>
     /// </remarks>
-    [AddComponentMenu(LizittUtil.Menu + "Plane Annotation (Editor Only)", LizittUtil.EditorComponentMenuOrder)]
+    [AddComponentMenu(LizittMenu.Menu + "Plane Annotation (Editor Only)", LizittMenu.EditorComponentMenuOrder)]
     public class SimplePlaneAnnotation
         : MonoBehaviour
     {

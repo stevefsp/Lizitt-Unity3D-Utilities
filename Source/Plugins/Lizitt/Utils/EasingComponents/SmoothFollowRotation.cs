@@ -31,7 +31,7 @@ namespace com.lizitt.easing
     /// </para>
     /// </remarks>
     [UnityEngine.AddComponentMenu(
-        LizittUtil.EasingMenu + "Smooth Follow Rotation", LizittUtil.EasingComponentMenuOrder + 4)]
+        LizittMenu.EasingMenu + "Smooth Follow Rotation", LizittMenu.EasingComponentMenuOrder + 4)]
     public class SmoothFollowRotation
         : TrsSmoothFollow
     {

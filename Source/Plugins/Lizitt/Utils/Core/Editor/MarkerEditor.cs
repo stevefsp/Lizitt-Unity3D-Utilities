@@ -31,49 +31,49 @@ namespace com.lizitt.editor
     {
         #region GameObject Menus
 
-        [MenuItem("GameObject/" + LizittUtil.Menu + "Marker", false, 7)]
+        [MenuItem("GameObject/" + LizittMenu.Menu + "Marker", false, 7)]
         private static void CreateMarker(MenuCommand command)
         {
             CreateMarker<Marker>(command, false);
         }
 
-        [MenuItem("GameObject/" + LizittUtil.Menu + "NavMarker", false, 8)]
+        [MenuItem("GameObject/" + LizittMenu.Menu + "NavMarker", false, 8)]
         private static void CreateNavigationMarker(MenuCommand command)
         {
             CreateMarker<NavigationMarker>(command, false);
         }
 
-        [MenuItem("GameObject/" + LizittUtil.Menu + "NavNode", false, 9)]
+        [MenuItem("GameObject/" + LizittMenu.Menu + "NavNode", false, 9)]
         private static void CreateNavigationNode(MenuCommand command)
         {
             CreateMarker<NavigationNode>(command, false);
         }
 
-        [MenuItem("GameObject/" + LizittUtil.Menu + "NavWaypoint", false, 10)]
+        [MenuItem("GameObject/" + LizittMenu.Menu + "NavWaypoint", false, 10)]
         private static void CreateNavigationWaypoint(MenuCommand command)
         {
             CreateMarker<NavigationWaypoint>(command, false);
         }
 
-        [MenuItem("GameObject/" + LizittUtil.Menu + "Aligned Marker", false, 11)]
+        [MenuItem("GameObject/" + LizittMenu.Menu + "Aligned Marker", false, 11)]
         private static void CreateAlignedMarker(MenuCommand command)
         {
             CreateMarker<Marker>(command, true);
         }
 
-        [MenuItem("GameObject/" + LizittUtil.Menu + "Aligned NavMarker", false, 12)]
+        [MenuItem("GameObject/" + LizittMenu.Menu + "Aligned NavMarker", false, 12)]
         private static void CreateAlignedNavigationMarker(MenuCommand command)
         {
             CreateMarker<NavigationMarker>(command, true);
         }
 
-        [MenuItem("GameObject/" + LizittUtil.Menu + "Aligned NavNode", false, 13)]
+        [MenuItem("GameObject/" + LizittMenu.Menu + "Aligned NavNode", false, 13)]
         private static void CreateAlignedNavigationNode(MenuCommand command)
         {
             CreateMarker<NavigationNode>(command, true);
         }
 
-        [MenuItem("GameObject/" + LizittUtil.Menu + "Aligned NavWaypoint", false, 14)]
+        [MenuItem("GameObject/" + LizittMenu.Menu + "Aligned NavWaypoint", false, 14)]
         private static void CreateAlignedNavigationWaypointMarker(MenuCommand command)
         {
             CreateMarker<NavigationWaypoint>(command, true);

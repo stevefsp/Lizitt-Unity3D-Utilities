@@ -33,7 +33,7 @@ namespace com.lizitt
     /// of just one.
     /// </para>
     /// </remarks>
-    [AddComponentMenu(LizittUtil.Menu + "Navigation Node", LizittUtil.MarkerComponentMenuOrder + 2)]
+    [AddComponentMenu(LizittMenu.Menu + "Navigation Node", LizittMenu.MarkerComponentMenuOrder + 2)]
     public class NavigationNode
         : NavigationMarker
     {
