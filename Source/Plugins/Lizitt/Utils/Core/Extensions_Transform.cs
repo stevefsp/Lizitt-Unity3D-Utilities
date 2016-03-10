@@ -170,5 +170,44 @@ namespace com.lizitt
             else
                 transform.MoveTo(position, space);
         }
+
+        /// <summary>
+        /// Gets the nearest shared parent, or null if there is none.  (Lowest common ancestor.)
+        /// </summary>
+        /// <param name="transform">Transform A (Required.)</param>
+        /// <param name="other">Transform B (Required.)</param>
+        /// <returns>Gets the nearest shared parent, or null if there is none.</returns>
+        public static Transform GetSharedParent(this Transform transform, Transform other)
+        {
+            if (!(transform && other))
+            {
+                Debug.LogError("One or both transforms are null.  A null transform can't have a parent.");
+                return null;
+            }
+
+            if (transform == other)
+            {
+                Debug.LogWarning("The two transforms are the same object.  Always same shared parent.", transform);
+                return transform.parent;
+            }
+
+            if (transform.IsChildOf(other) || other.IsChildOf(transform))
+            {
+                // Technically, the question is answered, so only a warning.
+                Debug.LogWarning("One of the transforms is a parent of the other.  Can't share a parent.", transform);
+                return null;
+            }
+
+            transform = transform.parent;
+            while (transform)
+            {
+                if (other.IsChildOf(transform))
+                    return transform;
+
+                transform = transform.parent;
+            }
+
+            return transform;
+        }
     }
 }
