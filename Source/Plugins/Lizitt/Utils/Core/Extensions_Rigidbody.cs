@@ -124,7 +124,7 @@ namespace com.lizitt
         /// See the 
         /// <a href="http://docs.unity3d.com/Manual/CollidersOverview.html">Collider Overview</a>
         /// page in the Unity Manual for details.
-        /// </para
+        /// </para>
         /// <para>
         /// This method will fail if the rigidbody has no colliders and <paramref name="status"/> is a 'rigidbody' 
         /// or 'kinematic' behavior type.  (Can't activate collider behavior on a rigidbody without colliders.)
