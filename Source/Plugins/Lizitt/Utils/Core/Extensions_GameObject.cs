@@ -93,7 +93,7 @@ namespace com.lizitt
                     {
                         // Bake from source.
                         var mesh = new Mesh();
-                        mesh.name = smr.sharedMesh.name + LizittUtil.BakeSuffix;
+                        mesh.name = smr.sharedMesh.name + LizUtil.BakeSuffix;
                         smr.BakeMesh(mesh);
 
                         // Transfer to outfit.
@@ -119,7 +119,7 @@ namespace com.lizitt
                 foreach (var renderer in target.GetComponentsInChildren<SkinnedMeshRenderer>())
                 {
                     var mesh = new Mesh();
-                    mesh.name = renderer.sharedMesh.name + LizittUtil.BakeSuffix;
+                    mesh.name = renderer.sharedMesh.name + LizUtil.BakeSuffix;
                     renderer.BakeMesh(mesh);
 
                     var rgo = renderer.gameObject;

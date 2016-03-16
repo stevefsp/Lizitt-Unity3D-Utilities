@@ -81,7 +81,7 @@ namespace com.lizitt.editor
         {
             if (property.propertyType == SerializedPropertyType.ObjectReference && !property.objectReferenceValue)
             {
-                position = LizittEditorGUIUtil.SingleLinePosition(position);
+                position = LizEditorGUIUtil.SingleLinePosition(position);
                 EditorGUI.PropertyField(position, property);
                 return;
             }
@@ -113,7 +113,7 @@ namespace com.lizitt.editor
         private void DrawElement(Rect position, SerializedProperty elementProperty,
             bool isActive, bool isFocused)
         {
-            position = LizittEditorGUIUtil.SingleLinePosition(
+            position = LizEditorGUIUtil.SingleLinePosition(
                 position, EditorGUIUtility.standardVerticalSpacing);
 
             var orig = elementProperty.objectReferenceValue;

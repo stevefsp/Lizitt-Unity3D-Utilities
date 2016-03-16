@@ -26,7 +26,7 @@ namespace com.lizitt
     /// <summary>
     /// Represents a navigation marker that is part of a waypoint list.
     /// </summary>
-    [AddComponentMenu(LizittMenu.Menu + "Navigation Waypoint", LizittMenu.MarkerComponentMenuOrder + 3)]
+    [AddComponentMenu(LizMenu.Menu + "Navigation Waypoint", LizMenu.MarkerComponentMenuOrder + 3)]
     public class NavigationWaypoint
         : NavigationMarker
     {

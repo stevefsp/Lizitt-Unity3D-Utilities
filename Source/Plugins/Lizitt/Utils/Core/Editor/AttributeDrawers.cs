@@ -149,7 +149,7 @@ namespace com.lizitt.editor
             EditorGUI.BeginChangeCheck();
 
             int val =
-                LizittEditorGUI.EnumFlagsField(position, property.intValue, attr.EnumType, label, attr.Sort);
+                LizEditorGUI.EnumFlagsField(position, property.intValue, attr.EnumType, label, attr.Sort);
 
             if (EditorGUI.EndChangeCheck())
                 property.intValue = val;
@@ -180,8 +180,8 @@ namespace com.lizitt.editor
             EditorGUI.BeginChangeCheck();
 
             int val = attr.IncludeLabel
-                ? LizittEditorGUI.SortedEnumPopup(position, label, property.intValue, attr.EnumType)
-                : LizittEditorGUI.SortedEnumPopup(position, property.intValue, attr.EnumType);
+                ? LizEditorGUI.SortedEnumPopup(position, label, property.intValue, attr.EnumType)
+                : LizEditorGUI.SortedEnumPopup(position, property.intValue, attr.EnumType);
 
             if (EditorGUI.EndChangeCheck())
                 property.intValue = val;
@@ -281,7 +281,7 @@ namespace com.lizitt.editor
             //}
 
             var style = property.stringValue.Trim().Length == 0
-                ? LizittEditorGUIUtil.RedLabel
+                ? LizEditorGUIUtil.RedLabel
                 : EditorStyles.label;
 
             var rect = new Rect(position.x, position.y, EditorGUIUtility.labelWidth, position.height);
@@ -303,7 +303,7 @@ namespace com.lizitt.editor
         {
             EditorGUI.BeginChangeCheck();
 
-            var style = property.intValue == 0 ? LizittEditorGUIUtil.RedLabel : EditorStyles.numberField;
+            var style = property.intValue == 0 ? LizEditorGUIUtil.RedLabel : EditorStyles.numberField;
             var val = EditorGUI.IntField(position, label, property.intValue, style);
 
             if (EditorGUI.EndChangeCheck())
@@ -314,7 +314,7 @@ namespace com.lizitt.editor
         {
             EditorGUI.BeginChangeCheck();
 
-            var style = property.floatValue == 0 ? LizittEditorGUIUtil.RedLabel : EditorStyles.numberField;
+            var style = property.floatValue == 0 ? LizEditorGUIUtil.RedLabel : EditorStyles.numberField;
 
             var val = EditorGUI.FloatField(position, label, property.floatValue, style);
 
@@ -334,7 +334,7 @@ namespace com.lizitt.editor
 
             var rect = new Rect(position.x, position.y, EditorGUIUtility.labelWidth, position.height);
 
-            EditorGUI.LabelField(rect, label, LizittEditorGUIUtil.RedLabel);
+            EditorGUI.LabelField(rect, label, LizEditorGUIUtil.RedLabel);
 
             rect =
                 new Rect(rect.xMax + 5, rect.y, position.width - rect.width - 5, position.height);
@@ -372,7 +372,7 @@ namespace com.lizitt.editor
                 m_GuiElement = new LocalComponentPopup(attr.ComponentType, attr.Required);
 
             m_GuiElement.OnGUI(position, property, label, 
-                LizittEditorGUIUtil.GetReferenceObject(property, attr.SearchPropertyPath, false));
+                LizEditorGUIUtil.GetReferenceObject(property, attr.SearchPropertyPath, false));
         }
     }
 
@@ -437,7 +437,7 @@ namespace com.lizitt.editor
         {
             var attr = attribute as FilteredColliderStatusAttribute;
 
-            LizittEditorGUI.ColliderBehaviorPopup(position, label, property, attr.FilterType);
+            LizEditorGUI.ColliderBehaviorPopup(position, label, property, attr.FilterType);
         }
     }
 
@@ -457,7 +457,7 @@ namespace com.lizitt.editor
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             var attr = attribute as DynamicColliderStatusAttribute;
-            LizittEditorGUI.ColliderBehaviorPopup(position, property, label, attr.ReferencePath, attr.PathIsRelative);
+            LizEditorGUI.ColliderBehaviorPopup(position, property, label, attr.ReferencePath, attr.PathIsRelative);
         }
     }
 }

@@ -94,7 +94,7 @@ namespace com.lizitt.editor
 
             list.drawElementCallback = (position, index, isActive, isFocused) =>
                 {
-                    position = LizittEditorGUIUtil.SingleLinePosition(
+                    position = LizEditorGUIUtil.SingleLinePosition(
                         position,  EditorGUIUtility.standardVerticalSpacing * 1.5f);
 
                     var element = list.serializedProperty.GetArrayElementAtIndex(index);
@@ -105,7 +105,7 @@ namespace com.lizitt.editor
                 roList => { roList.index = AddElement(roList.serializedProperty); };
 
             if (singleClickRemove)
-                list.onRemoveCallback = LizittEditorGUIUtil.DoSingleClickRemove;
+                list.onRemoveCallback = LizEditorGUIUtil.DoSingleClickRemove;
 
             return list;
         }

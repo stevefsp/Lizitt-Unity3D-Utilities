@@ -33,7 +33,7 @@ namespace com.lizitt.editor
     /// custom controls in a single location for easier discovery.
     /// </para>
     /// </remarks>
-    public static class LizittEditorGUI
+    public static class LizEditorGUI
     {
         /*
          * Design notes:
@@ -146,7 +146,7 @@ namespace com.lizitt.editor
 
             Collider collider = null;
             if (string.IsNullOrEmpty(referencePath))
-                collider = LizittUtil.DeriveCollider(property.serializedObject.targetObject);
+                collider = LizUtil.DeriveCollider(property.serializedObject.targetObject);
             else
             {
                 SerializedProperty refProp = pathIsRelative
@@ -159,7 +159,7 @@ namespace com.lizitt.editor
                         property.serializedObject.targetObject);
                 }
                 else if (refProp.propertyType == SerializedPropertyType.ObjectReference)
-                    collider = LizittUtil.DeriveCollider(refProp.objectReferenceValue);
+                    collider = LizUtil.DeriveCollider(refProp.objectReferenceValue);
                 else
                 {
                     Debug.LogErrorFormat(property.serializedObject.targetObject,
@@ -168,7 +168,7 @@ namespace com.lizitt.editor
                 }
             }
 
-            LizittEditorGUI.ColliderBehaviorPopup(position, label, property, collider);
+            LizEditorGUI.ColliderBehaviorPopup(position, label, property, collider);
 
             EditorGUI.EndProperty();
         }
@@ -362,9 +362,9 @@ namespace com.lizitt.editor
         /// <returns>The selected enumeration value.</returns>
         public static int SortedEnumPopup(Rect position, GUIContent label, int selectedValue, System.Type enumTyp)
         {
-            EditorGUI.LabelField(LizittEditorGUIUtil.LabelPosition(position, EditorGUIUtility.labelWidth), label);
+            EditorGUI.LabelField(LizEditorGUIUtil.LabelPosition(position, EditorGUIUtility.labelWidth), label);
 
-            return SortedEnumPopup(LizittEditorGUIUtil.LabelAfter(
+            return SortedEnumPopup(LizEditorGUIUtil.LabelAfter(
                 position, EditorGUIUtility.labelWidth, 0), selectedValue, enumTyp);
         }
 

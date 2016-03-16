@@ -29,7 +29,7 @@ namespace com.lizitt.editor
     /// <summary>
     /// Provides GUI utility functions for the Unity Editor.
     /// </summary>
-    public static class LizittEditorGUIUtil
+    public static class LizEditorGUIUtil
     {
         #region GUI Styles
 

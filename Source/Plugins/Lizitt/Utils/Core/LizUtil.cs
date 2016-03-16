@@ -26,7 +26,7 @@ namespace com.lizitt
     /// <summary>
     /// Provides various common utility features.
     /// </summary>
-    public static class LizittUtil
+    public static class LizUtil
     {
         #region Constants
 

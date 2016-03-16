@@ -26,7 +26,7 @@ namespace com.lizitt
     /// <summary>
     /// Provides various constants for use with Unity Editor menus attributes.
     /// </summary>
-    public static class LizittMenu
+    public static class LizMenu
     {
         /// <summary>
         /// The general Lizitt menu path.

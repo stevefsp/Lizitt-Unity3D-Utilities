@@ -39,7 +39,7 @@ namespace com.lizitt
     /// Remember: Must be attached to an active object to function.
     /// </para>
     /// </remarks>
-    [AddComponentMenu(LizittMenu.Menu + "Activate On Start", LizittMenu.UtilityComponentMenuOrder + 0)]
+    [AddComponentMenu(LizMenu.Menu + "Activate On Start", LizMenu.UtilityComponentMenuOrder + 0)]
     public class ActivateOnStart
         : MonoBehaviour
     {

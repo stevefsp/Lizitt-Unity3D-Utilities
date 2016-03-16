@@ -41,7 +41,7 @@ namespace com.lizitt.easing
     /// Any changes during the the interpolation will warp the easing behavior.
     /// </para>
     /// </remarks>
-    [UnityEngine.AddComponentMenu(LizittMenu.EasingMenu + "Ease MoveTo", LizittMenu.EasingComponentMenuOrder + 1)]
+    [UnityEngine.AddComponentMenu(LizMenu.EasingMenu + "Ease MoveTo", LizMenu.EasingComponentMenuOrder + 1)]
     public class EaseMoveTo
         : TrsEase
     {

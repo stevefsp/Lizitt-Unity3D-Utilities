@@ -42,7 +42,7 @@ namespace com.lizitt.editor
     /// <summary>
     /// Provides general purpose utility functions for the Unity Editor.
     /// </summary>
-    public static class LizittEditorUtil
+    public static class LizEditorUtil
     {
         #region Menu Related Members
 
@@ -54,9 +54,9 @@ namespace com.lizitt.editor
         /// <summary>
         /// The root Lizitt menu name.
         /// </summary>
-        public const string ToolsMenu = BaseToolsMenu + LizittMenu.Menu;
+        public const string ToolsMenu = BaseToolsMenu + LizMenu.Menu;
 
-        public const string GameObjectMenu = "GameObject/" + LizittMenu.Menu;
+        public const string GameObjectMenu = "GameObject/" + LizMenu.Menu;
 
         #endregion
 

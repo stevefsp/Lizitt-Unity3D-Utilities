@@ -161,7 +161,7 @@ namespace com.lizitt.editor
             }
 
             if (singleClickDelete)
-                list.onRemoveCallback = LizittEditorGUIUtil.DoSingleClickRemove;
+                list.onRemoveCallback = LizEditorGUIUtil.DoSingleClickRemove;
 
             return list;
         }
@@ -188,7 +188,7 @@ namespace com.lizitt.editor
             // list element handle.
             var offset = EditorGUIUtility.standardVerticalSpacing * 1.5f;
             position.height -= offset;
-            position = LizittEditorGUIUtil.SingleLinePosition(position, offset);
+            position = LizEditorGUIUtil.SingleLinePosition(position, offset);
             EditorGUI.PropertyField(position, elementProperty, GUIContent.none);  // Don't want 'Element0' type labels.
         }
     }
