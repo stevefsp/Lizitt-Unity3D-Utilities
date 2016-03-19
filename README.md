@@ -1,18 +1,19 @@
 # Lizitt Unity3D Utilities
 
+## Notice
+
+**2016-03-18:** Released v0.2.0.  With this release the main branch will no longer be treated as a development branch and breaking changes will only occur in major versions (0.x).  For now, bug fixes and new features will still be added between releases with the changes aggregated periodically into minor releases (0.x.x).
+
 ## Overview
 
-This project implements various useful utilities for [Unity3D](http://unity3d.com/unity) projects.
-
-API Status: Pre-release Alpha  
-Test Status: Beta  
-Language: C#  
-Target: Unity3D 5.0+ (Personal & Professional)  
-Lastest release tested in: Unity3D 5.3.1 Professional
+**API Status:** Pre-release Alpha  
+**Test Status:** Beta  
+**Language:** C#  
+**Platform:** [Unity3D](http://unity3d.com/unity) 5.3+ (Personal & Professional)
 
 ## Installation
 
-Download the project and drop the contents of the `Source` directory into the Unity Assets folder.  No pre-built DLLs are planned for this project.
+Download the project and drop the contents of the `Source` directory into the Unity Assets folder.
 
 ### Notes
 
